@@ -108,6 +108,8 @@ proc grep {glob lines} {
 
 rename grep {}
 
+critcl::cflags -DYAML_DECLARE_STATIC ; # Windows, no DLL export of symbols.
+
 # # ## ### ##### ######## #############
 ## The C parts of the package expose libyaml as a plain C class,
 ## providing access to the event parts of the API. The higher-level
