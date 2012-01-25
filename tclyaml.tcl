@@ -53,7 +53,60 @@ critcl::tcl 8.5
 
 critcl::cheaders  libyaml/include/yaml.h
 critcl::cheaders  libyaml/src/yaml_private.h
+
+# Note: Slow processing from critcl starkit, large files, and non-accelerated md5
 critcl::csources  libyaml/src/*.c
+
+# # ## ### ##### ######## #############
+## Extract libyaml version number(s) out of its configure and put them
+## into defines, for libyaml/src/api.c to pick up.
+
+proc grep {glob lines} {
+    set result {}
+    foreach line $lines {
+	if {![string match $glob $line]} continue
+	lappend result $line
+    }
+    return $result
+}
+
+::apply {{} {
+    # Get all defines in the configure
+    set D [grep *m4_define* [split [critcl::Cat [critcl::Here]/libyaml/configure.ac] \n]]
+
+    #puts \nD=[join $D \nD=]
+
+    # Extract the defines relevant to us.
+    set major [lindex [grep *YAML_MAJOR* $D] 0]
+    set minor [lindex [grep *YAML_MINOR* $D] 0]
+    set patch [lindex [grep *YAML_PATCH* $D] 0]
+
+    #puts major=$major
+    #puts minor=$minor
+    #puts patch=$patch
+
+    regsub m4_define $major {} major ; # Strip text containing digits.
+    regsub m4_define $minor {} minor
+    regsub m4_define $patch {} patch
+
+    regsub -all {[^0-9]} $major {} major ; # Strip any other non-digits.
+    regsub -all {[^0-9]} $minor {} minor
+    regsub -all {[^0-9]} $patch {} patch
+
+    #puts major'=$major
+    #puts minor'=$minor
+    #puts patch'=$patch
+
+    # And push the configuration into the build setup.
+    critcl::cflags -DYAML_VERSION_MAJOR=\"$major\"
+    critcl::cflags -DYAML_VERSION_MINOR=\"$minor\"
+    critcl::cflags -DYAML_VERSION_PATCH=\"$patch\"
+    critcl::cflags -DYAML_VERSION_STRING=\"$major.$minor.$patch\"
+
+    critcl::msg -nonewline " (using libyaml $major.$minor.$patch)"
+}}
+
+rename grep {}
 
 # # ## ### ##### ######## #############
 ## The C parts of the package expose libyaml as a plain C class,
@@ -69,12 +122,14 @@ critcl::tsources policy.tcl
 # # ## ### ##### ######## #############
 ## C classes for the various types of objects.
 
+critcl::source ly_global.tcl
 critcl::source ly_parser.tcl
 critcl::source ly_emitter.tcl
 
 # # ## ### ##### ######## #############
 ## Make the C pieces ready. Immediate build of the binaries, no deferal.
 
+critcl::msg -nonewline { Building ...}
 if {![critcl::load]} {
     error "Building and loading Tclyaml failed."
 }
