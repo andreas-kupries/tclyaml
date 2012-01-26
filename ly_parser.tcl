@@ -51,7 +51,7 @@ critcl::ccode {
 
 	    static const char* es [] = {
 		"none",
-		"stream-begin",	"stream-end",
+		"stream-start",	"stream-end",
 		"document-start", "document-end",
 		"alias",
 		"scalar",
@@ -324,7 +324,7 @@ critcl::ccode {
     }
 }
 
-critcl::ccommand tclyaml::parse_channel {} { /* syntax: <x> <channel> <cmd>.... */
+critcl::ccommand ::tclyaml::parse::channel {} { /* syntax: <x> <channel> <cmd>.... */
     int ok, mode, run, res;
     yaml_parser_t yp;
     yaml_event_t  ye;
