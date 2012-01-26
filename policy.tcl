@@ -9,7 +9,7 @@ package require TclOO
 
 namespace eval ::tclyaml {
     namespace eval get {
-	namespace export channel
+	namespace export channel file
 	namespace ensemble create
     }
 
@@ -19,49 +19,84 @@ namespace eval ::tclyaml {
 
 # # ## ### ##### ######## #############
 
+proc ::tclyaml::get::file {path} {
+    set c [open $path r]
+    set documents [channel $c]
+    close $c
+    return $documents
+}
+
 proc ::tclyaml::get::channel {c} {
     set p [::tclyaml::parser new]
-    set data [$p channel $c]
+    set documents [$p channel $c]
     $p destroy
-    return $data
+    return $documents
 }
 
 # # ## ### ##### ######## #############
 
 oo::class create ::tclyaml::parser {
-    variable mybuffer mystack
+    variable mydocs mybuffer mystack
 
     method channel {c} {
+	# Redirect the event callback to ourself, using our methods
+	# for processing the events.
 	::tclyaml::parse::channel $c [self]
-	return $mybuffer
+	return $mydocs
     }
 
     method none {} {}
 
     method stream-start {details} {
+	# details = (encoding -> encoding name)
+	set mydocs {}
+	return
     }
 
     method stream-end {} {
     }
 
     method document-start {details} {
+	# details = (
+	#   implicit -> bool
+	#   version -> list (int int) /optional
+	#   tags -> ??? /optional, not-yet-done
+	# )
 	set mybuffer {}
 	set mystack {}
 	return
     }
 
     method document-end {details} {
+	# details = (implicit -> bool)
+	lappend mydocs $mybuffer
     }
 
     method alias {details} {
+	# details = (anchor -> string)
+	return -code error "Currently not able to handle aliases"
     }
 
     method scalar {details} {
+	# details = (
+	#   anchor          -> string
+	#   tag            -> string
+	#   scalar          -> string
+	#   plain-implicit  -> bool
+	#   quoted-implicit -> bool
+	#   style           -> enum (any, plain, single, double, literal, folded)
+	# )
 	lappend mybuffer [dict get $details scalar]
 	return
     }
 
     method sequence-start {details} {
+	# details = (
+	#   anchor   -> string
+	#   tag      -> string
+	#   implicit -> bool
+	#   style    -> enum (any, block, flow)
+	# )
 	lappend mystack $mybuffer
 	set mybuffer {}
 	return
@@ -76,6 +111,12 @@ oo::class create ::tclyaml::parser {
     }
 
     method mapping-start {details} {
+	# details = (
+	#   anchor   -> string
+	#   tag      -> string
+	#   implicit -> bool
+	#   style    -> enum (any, block, flow)
+	# )
 	lappend mystack $mybuffer
 	set mybuffer {}
 	return

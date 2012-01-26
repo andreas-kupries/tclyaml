@@ -1,0 +1,46 @@
+Basic manpage, no formatting.
+
+- package require tclyaml
+
+- tclyaml::get::channel <channel>
+
+  Processes the yaml documents found in the open channel, starting at
+  the current location in that channel.
+
+  Result is a list of documents.
+  A document is list of values.
+  Values can be scalar, sequences or mappings
+  Sequences and mappings are both lists of words.
+  Their difference is in the intrepretation of words.
+  Sequence = list
+  Mapping = keys and associated values.
+  Syntactically they are the same at Tcl level.
+
+- tclyaml::get file <path>
+
+  Convenience command around 'get channel' taking a path to a file to
+  process. Otherwise identical.
+
+- tclyaml::parse::channel <channel> <cmd> ?<arg>...?
+
+  The low-level API to the parser. 
+
+  Processes the yaml documents found in the open channel, starting at
+  the current location in that channel.
+
+  Generates a series of events describing the YAML, and invokes the
+  specified command prefix (cmd ?arg...?) once per event. Arguments to
+  the command prefix are:
+
+  - event type    (string)
+  - event details (dictionary)
+
+  The arguments are provided in the order specified above.
+  The presence of event details actually depends on the type.
+  A number of events do not have any details, and are called only with
+  the type.
+
+  The contents of the event detail dictionary depend on the event type.
+
+  Event types, and associated detail dictionary keys (if any):
+  See sources, policy.tcl
