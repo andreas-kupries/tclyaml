@@ -21,16 +21,20 @@ namespace eval ::tclyaml {
 
 proc ::tclyaml::get::file {path} {
     set c [open $path r]
-    set documents [channel $c]
+    catch {
+      channel $c
+    } e o
     close $c
-    return $documents
+    return {*}$o $e
 }
 
 proc ::tclyaml::get::channel {c} {
     set p [::tclyaml::parser new]
-    set documents [$p channel $c]
+    catch {
+	$p channel $c
+    } e o
     $p destroy
-    return $documents
+    return {*}$o $e
 }
 
 # # ## ### ##### ######## #############
