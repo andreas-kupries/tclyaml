@@ -39,6 +39,7 @@ critcl::ccode {
 	return 1;
     }
 
+    /* Maximum sharing of the string as Tcl_Obj's */
     static Tcl_Obj*
     decode_event_type (yaml_event_type_t t)
     {
@@ -69,6 +70,7 @@ critcl::ccode {
 	return events [t];
     }
 
+    /* Maximum sharing of the string as Tcl_Obj's */
     static Tcl_Obj*
     decode_encoding_type (yaml_encoding_t t)
     {
@@ -93,6 +95,7 @@ critcl::ccode {
 	return events [t];
     }
 
+    /* Maximum sharing of the string as Tcl_Obj's */
     static Tcl_Obj*
     decode_scalar_style (yaml_scalar_style_t t)
     {
@@ -117,6 +120,7 @@ critcl::ccode {
 	return events [t];
     }
 
+    /* Maximum sharing of the string as Tcl_Obj's */
     static Tcl_Obj*
     decode_sequence_style (yaml_sequence_style_t t)
     {
@@ -141,6 +145,7 @@ critcl::ccode {
 	return events [t];
     }
 
+    /* Maximum sharing of the string as Tcl_Obj's */
     static Tcl_Obj*
     decode_mapping_style (yaml_mapping_style_t t)
     {
@@ -180,6 +185,8 @@ critcl::ccode {
     static Tcl_Obj*
     decode_event_stream_start (yaml_event_t* ye)
     {
+	/* XXX Should put the totality of dict keys into a setup for Tcl_Obj* sharing as well */
+
 	Tcl_Obj* dict = Tcl_NewListObj (0,0);
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("encoding",-1));
 	Tcl_ListObjAppendElement (NULL, dict, decode_encoding_type (ye->data.stream_start.encoding));
@@ -346,8 +353,8 @@ critcl::ccommand tclyaml::parse_channel {} { /* syntax: <x> <channel> <cmd>.... 
     }
 
     /* XXX: encoding ! - question is how does the value come out of it! */
+    /* yaml_parser_set_encoding (&yp, YAML_ANY_ENCODING); */
 
-    //yaml_parser_set_encoding (&yp, YAML_ANY_ENCODING);
     yaml_parser_set_input    (&yp, read_handler, chan);
 
     cmdprefix = Tcl_NewListObj (objc - 2, objv + 2);
