@@ -23,7 +23,7 @@ critcl::ccode {
 
 	/*fprintf (stderr,"RH read\n");fflush (stderr);*/
 
-	got = Tcl_Read (chan, buffer, size);
+	got = Tcl_Read (chan, (char*) buffer, size);
 
 	/*fprintf (stderr,"RH got %d e%d\n\n",got,Tcl_GetErrno());fflush (stderr);*/
 
@@ -95,81 +95,6 @@ critcl::ccode {
 	return events [t];
     }
 
-    /* Maximum sharing of the string as Tcl_Obj's */
-    static Tcl_Obj*
-    decode_scalar_style (yaml_scalar_style_t t)
-    {
-	/* XXX This setup is not thread safe, nor oblivious */
-	static Tcl_Obj* events [YAML_FOLDED_SCALAR_STYLE+1] = { NULL };
-
-	if (!events [0]) {
-	    int e;
-
-	    static const char* es [] = {
-		"any", "plain", "single", "double", "literal", "folded"
-	    };
-
-	    for (e = YAML_ANY_SCALAR_STYLE;
-		 e <= YAML_FOLDED_SCALAR_STYLE;
-		 e++) {
-	       events [e] = Tcl_NewStringObj (es [e], -1);
-	       Tcl_IncrRefCount (events[e]);
-	    }
-	}
-
-	return events [t];
-    }
-
-    /* Maximum sharing of the string as Tcl_Obj's */
-    static Tcl_Obj*
-    decode_sequence_style (yaml_sequence_style_t t)
-    {
-	/* XXX This setup is not thread safe, nor oblivious */
-	static Tcl_Obj* events [YAML_FLOW_SEQUENCE_STYLE+1] = { NULL };
-
-	if (!events [0]) {
-	    int e;
-
-	    static const char* es [] = {
-		"any", "block", "flow"
-	    };
-
-	    for (e = YAML_ANY_SEQUENCE_STYLE;
-		 e <= YAML_FLOW_SEQUENCE_STYLE;
-		 e++) {
-	       events [e] = Tcl_NewStringObj (es [e], -1);
-	       Tcl_IncrRefCount (events[e]);
-	    }
-	}
-
-	return events [t];
-    }
-
-    /* Maximum sharing of the string as Tcl_Obj's */
-    static Tcl_Obj*
-    decode_mapping_style (yaml_mapping_style_t t)
-    {
-	/* XXX This setup is not thread safe, nor oblivious */
-	static Tcl_Obj* events [YAML_FLOW_MAPPING_STYLE+1] = { NULL };
-
-	if (!events [0]) {
-	    int e;
-
-	    static const char* es [] = {
-		"any", "block", "flow"
-	    };
-
-	    for (e = YAML_ANY_MAPPING_STYLE;
-		 e <= YAML_FLOW_MAPPING_STYLE;
-		 e++) {
-	       events [e] = Tcl_NewStringObj (es [e], -1);
-	       Tcl_IncrRefCount (events[e]);
-	    }
-	}
-
-	return events [t];
-    }
-
     static const char*
     decode_error_type (yaml_error_type_t t)
     {
@@ -224,7 +149,7 @@ critcl::ccode {
     {
 	Tcl_Obj* dict = Tcl_NewListObj (0,0);
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("anchor",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj (ye->data.alias.anchor,-1));
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.alias.anchor,-1));
 	return dict;
     }
 
@@ -233,11 +158,11 @@ critcl::ccode {
     {
 	Tcl_Obj* dict = Tcl_NewListObj (0,0);
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("anchor",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj (ye->data.scalar.anchor,-1));
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.scalar.anchor,-1));
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("tag",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj (ye->data.scalar.tag,-1));
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.scalar.tag,-1));
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("scalar",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj (ye->data.scalar.value,ye->data.scalar.length));
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.scalar.value,ye->data.scalar.length));
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("plain-implicit",-1));
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewIntObj (ye->data.scalar.plain_implicit));
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("quoted-implicit",-1));
@@ -253,9 +178,9 @@ critcl::ccode {
     {
 	Tcl_Obj* dict = Tcl_NewListObj (0,0);
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("anchor",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj (ye->data.sequence_start.anchor,-1));
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.sequence_start.anchor,-1));
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("tag",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj (ye->data.sequence_start.tag,-1));
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.sequence_start.tag,-1));
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("implicit",-1));
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewIntObj (ye->data.sequence_start.implicit));
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("style",-1));
@@ -268,9 +193,9 @@ critcl::ccode {
     {
 	Tcl_Obj* dict = Tcl_NewListObj (0,0);
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("anchor",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj (ye->data.mapping_start.anchor,-1));
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.mapping_start.anchor,-1));
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("tag",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj (ye->data.mapping_start.tag,-1));
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.mapping_start.tag,-1));
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("implicit",-1));
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewIntObj (ye->data.mapping_start.implicit));
 	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("style",-1));
@@ -309,15 +234,21 @@ critcl::ccode {
     {
 	char buf [60];
 
-	Tcl_AppendResult (interp, decode_error_type (yp->error), " error: ", NULL);
-	Tcl_AppendResult (interp, yp->problem, NULL);
-	sprintf (buf, "line %d, column %d", yp->problem_mark.line, yp->problem_mark.column);
-	Tcl_AppendResult (interp, " at ", buf, NULL);
+	sprintf (buf, "line %d, column %d",
+		 yp->problem_mark.line,
+		 yp->problem_mark.column);
+
+	Tcl_AppendResult (interp,
+			  decode_error_type (yp->error), " error: ",
+			  yp->problem, " at ", buf,
+			  NULL);
 
 	if (yp->context) {
-	    Tcl_AppendResult (interp, " ", yp->context, NULL);
-	    sprintf (buf, "line %d column %d", yp->context_mark.line, yp->context_mark.column);
-	    Tcl_AppendResult (interp, " at ", buf, NULL);
+	    sprintf (buf, "line %d column %d",
+		     yp->context_mark.line,
+		     yp->context_mark.column);
+
+	    Tcl_AppendResult (interp, " ", yp->context, " at ", buf, NULL);
 	}
 
 	Tcl_AppendResult (interp, ".", NULL);
