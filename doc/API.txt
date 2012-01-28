@@ -2,7 +2,7 @@ Basic manpage, no formatting.
 
 - package require tclyaml
 
-- tclyaml::get::channel <channel>
+- tclyaml read channel <channel>
 
   Processes the yaml documents found in the open channel, starting at
   the current location in that channel.
@@ -16,10 +16,15 @@ Basic manpage, no formatting.
   Mapping = keys and associated values.
   Syntactically they are the same at Tcl level.
 
-- tclyaml::get file <path>
+- tclyaml read file <path>
 
   Convenience command around 'get channel' taking a path to a file to
   process. Otherwise identical.
+
+- tclyaml::reader
+
+  TclOO helper class for the read commands.
+  Uses tclyaml::parse::channel (see below)
 
 - tclyaml::parse::channel <channel> <cmd> ?<arg>...?
 
@@ -44,3 +49,44 @@ Basic manpage, no formatting.
 
   Event types, and associated detail dictionary keys (if any):
   See sources, policy.tcl
+
+- tclyaml write channel <struct-def> <chan> <value>
+- tclyaml write file    <struct-def> <path> <value>
+
+  Convert the <value> into YAML according to (guided by) the <struct-def>.
+
+  The result is written to the open channel <chan>, at the current
+  location, or written to the file at <path>.
+
+- tclyaml::writer
+
+  TclOO helper class used by the write commands above.
+  Maintains global styling information.
+
+  Which is currently not exposed to the write commands.
+
+- tclyaml::Emitter
+
+  The low-level Tcl C class wrapping libyaml's emitter functionality.
+  The 'writer' class above is a convenience to make usae of optional
+  arguments, global styling etc. easier. The C class expects styling
+  information at each method call, required or not.
+
+- tclyaml write deftype <name> <arguments> <body>
+
+  Define a new type converter command for use by the main write
+  commands. Predefined converters are
+
+	scalar
+	sequence
+	mapping
+
+   with aliases (see table below) for convenience
+
+			Aliases
+	YAML		Tcl	JSON
+	-----		----	-----
+	scalar		string	-
+	sequence	list	array
+	mapping		dict	object
+	-----		----	-----
