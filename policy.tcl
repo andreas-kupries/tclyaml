@@ -144,7 +144,7 @@ oo::class create ::tclyaml::reader {
 
 oo::class create ::tclyaml::writer {
     constructor {} {
-	::tclyaml::Emitter E
+	::tclyaml::Emitter create E
 	set myblockstyle  any
 	set myscalarstyle any
 	return
