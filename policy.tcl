@@ -13,12 +13,17 @@ namespace eval ::tclyaml {
 	namespace ensemble create
     }
 
+    namespace eval readTags {
+	namespace export channel file
+	namespace ensemble create
+    }
+
     namespace eval write {
 	namespace export channel file deftype
 	namespace ensemble create
     }
 
-    namespace export read write
+    namespace export read readTags write
     namespace ensemble create
 }
 
@@ -35,6 +40,26 @@ proc ::tclyaml::read::file {path} {
 
 proc ::tclyaml::read::channel {c} {
     set reader [::tclyaml::reader new]
+    catch {
+	$reader channel $c
+    } e o
+    $reader destroy
+    return {*}$o $e
+}
+
+# # ## ### ##### ######## #############
+
+proc ::tclyaml::readTags::file {path} {
+    set c [open $path r]
+    catch {
+      channel $c
+    } e o
+    close $c
+    return {*}$o $e
+}
+
+proc ::tclyaml::readTags::channel {c} {
+    set reader [::tclyaml::taggedreader new]
     catch {
 	$reader channel $c
     } e o
@@ -134,6 +159,104 @@ oo::class create ::tclyaml::reader {
     method mapping-end {} {
 	set previous [lindex $mystack end]
 	lappend previous $mybuffer
+	set mybuffer $previous
+	set mystack [lrange $mystack 0 end-1]
+	return
+    }
+}
+
+# # ## ### ##### ######## #############
+
+oo::class create ::tclyaml::taggedreader {
+    variable mydocs mybuffer mystack
+
+    method channel {c} {
+	# Redirect the event callback to ourself, using our methods
+	# for processing the events.
+	::tclyaml::parse::channel $c [self]
+	return $mydocs
+    }
+
+    method none {} {}
+
+    method stream-start {details} {
+	# details = (encoding -> encoding name)
+	set mydocs {}
+	return
+    }
+
+    method stream-end {} {
+    }
+
+    method document-start {details} {
+	# details = (
+	#   implicit -> bool
+	#   version -> list (int int) /optional
+	#   tags -> ??? /optional, not-yet-done
+	# )
+	set mybuffer {}
+	set mystack {}
+	return
+    }
+
+    method document-end {details} {
+	# details = (implicit -> bool)
+	lappend mydocs $mybuffer
+    }
+
+    method alias {details} {
+	# details = (anchor -> string)
+	return -code error "Currently not able to handle aliases"
+    }
+
+    method scalar {details} {
+	# details = (
+	#   anchor          -> string
+	#   tag            -> string
+	#   scalar          -> string
+	#   plain-implicit  -> bool
+	#   quoted-implicit -> bool
+	#   style           -> enum (any, plain, single, double, literal, folded)
+	# )
+	lappend mybuffer [list scalar [dict get $details scalar]]
+	return
+    }
+
+    method sequence-start {details} {
+	# details = (
+	#   anchor   -> string
+	#   tag      -> string
+	#   implicit -> bool
+	#   style    -> enum (any, block, flow)
+	# )
+	lappend mystack $mybuffer
+	set mybuffer {}
+	return
+    }
+
+    method sequence-end {} {
+	set previous [lindex $mystack end]
+	lappend previous [list sequence $mybuffer]
+	set mybuffer $previous
+	set mystack [lrange $mystack 0 end-1]
+	return
+    }
+
+    method mapping-start {details} {
+	# details = (
+	#   anchor   -> string
+	#   tag      -> string
+	#   implicit -> bool
+	#   style    -> enum (any, block, flow)
+	# )
+	lappend mystack $mybuffer
+	set mybuffer {}
+	return
+    }
+
+    method mapping-end {} {
+	set previous [lindex $mystack end]
+	lappend previous [list mapping $mybuffer]
 	set mybuffer $previous
 	set mystack [lrange $mystack 0 end-1]
 	return

@@ -26,6 +26,16 @@ Basic manpage, no formatting.
   TclOO helper class for the read commands.
   Uses tclyaml::parse::channel (see below)
 
+
+- tclyaml readTags channel <channel>
+- tclyaml readTags file <path>
+- tclyaml::taggedreader
+
+  Analogons of the 'read' commands, generating tagged data structures
+  instead, with each node a pair, first element the type of the
+  second, one of 'scalar', 'sequence', and 'mapping.
+
+
 - tclyaml::parse::channel <channel> <cmd> ?<arg>...?
 
   The low-level API to the parser. 
