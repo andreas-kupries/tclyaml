@@ -1,0 +1,15 @@
+#!/bin/env tclsh
+# -*- tcl -*-
+
+puts "Using tclyaml [package require tclyaml]"
+puts "      libyaml [tclyaml::version]"
+puts ========================================
+puts "shlib = [join [info loaded] "\nshlib = "]"
+puts ========================================
+puts ""
+
+set yamlfile [lindex $argv 0]
+
+puts "$yamlfile = [tclyaml read file $yamlfile]"
+
+exit

@@ -1,0 +1,41 @@
+#!/bin/env tclsh
+# -*- tcl -*-
+
+puts "Using tclyaml [package require tclyaml]"
+puts "      libyaml [tclyaml::version]"
+puts ========================================
+puts "shlib = [join [info loaded] "\nshlib = "]"
+puts ========================================
+puts ""
+
+set yamlfile [lindex $argv 0]
+
+puts "Streaming $yamlfile ..."
+
+array set map {
+    stream-start {  }
+    stream-end {    }
+    document-start {}
+    document-end {  }
+    mapping-start { }
+    mapping-end {   }
+    sequence-start {}
+    sequence-end {  }
+    scalar {        }
+}
+
+proc event {event args} {
+    global map
+    if {[llength $args]} {
+	puts "$event$map($event) = ([join $args {) (}])"
+    } else {
+	puts $event
+    }
+    return
+}
+
+set f [open $yamlfile r]
+tclyaml::parse::channel $f event
+close $f
+
+exit

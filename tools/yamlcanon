@@ -1,0 +1,22 @@
+#!/bin/env tclsh
+# -*- tcl -*-
+
+#lappend auto_path ~/yaml-lib
+
+puts "Using tclyaml [package require tclyaml]"
+puts "      libyaml [tclyaml::version]"
+puts ========================================
+puts "shlib = [join [info loaded] "\nshlib = "]"
+puts ========================================
+puts ""
+
+set yamlfile [lindex $argv 0]
+
+puts "$yamlfile ="
+
+foreach document [tclyaml readTags file $yamlfile] {
+    puts ==========================
+    tclyaml writeTags channel stdout [lindex $document 0]
+}
+puts ==========================
+exit

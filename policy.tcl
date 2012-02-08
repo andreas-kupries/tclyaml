@@ -23,7 +23,12 @@ namespace eval ::tclyaml {
 	namespace ensemble create
     }
 
-    namespace export read readTags write
+    namespace eval writeTags {
+	namespace export channel file
+	namespace ensemble create
+    }
+
+    namespace export read readTags write writeTags
     namespace ensemble create
 }
 
@@ -324,6 +329,69 @@ oo::class create ::tclyaml::writer {
     # # ## ### ##### ######## #############
 }
 
+
+# # ## ### ##### ######## #############
+## Todo: Configuration of styling.
+
+proc ::tclyaml::writeTags::channel {chan value} {
+    set data [Core $value]
+    puts -nonewline $chan $data
+    flush $chan
+    return
+}
+
+proc ::tclyaml::writeTags::file {path value} {
+    set data [Core $value]
+    set chan [open $path w]
+    puts -nonewline $chan $data
+    close $chan
+    return
+}
+
+proc ::tclyaml::writeTags::Core {value} {
+    set writer [::tclyaml::writer new]
+
+    catch {
+	$writer stream-start
+	$writer document-start
+
+	Convert $writer $value
+
+	$writer document-end
+	$writer stream-end
+	$writer yaml
+    } e o
+    $writer destroy
+    return {*}$o $e
+}
+
+proc ::tclyaml::writeTags::Convert {writer value} {
+    lassign $value tag value
+    switch -exact -- $tag {
+	scalar {
+	    $writer scalar $value
+	}
+	sequence {
+	    $writer sequence-start
+	    foreach element $value {
+		Convert $writer $element
+	    }
+	    $writer sequence-end
+	}
+	mapping {
+	    $writer mapping-start
+	    foreach {k v} $value {
+		Convert $writer $k
+		Convert $writer $v
+	    }
+	    $writer mapping-end
+	}
+	default {
+	    return -code error "Bad tag $tag"
+	}
+    }
+}
+
 # # ## ### ##### ######## #############
 ## Todo: Configuration of styling.
 
@@ -395,7 +463,7 @@ proc ::tclyaml::write::type::sequence {writer structure value} {
 
     $writer sequence-start
     foreach element $value {
-	__convert $writer $structure $value
+	__convert $writer $structure $element
     }
     $writer sequence-end
     return
