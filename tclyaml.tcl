@@ -12,7 +12,7 @@
 package require critcl 3.1
 critcl::buildrequirement {
     package require critcl::util 1
-    package require critcl::class 1
+    package require critcl::class 1.0.3
 }
 
 # # ## ### ##### ######## #############

@@ -4,7 +4,7 @@
 
 # # ## ### ##### ######## #############
 
-critcl::class def tclyaml::Emitter {
+critcl::class define tclyaml::Emitter {
     #introspect-methods
     # auto instance method 'methods'.
     # auto classvar 'methods'
@@ -18,7 +18,7 @@ critcl::class def tclyaml::Emitter {
 	libyaml emitter object managed by the binding class.
 	NOT a pointer.
     } {
-	ok = yaml_emitter_initialize (&instance->yemit);
+	int ok = yaml_emitter_initialize (&instance->yemit);
 	if (!ok) {
 	    Tcl_AppendResult (interp, "Failed to create libyaml emitter instance", NULL);
 	    goto error;
@@ -48,7 +48,8 @@ critcl::class def tclyaml::Emitter {
     }
 
     # # ## ### ##### ######## #############
-    destructor {}
+    destructor {
+    }
 
     # # ## ### ##### ######## #############
     method stream_start proc {} ok {
