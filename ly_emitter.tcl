@@ -4,6 +4,18 @@
 
 # # ## ### ##### ######## #############
 
+critcl::argtype yaml_sequence_style_t {
+    if (!encode_sequence_style (interp, @@, &@A)) return TCL_ERROR;
+}
+
+critcl::argtype yaml_mapping_style_t {
+    if (!encode_mapping_style (interp, @@, &@A)) return TCL_ERROR;
+}
+
+critcl::argtype yaml_scalar_style_t {
+    if (!encode_scalar_style (interp, @@, &@A)) return TCL_ERROR;
+}
+
 critcl::class define tclyaml::Emitter {
     #introspect-methods
     # auto instance method 'methods'.
@@ -90,20 +102,22 @@ critcl::class define tclyaml::Emitter {
     }
 
     # # ## ### ##### ######## #############
-    method sequence_start proc {char* anchor char* tag int implicit Tcl_Obj* style} ok {
+    method sequence_start proc {
+	pstring anchor
+	pstring tag
+	int implicit
+	yaml_sequence_style_t style
+    } ok {
 	/* Syntax: <instance> seq_start <anchor> <tag> <implicit> <style> */
 	yaml_event_t e;
-	yaml_sequence_style_t ystyle;
 
-	if (!strlen(anchor)) anchor = NULL;
-	if (!strlen(tag))    tag    = NULL;
+	if (!anchor.len) anchor.s = NULL;
+	if (!tag.len)    tag.s    = NULL;
 
-	if (!encode_sequence_style (interp, style, &ystyle)) {
-	    return TCL_ERROR;
-	}
-
-	yaml_sequence_start_event_initialize (&e, (yaml_char_t*) anchor,
-					      (yaml_char_t*) tag, implicit, ystyle);
+	yaml_sequence_start_event_initialize (&e,
+					      (yaml_char_t*) anchor.s,
+					      (yaml_char_t*) tag.s,
+					      implicit, style);
 	return @stem@_emit (interp, instance, &e);
     }
 
@@ -117,20 +131,22 @@ critcl::class define tclyaml::Emitter {
     }
 
     # # ## ### ##### ######## #############
-    method mapping_start proc {char* anchor char* tag int implicit Tcl_Obj* style} ok {
+    method mapping_start proc {
+	pstring anchor
+	pstring tag
+	int implicit
+	yaml_mapping_style_t style
+    } ok {
 	/* Syntax: <instance> map_start <anchor> <tag> <implicit> <style> */
 	yaml_event_t e;
-	yaml_mapping_style_t ystyle;
 
-	if (!strlen(anchor)) anchor = NULL;
-	if (!strlen(tag))    tag = NULL;
+	if (!anchor.len) anchor.s = NULL;
+	if (!tag.len)    tag.s    = NULL;
 
-	if (!encode_mapping_style (interp, style, &ystyle)) {
-	    return TCL_ERROR;
-	}
-
-	yaml_mapping_start_event_initialize (&e, (yaml_char_t*) anchor,
-					     (yaml_char_t*) tag, implicit, ystyle);
+	yaml_mapping_start_event_initialize (&e,
+					     (yaml_char_t*) anchor.s,
+					     (yaml_char_t*) tag.s,
+					     implicit, style);
 	return @stem@_emit (interp, instance, &e);
     }
 
@@ -144,25 +160,26 @@ critcl::class define tclyaml::Emitter {
     }
 
     # # ## ### ##### ######## #############
-    method scalar proc {char* anchor char* tag char* value int plain int quoted Tcl_Obj* style} ok {
+    method scalar proc {
+	pstring anchor
+	pstring tag
+	pstring value
+	int plain
+	int quoted
+	yaml_scalar_style_t style
+    } ok {
 	/* Syntax: <instance> scalar <anchor> <tag> <value> <plain> <quoted> <style> */
-	yaml_scalar_style_t ystyle;
-	int vlen;
+
 	yaml_event_t e;
 
-	if (!strlen(anchor)) anchor = NULL;
-	if (!strlen(tag))    tag = NULL;
+	if (!anchor.len) anchor.s = NULL;
+	if (!tag.len)    tag.s    = NULL;
 
-	if (!encode_scalar_style (interp, style, &ystyle)) {
-	    return TCL_ERROR;
-	}
-
-	vlen = strlen (value);
 	if (!yaml_scalar_event_initialize (&e,
-		   (yaml_char_t*) anchor,
-		   (yaml_char_t*) tag,
-		   (yaml_char_t*) value, vlen,
-		   plain, quoted, ystyle)) {
+		   (yaml_char_t*) anchor.s,
+		   (yaml_char_t*) tag.s,
+		   (yaml_char_t*) value.s, value.len,
+		   plain, quoted, style)) {
 	    Tcl_AppendResult (interp, "Bad event", NULL);
 	    return TCL_ERROR;
 	}
