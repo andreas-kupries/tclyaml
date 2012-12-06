@@ -9,10 +9,10 @@
 # # ## ### ##### ######## #############
 ## Requisites
 
-package require critcl 3.1
+package require critcl 3.1.3 ; # need argtype "pstring"
 critcl::buildrequirement {
     package require critcl::util 1
-    package require critcl::class 1
+    package require critcl::class 1.0.3
 }
 
 # # ## ### ##### ######## #############

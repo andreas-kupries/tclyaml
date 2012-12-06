@@ -49,10 +49,12 @@ critcl::ccode {
     static int
     encode_scalar_style (Tcl_Interp* interp, Tcl_Obj* style, yaml_scalar_style_t* estyle)
     {
+	int value;
 	if (Tcl_GetIndexFromObj (interp, style, ty_scalar_style_names,
-				 "scalar style", 0, estyle) != TCL_OK) {
+				 "scalar style", 0, &value) != TCL_OK) {
 	    return 0;
 	}
+	*estyle = value;
 	return 1;
     }
 
@@ -86,10 +88,12 @@ critcl::ccode {
     static int
     encode_sequence_style (Tcl_Interp* interp, Tcl_Obj* style, yaml_sequence_style_t* estyle)
     {
+	int value;
 	if (Tcl_GetIndexFromObj (interp, style, ty_block_style_names,
-				 "sequence style", 0, estyle) != TCL_OK) {
+				 "sequence style", 0, &value) != TCL_OK) {
 	    return 0;
 	}
+	*estyle = value;
 	return 1;
     }
 
@@ -117,10 +121,12 @@ critcl::ccode {
     static int
     encode_mapping_style (Tcl_Interp* interp, Tcl_Obj* style, yaml_mapping_style_t* estyle)
     {
+	int value;
 	if (Tcl_GetIndexFromObj (interp, style, ty_block_style_names,
-				 "mapping style", 0, estyle) != TCL_OK) {
+				 "mapping style", 0, &value) != TCL_OK) {
 	    return 0;
 	}
+	*estyle = value;
 	return 1;
     }
 }
