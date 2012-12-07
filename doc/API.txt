@@ -11,9 +11,9 @@ Basic manpage, no formatting.
   A document is list of values.
   Values can be scalar, sequences or mappings
   Sequences and mappings are both lists of words.
-  Their difference is in the intrepretation of words.
+  Their difference is in the interpretation of words.
   Sequence = list
-  Mapping = keys and associated values.
+  Mapping = keys and associated values = dictionary.
   Syntactically they are the same at Tcl level.
 
 - tclyaml read file <path>
