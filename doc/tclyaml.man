@@ -1,0 +1,11 @@
+[comment {-*- tcl -*- doctools manpage}]
+[manpage_begin tclyaml n 0.1]
+[include include/module.inc]
+[titledesc {TclYAML - API}]
+[description]
+[include include/welcome.inc]
+
+
+[include include/feedback.inc]
+[manpage_end]
+
