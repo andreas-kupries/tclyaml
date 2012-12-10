@@ -1,0 +1,227 @@
+
+<html><head>
+<title>tclyaml_devguide - TclYAML</title>
+<style type="text/css"><!--
+    HTML {
+	background: 	#FFFFFF;
+	color: 		black;
+    }
+    BODY {
+	background: 	#FFFFFF;
+	color:	 	black;
+    }
+    DIV.doctools {
+	margin-left:	10%;
+	margin-right:	10%;
+    }
+    DIV.doctools H1,DIV.doctools H2 {
+	margin-left:	-5%;
+    }
+    H1, H2, H3, H4 {
+	margin-top: 	1em;
+	font-family:	sans-serif;
+	font-size:	large;
+	color:		#005A9C;
+	background: 	transparent;
+	text-align:		left;
+    }
+    H1.title {
+	text-align: center;
+    }
+    UL,OL {
+	margin-right: 0em;
+	margin-top: 3pt;
+	margin-bottom: 3pt;
+    }
+    UL LI {
+	list-style: disc;
+    }
+    OL LI {
+	list-style: decimal;
+    }
+    DT {
+	padding-top: 	1ex;
+    }
+    UL.toc,UL.toc UL, UL.toc UL UL {
+	font:		normal 12pt/14pt sans-serif;
+	list-style:	none;
+    }
+    LI.section, LI.subsection {
+	list-style: 	none;
+	margin-left: 	0em;
+	text-indent:	0em;
+	padding: 	0em;
+    }
+    PRE {
+	display: 	block;
+	font-family:	monospace;
+	white-space:	pre;
+	margin:		0%;
+	padding-top:	0.5ex;
+	padding-bottom:	0.5ex;
+	padding-left:	1ex;
+	padding-right:	1ex;
+	width:		100%;
+    }
+    PRE.example {
+	color: 		black;
+	background: 	#f5dcb3;
+	border:		1px solid black;
+    }
+    UL.requirements LI, UL.syntax LI {
+	list-style: 	none;
+	margin-left: 	0em;
+	text-indent:	0em;
+	padding:	0em;
+    }
+    DIV.synopsis {
+	color: 		black;
+	background: 	#80ffff;
+	border:		1px solid black;
+	font-family:	serif;
+	margin-top: 	1em;
+	margin-bottom: 	1em;
+    }
+    UL.syntax {
+	margin-top: 	1em;
+	border-top:	1px solid black;
+    }
+    UL.requirements {
+	margin-bottom: 	1em;
+	border-bottom:	1px solid black;
+    }
+--></style>
+</head>
+<! -- Generated from file '/net/nas/data/andreask/Dev/YAML/tclyaml/embedded/www/doc/files/tclyaml_devguide.html' by tcllib/doctools with format 'html'
+   -->
+<! -- Copyright &copy; 2012 Andreas Kupries   -- Copyright &copy; 2012 Documentation, Andreas Kupries
+   -->
+<! -- CVS: $Id$ tclyaml_devguide.n
+   -->
+<body><div class="doctools">
+<hr> [
+  <a href="../../toc.html">Main Table Of Contents</a>
+| <a href="../toc.html">Table Of Contents</a>
+| <a href="../../index.html">Keyword Index</a>
+] <hr>
+<h1 class="title">tclyaml_devguide(n) 1 doc &quot;TclYAML&quot;</h1>
+<div id="name" class="section"><h2><a name="name">Name</a></h2>
+<p>tclyaml_devguide - TclYAML - The Developer's Guide</p>
+</div>
+<div id="toc" class="section"><h2><a name="toc">Table Of Contents</a></h2>
+<ul class="toc">
+<li class="section"><a href="#toc">Table Of Contents</a></li>
+<li class="section"><a href="#synopsis">Synopsis</a></li>
+<li class="section"><a href="#section1">Description</a></li>
+<li class="section"><a href="#section2">Playing with TclYAML</a></li>
+<li class="section"><a href="#section3">Developing for TclYAML</a>
+<ul>
+<li class="subsection"><a href="#subsection1">Architecture &amp; Concepts</a></li>
+<li class="subsection"><a href="#subsection2">Directory structure</a></li>
+</ul>
+</li>
+<li class="section"><a href="#section4">Bugs, Ideas, Feedback</a></li>
+<li class="section"><a href="#keywords">Keywords</a></li>
+<li class="section"><a href="#category">Category</a></li>
+<li class="section"><a href="#copyright">Copyright</a></li>
+</ul>
+</div>
+<div id="synopsis" class="section"><h2><a name="synopsis">Synopsis</a></h2>
+<div class="synopsis">
+<ul class="requirements">
+<li>package require <b class="pkgname">Tcl 8.5</b></li>
+<li>package require <b class="pkgname">tclyaml <span class="opt">?0.1?</span></b></li>
+</ul>
+</div>
+</div>
+<div id="section1" class="section"><h2><a name="section1">Description</a></h2>
+<p>Welcome to TclYAML, a binding to the C-based libyaml parser
+library for <a href="http://yaml.org">YAML</a> (YAML Ain't Markup Language).</p>
+<p>This document is a guide for developers working on TclYAML,
+i.e. maintainers fixing bugs, extending the package's functionality,
+etc.</p>
+<p>Please read</p>
+<ol class="enumerated">
+<li><p><i class="term"><a href="license.html">TclYAML - License</a></i>,</p></li>
+<li><p><i class="term"><a href="tclyaml_sources.html">TclYAML - How To Get The Sources</a></i>, and</p></li>
+<li><p><i class="term"><a href="tclyaml_installer.html">TclYAML - The Installer's Guide</a></i></p></li>
+</ol>
+<p>first, if that was not done already.
+Here we assume that the sources are already available in a directory
+of your choice, and that you not only know how to build and install
+them, but also have all the necessary requisites to actually do
+so. The guide to the sources in particular also explains which source
+code management system is used, where to find it, how to set it up,
+etc.</p>
+</div>
+<div id="section2" class="section"><h2><a name="section2">Playing with TclYAML</a></h2>
+<p>We currently do not have demo applications.</p>
+</div>
+<div id="section3" class="section"><h2><a name="section3">Developing for TclYAML</a></h2>
+<div id="subsection1" class="subsection"><h3><a name="subsection1">Architecture &amp; Concepts</a></h3>
+</div>
+<div id="subsection2" class="subsection"><h3><a name="subsection2">Directory structure</a></h3>
+<dl class="definitions">
+<dt>Helpers</dt>
+<dd></dd>
+<dt>Documentation</dt>
+<dd><dl class="definitions">
+<dt>&quot;<b class="file">doc/</b>&quot;</dt>
+<dd><p>This directory contains the documentation sources. The texts are written
+in <i class="term">doctools</i> format.</p></dd>
+<dt>&quot;<b class="file">embedded/</b>&quot;</dt>
+<dd><p>This directory contains the documentation converted to regular manpages
+(nroff) and HTML.
+It is called embedded because these files, while derived, are part of the
+fossil repository, i.e. embedded into it. This enables fossil to access
+and display these files when serving the repositories' web interface.
+The &quot;Command Reference&quot; link at
+<a href="http://chiselapp.com/user/andreas_kupries/repository/tclyaml/home">http://chiselapp.com/user/andreas_kupries/repository/tclyaml/home</a>
+is, for example, accessing the generated HTML.</p></dd>
+</dl></dd>
+<dt>Demonstration Application and Framework</dt>
+<dd></dd>
+<dt>Package Code, General structure</dt>
+<dd><dl class="definitions">
+<dt>&quot;<b class="file">tclyaml.tcl</b>&quot;</dt>
+<dd><p>This is the master file of the package. Based on <b class="cmd">critcl</b> (v3.1) it
+contain alls the necessary declarations to build the package.</p></dd>
+<dt>&quot;<b class="file">policy.tcl</b>&quot;</dt>
+<dd><p>This is the companions to the &quot;<b class="file">tclyaml.tcl</b>&quot; file which implements
+the higher-level interfaces on top of the C-based primitive
+operations, and determines policies.</p>
+<p>The documentation (see &quot;<b class="file">doc/</b>&quot;) mainly describes this higher-level API,
+plus the few primitives which are passed through unchanged, i.e. without
+getting wrapped into Tcl procedures.</p></dd>
+</dl></dd>
+<dt>Package Code, Per Package</dt>
+<dd><dl class="definitions">
+<dt><b class="package"><a href="tclyaml.html">tclyaml</a></b></dt>
+<dd><dl class="definitions">
+<dt>&quot;<b class="file">tclyaml.tcl</b>&quot;</dt>
+<dd></dd>
+<dt>&quot;<b class="file">policy.tcl</b>&quot;</dt>
+<dd></dd>
+</dl></dd>
+</dl></dd>
+</dl>
+</div>
+</div>
+<div id="section4" class="section"><h2><a name="section4">Bugs, Ideas, Feedback</a></h2>
+<p>This document, and the package it describes, will undoubtedly contain
+bugs and other problems.
+Please report such at the <a href="http://chiselapp.com/user/andreas_kupries/repository/tclyaml">TclYAML Tracker</a>.
+Please also report any ideas for enhancements you may have for either
+package and/or documentation.</p>
+</div>
+<div id="keywords" class="section"><h2><a name="keywords">Keywords</a></h2>
+<p><a href="../../index.html#key2">YAML</a>, <a href="../../index.html#key0">markup language</a>, <a href="../../index.html#key1">serialization</a></p>
+</div>
+<div id="category" class="section"><h2><a name="category">Category</a></h2>
+<p>3rd party library binding</p>
+</div>
+<div id="copyright" class="section"><h2><a name="copyright">Copyright</a></h2>
+<p>Copyright &copy; 2012 Andreas Kupries<br>
+Copyright &copy; 2012 Documentation, Andreas Kupries</p>
+</div>
+</div></body></html>
