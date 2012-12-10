@@ -113,14 +113,12 @@
 <li class="section"><a href="#toc">Table Of Contents</a></li>
 <li class="section"><a href="#synopsis">Synopsis</a></li>
 <li class="section"><a href="#section1">Description</a></li>
-<li class="section"><a href="#section2">Playing with TclYAML</a></li>
-<li class="section"><a href="#section3">Developing for TclYAML</a>
+<li class="section"><a href="#section2">Developing for TclYAML</a>
 <ul>
-<li class="subsection"><a href="#subsection1">Architecture &amp; Concepts</a></li>
-<li class="subsection"><a href="#subsection2">Directory structure</a></li>
+<li class="subsection"><a href="#subsection1">Directory structure</a></li>
 </ul>
 </li>
-<li class="section"><a href="#section4">Bugs, Ideas, Feedback</a></li>
+<li class="section"><a href="#section3">Bugs, Ideas, Feedback</a></li>
 <li class="section"><a href="#keywords">Keywords</a></li>
 <li class="section"><a href="#category">Category</a></li>
 <li class="section"><a href="#copyright">Copyright</a></li>
@@ -154,13 +152,8 @@ so. The guide to the sources in particular also explains which source
 code management system is used, where to find it, how to set it up,
 etc.</p>
 </div>
-<div id="section2" class="section"><h2><a name="section2">Playing with TclYAML</a></h2>
-<p>We currently do not have demo applications.</p>
-</div>
-<div id="section3" class="section"><h2><a name="section3">Developing for TclYAML</a></h2>
-<div id="subsection1" class="subsection"><h3><a name="subsection1">Architecture &amp; Concepts</a></h3>
-</div>
-<div id="subsection2" class="subsection"><h3><a name="subsection2">Directory structure</a></h3>
+<div id="section2" class="section"><h2><a name="section2">Developing for TclYAML</a></h2>
+<div id="subsection1" class="subsection"><h3><a name="subsection1">Directory structure</a></h3>
 <dl class="definitions">
 <dt>Helpers</dt>
 <dd></dd>
@@ -179,8 +172,6 @@ The &quot;Command Reference&quot; link at
 <a href="http://chiselapp.com/user/andreas_kupries/repository/tclyaml/home">http://chiselapp.com/user/andreas_kupries/repository/tclyaml/home</a>
 is, for example, accessing the generated HTML.</p></dd>
 </dl></dd>
-<dt>Demonstration Application and Framework</dt>
-<dd></dd>
 <dt>Package Code, General structure</dt>
 <dd><dl class="definitions">
 <dt>&quot;<b class="file">tclyaml.tcl</b>&quot;</dt>
@@ -190,9 +181,19 @@ contain alls the necessary declarations to build the package.</p></dd>
 <dd><p>This is the companions to the &quot;<b class="file">tclyaml.tcl</b>&quot; file which implements
 the higher-level interfaces on top of the C-based primitive
 operations, and determines policies.</p>
-<p>The documentation (see &quot;<b class="file">doc/</b>&quot;) mainly describes this higher-level API,
+<p>The documentation (see &quot;<b class="file">doc/</b>&quot;) mainly describes the higher-level API,
 plus the few primitives which are passed through unchanged, i.e. without
 getting wrapped into Tcl procedures.</p></dd>
+<dt>&quot;<b class="file">ly_global.tcl</b>&quot;</dt>
+<dd><p>Common global code useful to both parsing and generator sides.
+Mainly the conversion of style values from and to Tcl strings.</p></dd>
+<dt>&quot;<b class="file">ly_emitter.tcl</b>&quot;</dt>
+<dd><p>The generator side of the package, a <b class="package">critcl::class</b>-based
+class whose instances can convert various Tcl data structures into
+proper YAML.</p></dd>
+<dt>&quot;<b class="file">ly_parser.tcl</b>&quot;</dt>
+<dd><p>The low-level commands for parsing YAML, returning it in the form
+of various Tcl data structures. Plain commands, not object-based.</p></dd>
 </dl></dd>
 <dt>Package Code, Per Package</dt>
 <dd><dl class="definitions">
@@ -202,12 +203,18 @@ getting wrapped into Tcl procedures.</p></dd>
 <dd></dd>
 <dt>&quot;<b class="file">policy.tcl</b>&quot;</dt>
 <dd></dd>
+<dt>&quot;<b class="file">ly_emitter.tcl</b>&quot;</dt>
+<dd></dd>
+<dt>&quot;<b class="file">ly_global.tcl</b>&quot;</dt>
+<dd></dd>
+<dt>&quot;<b class="file">ly_parser.tcl</b>&quot;</dt>
+<dd></dd>
 </dl></dd>
 </dl></dd>
 </dl>
 </div>
 </div>
-<div id="section4" class="section"><h2><a name="section4">Bugs, Ideas, Feedback</a></h2>
+<div id="section3" class="section"><h2><a name="section3">Bugs, Ideas, Feedback</a></h2>
 <p>This document, and the package it describes, will undoubtedly contain
 bugs and other problems.
 Please report such at the <a href="http://chiselapp.com/user/andreas_kupries/repository/tclyaml">TclYAML Tracker</a>.

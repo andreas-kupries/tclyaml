@@ -28,16 +28,7 @@ so. The guide to the sources in particular also explains which source
 code management system is used, where to find it, how to set it up,
 etc.
 
-
-[section {Playing with TclYAML}]
-
-We currently do not have demo applications.
-
 [section {Developing for TclYAML}]
-
-[comment @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@]
-[subsection {Architecture & Concepts}]
-
 
 [comment @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@]
 [subsection {Directory structure}]
@@ -73,9 +64,6 @@ is, for example, accessing the generated HTML.
 [list_end]
 
 [comment =====================================================================]
-[def {Demonstration Application and Framework}]
-
-[comment =====================================================================]
 [def {Package Code, General structure}]
 
 [list_begin definitions]
@@ -92,9 +80,25 @@ operations, and determines policies.
 
 [para]
 
-The documentation (see [file doc/]) mainly describes this higher-level API,
+The documentation (see [file doc/]) mainly describes the higher-level API,
 plus the few primitives which are passed through unchanged, i.e. without
 getting wrapped into Tcl procedures.
+
+[def [file ly_global.tcl]]
+
+Common global code useful to both parsing and generator sides.
+Mainly the conversion of style values from and to Tcl strings.
+
+[def [file ly_emitter.tcl]]
+
+The generator side of the package, a [package critcl::class]-based
+class whose instances can convert various Tcl data structures into
+proper YAML.
+
+[def [file ly_parser.tcl]]
+
+The low-level commands for parsing YAML, returning it in the form
+of various Tcl data structures. Plain commands, not object-based.
 
 [list_end]
 
@@ -108,6 +112,9 @@ getting wrapped into Tcl procedures.
 [list_begin definitions]
 [def [file tclyaml.tcl]]
 [def [file policy.tcl]]
+[def [file ly_emitter.tcl]]
+[def [file ly_global.tcl]]
+[def [file ly_parser.tcl]]
 [list_end]
 
 [list_end]

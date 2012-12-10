@@ -139,9 +139,17 @@ library for <a href="http://yaml.org">YAML</a> (YAML Ain't Markup Language).</p>
 <li><p><i class="term"><a href="tclyaml_sources.html">TclYAML - How To Get The Sources</a></i>.</p></li>
 <li><p><i class="term"><a href="tclyaml_installer.html">TclYAML - The Installer's Guide</a></i>.</p></li>
 <li><p><i class="term"><a href="tclyaml_devguide.html">TclYAML - The Developer's Guide</a></i>.</p></li>
+<li><p><i class="term"><a href="tclyaml.html">TclYAML - API</a></i></p></li>
 </ol>
 </div>
 <div id="section3" class="section"><h2><a name="section3">System Architecture</a></h2>
+<p>The system's structure is not very complicated.</p>
+<p>At the bottom is the libyaml library doing
+the heavy lifting for both parsing and generation
+of YAML.</p>
+<p>TclYAML sits on top of that, with two
+distinguishable parts, binding to the parsing and
+generation sides of libyaml.</p>
 </div>
 <div id="section4" class="section"><h2><a name="section4">Bugs, Ideas, Feedback</a></h2>
 <p>This document, and the package it describes, will undoubtedly contain

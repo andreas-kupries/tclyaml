@@ -21,9 +21,20 @@ What are your goals which drove you here ?
 [enum] [term {TclYAML - How To Get The Sources}].
 [enum] [term {TclYAML - The Installer's Guide}].
 [enum] [term {TclYAML - The Developer's Guide}].
+[enum] [term {TclYAML - API}]
 [list_end]
 
 [section {System Architecture}]
+
+The system's structure is not very complicated.
+
+[para] At the bottom is the libyaml library doing
+the heavy lifting for both parsing and generation
+of YAML.
+
+[para] TclYAML sits on top of that, with two
+distinguishable parts, binding to the parsing and
+generation sides of libyaml.
 
 [include include/feedback.inc]
 [manpage_end]

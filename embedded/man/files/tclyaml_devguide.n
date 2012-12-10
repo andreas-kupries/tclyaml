@@ -273,10 +273,7 @@ them, but also have all the necessary requisites to actually do
 so. The guide to the sources in particular also explains which source
 code management system is used, where to find it, how to set it up,
 etc.
-.SH "PLAYING WITH TCLYAML"
-We currently do not have demo applications.
 .SH "DEVELOPING FOR TCLYAML"
-.SS "ARCHITECTURE & CONCEPTS"
 .SS "DIRECTORY STRUCTURE"
 .TP
 Helpers
@@ -299,8 +296,6 @@ The "Command Reference" link at
 is, for example, accessing the generated HTML.
 .RE
 .TP
-Demonstration Application and Framework
-.TP
 Package Code, General structure
 .RS
 .TP
@@ -313,9 +308,22 @@ This is the companions to the "\fItclyaml.tcl\fR" file which implements
 the higher-level interfaces on top of the C-based primitive
 operations, and determines policies.
 .sp
-The documentation (see "\fIdoc/\fR") mainly describes this higher-level API,
+The documentation (see "\fIdoc/\fR") mainly describes the higher-level API,
 plus the few primitives which are passed through unchanged, i.e. without
 getting wrapped into Tcl procedures.
+.TP
+"\fIly_global.tcl\fR"
+Common global code useful to both parsing and generator sides.
+Mainly the conversion of style values from and to Tcl strings.
+.TP
+"\fIly_emitter.tcl\fR"
+The generator side of the package, a \fBcritcl::class\fR-based
+class whose instances can convert various Tcl data structures into
+proper YAML.
+.TP
+"\fIly_parser.tcl\fR"
+The low-level commands for parsing YAML, returning it in the form
+of various Tcl data structures. Plain commands, not object-based.
 .RE
 .TP
 Package Code, Per Package
@@ -327,6 +335,12 @@ Package Code, Per Package
 "\fItclyaml.tcl\fR"
 .TP
 "\fIpolicy.tcl\fR"
+.TP
+"\fIly_emitter.tcl\fR"
+.TP
+"\fIly_global.tcl\fR"
+.TP
+"\fIly_parser.tcl\fR"
 .RE
 .RE
 .PP

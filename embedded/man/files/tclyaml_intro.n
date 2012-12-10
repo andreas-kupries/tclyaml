@@ -262,8 +262,19 @@ library for \fIYAML\fR [http://yaml.org] (YAML Ain't Markup Language).
 \fITclYAML - The Installer's Guide\fR.
 .IP [4]
 \fITclYAML - The Developer's Guide\fR.
+.IP [5]
+\fITclYAML - API\fR
 .PP
 .SH "SYSTEM ARCHITECTURE"
+The system's structure is not very complicated.
+.PP
+At the bottom is the libyaml library doing
+the heavy lifting for both parsing and generation
+of YAML.
+.PP
+TclYAML sits on top of that, with two
+distinguishable parts, binding to the parsing and
+generation sides of libyaml.
 .SH "BUGS, IDEAS, FEEDBACK"
 This document, and the package it describes, will undoubtedly contain
 bugs and other problems.
