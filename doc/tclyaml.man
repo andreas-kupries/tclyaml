@@ -12,6 +12,7 @@ This API falls into two big sections, for the generation of YAML from Tcl
 data structures on one side, and the parsing of YAML into Tcl structures on
 the other.
 
+[comment {* * ** *** ***** ******** ************* *********************}]
 [section {Parsing YAML}]
 
 [list_begin definitions]
@@ -25,7 +26,6 @@ single document found in the input.
 
 [para] For each document YAML scalars are converted to Tcl strings, and YAML
 sequences and mappings to Tcl lists and dictionaries.
-
 
 [call [cmd {tclyaml readTags channel}] [arg chan]]
 [call [cmd {tclyaml readTags file}]    [arg path]]
@@ -49,14 +49,102 @@ This command provides the lowest level of access to the YAML parser. Reading
 YAML data from the specified [arg channel] each structural element encountered
 is reported through an invokation of the command prefix [arg cmd]...
 
-[para] This command prefix is invoked with two additional arguments, the type of
-the found element, and a dictionary holding detailed information about it.
+[para] This command prefix is invoked with one or two additional arguments,
+the type of the found element, and a dictionary holding detailed information
+about it. The contents of the latter are type specific, and may be missing
+completely if the type does not have details.
 
-[para] %%TODO%% Describe the 'events', and their dictionaries.
+[para] The possible types, with their details, if any, are listed below. For
+the details, the dictionary keys and their meanings are listed.
 
+[comment {= = == === ===== ======== ============= =====================}]
+[comment {= = == === ===== ======== ============= =====================}]
+[list_begin definitions]
 
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const stream-start]]
+Parsing has begun.
+
+[list_begin definitions]
+[def [const encoding]] Name of the character encoding used by the input.
 [list_end]
 
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const stream-end]]
+Parsing of the current stream ended. No details.
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const document-start]]
+A new document has begun.
+[list_begin definitions]
+[def [const implicit]] Boolean flag.
+[def [const version]]  Version information as 2-element list of integers.
+[def [const tags]]     Yaml type tags.
+[list_end]
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const document-end]]
+The current document has ended.
+[list_begin definitions]
+[def [const implicit]] Boolean flag.
+[list_end]
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const alias]]
+[list_begin definitions]
+[def [const anchor]] ???
+[list_end]
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const scalar]]
+A scalar value has been found.
+
+[list_begin definitions]
+[def [const anchor]]          ???
+[def [const tag]]             Yaml type tag
+[def [const scalar]]          Value of the scalar, string.
+[def [const plain-implicit]]  Boolean flag.
+[def [const quoted-implicit]] Boolean flag.
+[def [const style]] One of [const any], [const plain], [const single],
+                    [const double], [const literal], or [const folded].
+[list_end]
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const sequence-start]]
+A sequence (aka list) has started.
+
+[list_begin definitions]
+[def [const anchor]]   ???
+[def [const tag]]      Yaml type tag.
+[def [const implicit]] Boolean flag.
+[def [const style]]    One of [const any], [const block], or [const flow].
+[list_end]
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const sequence-end]]
+The current sequence ends. No details.
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const mapping-start]]
+[list_begin definitions]
+A mapping (aka dictionary) has started.
+
+[def [const anchor]]   ???
+[def [const tag]]      Yaml type tag.
+[def [const implicit]] Boolean flag.
+[def [const style]]    One of [const any], [const block], or [const flow].
+[list_end]
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const mapping-end]]
+The current mapping ends. No details.
+[list_end]
+[list_end]
+[comment {= = == === ===== ======== ============= =====================}]
+
+
+
+[comment {* * ** *** ***** ******** ************* *********************}]
 [section {Generating YAML}]
 
 [list_begin definitions]
@@ -73,7 +161,32 @@ of the [arg value], but separate from the value itself.
 open for writing), or file ([arg path]). For the latter, an existing file is
 overwritten.
 
-[para] %%TODO%% Describe structure of [arg spec].
+[para] The syntax of structure [arg spec]ification is:
+
+[list_begin enumerated]
+[enum] A list of one or more elements.
+[enum] The first element of the list is the name of the type.
+       This name has to be the name of a conversion command
+       declared via [cmd {tclyaml write deftype}], see below.
+[enum] The command name can be followed by additional arguments
+       and detail information. The detail information is always
+       the last element of the list, if the list did not contain
+       just the command name, and anything else between command
+       name and details are considered the additional arguments.
+[enum] If the list contains only the command name no additional
+       arguments are assumed, and the detail information defaults
+       to the empty string or list.
+[enum] The interpretation of the detail information depends on the
+       conversion command. For more information see the descriptions
+       of the standard converters the package makes available.
+[list_end]
+
+To convert the [arg value] the conversion command is run, with
+the additional arguments from the [arg spec], followed by the
+handle of the low-level writer object, the detail information
+from the [arg spec], and the [arg value] itself. The conversion
+command then uses the API of the writer object to add YAML
+structures to it, representing the value.
 
 [call [cmd {tclyaml write deftype}] [arg name] [arg arguments] [arg body]]
 
@@ -82,12 +195,98 @@ This command defines a new type conversion command [arg name] for use in the
 
 [para] The [arg arguments] are what has to be specified in a structure
 specification (see [arg spec] above). Beyond these the [arg body] will have
-access to three standard arguments named "writer", "structure", and "value".
+access to three standard arguments, namely:
 
-[para] %%TODO%% describe the standard arguments.
+[list_begin args]
+[arg_def object writer]
+The low-level object holding the YAML structures we wish to generate.
+The conversion command has to use its API to add the structures it
+needs to represent the [arg value].
+
+[arg_def list structure]
+
+This is the detail information from the structure specification
+given to the [cmd {tclyaml write}] commands. The conversion command
+may interpret this as it sees fit.
+
+[arg_def any value]
+This argument holds the Tcl structure to convert.
 
 [list_end]
 
+[para] %%TODO%% describe the writer object, and its API.
+[para] %%TODO%% describe the API for invokation/use of nested type specs.
+
+[list_end]
+
+[section {Standard converters for YAML generation}]
+
+The package provides the following pre-defined conversion commands
+for use in structure specifications taken by the
+[cmd {tclyaml write}] commands.
+
+[list_begin definitions]
+[call [cmd string]]
+[call [cmd scalar]]
+
+This command/type is for the conversion of plain Tcl strings.
+
+[para] No additional arguments.
+
+[para] The detail information is ignored.
+
+[para] Adds a scalar entry to the writer, with the value is the value
+of the scalar.
+
+[call [cmd list]]
+[call [cmd array]]
+[call [cmd sequence]]
+
+This command/type is for the conversion of Tcl lists.
+In YAML parlance, sequences.
+In JSON parlance, arrays.
+
+[para] No additional arguments.
+
+[para] The detail information is treated as a single structure specification
+as taken by the [cmd {tclyaml write}] commands. This specification
+describes the type with which to convert the elements of the Tcl list
+held in the [arg value].
+
+[para] The converter starts a sequence in the writer object, then converts
+all list elements, and at last ends the sequence in the writer.
+
+
+[call [cmd dict]]
+[call [cmd object]]
+[call [cmd mapping]]
+
+This command/type is for the conversion of Tcl dictionaries.
+In YAML parlance, mappings.
+In JSON parlance, objects.
+
+[para] No additional arguments.
+
+[para] The detail information is treated as a dictionary of structure
+specifications as taken by the [cmd {tclyaml write}] commands. This
+dictionary describes the types with which to convert the values of the
+Tcl dictionary held in the [arg value].
+
+All keys in [arg value] also found as key in the [arg structure] use
+the associated type specification for the conversion of their value.
+
+The values of all keys without an explicit conversion are converted
+with the type specification found under the key [const *]. If such
+a key does not exist their conversion is done with type "scalar".
+
+[para] The keys of [arg value] themselves are always converted with
+type "scalar".
+
+[para] The converter starts a mapping in the writer object, then converts
+all dictionary elements (keys, and values), and at last ends the mapping
+in the writer.
+
+[list_end]
 
 [include include/feedback.inc]
 [manpage_end]

@@ -115,7 +115,8 @@
 <li class="section"><a href="#section1">Description</a></li>
 <li class="section"><a href="#section2">Parsing YAML</a></li>
 <li class="section"><a href="#section3">Generating YAML</a></li>
-<li class="section"><a href="#section4">Bugs, Ideas, Feedback</a></li>
+<li class="section"><a href="#section4">Standard converters for YAML generation</a></li>
+<li class="section"><a href="#section5">Bugs, Ideas, Feedback</a></li>
 <li class="section"><a href="#keywords">Keywords</a></li>
 <li class="section"><a href="#category">Category</a></li>
 <li class="section"><a href="#copyright">Copyright</a></li>
@@ -136,6 +137,14 @@
 <li><a href="#6"><b class="cmd">tclyaml write channel</b> <i class="arg">spec</i> <i class="arg">chan</i> <i class="arg">value</i></a></li>
 <li><a href="#7"><b class="cmd">tclyaml write file</b> <i class="arg">spec</i> <i class="arg">path</i> <i class="arg">value</i></a></li>
 <li><a href="#8"><b class="cmd">tclyaml write deftype</b> <i class="arg">name</i> <i class="arg">arguments</i> <i class="arg">body</i></a></li>
+<li><a href="#9"><b class="cmd">string</b></a></li>
+<li><a href="#10"><b class="cmd">scalar</b></a></li>
+<li><a href="#11"><b class="cmd">list</b></a></li>
+<li><a href="#12"><b class="cmd">array</b></a></li>
+<li><a href="#13"><b class="cmd">sequence</b></a></li>
+<li><a href="#14"><b class="cmd">dict</b></a></li>
+<li><a href="#15"><b class="cmd">object</b></a></li>
+<li><a href="#16"><b class="cmd">mapping</b></a></li>
 </ul>
 </div>
 </div>
@@ -176,9 +185,88 @@ untagged conversion these cases are difficult to impossible to distinguish.</p><
 <dd><p>This command provides the lowest level of access to the YAML parser. Reading
 YAML data from the specified <i class="arg">channel</i> each structural element encountered
 is reported through an invokation of the command prefix <i class="arg">cmd</i>...</p>
-<p>This command prefix is invoked with two additional arguments, the type of
-the found element, and a dictionary holding detailed information about it.</p>
-<p>%%TODO%% Describe the 'events', and their dictionaries.</p></dd>
+<p>This command prefix is invoked with one or two additional arguments,
+the type of the found element, and a dictionary holding detailed information
+about it. The contents of the latter are type specific, and may be missing
+completely if the type does not have details.</p>
+<p>The possible types, with their details, if any, are listed below. For
+the details, the dictionary keys and their meanings are listed.</p>
+<dl class="definitions">
+<dt><b class="const">stream-start</b></dt>
+<dd><p>Parsing has begun.</p>
+<dl class="definitions">
+<dt><b class="const">encoding</b></dt>
+<dd><p>Name of the character encoding used by the input.</p></dd>
+</dl></dd>
+<dt><b class="const">stream-end</b></dt>
+<dd><p>Parsing of the current stream ended. No details.</p></dd>
+<dt><b class="const">document-start</b></dt>
+<dd><p>A new document has begun.</p>
+<dl class="definitions">
+<dt><b class="const">implicit</b></dt>
+<dd><p>Boolean flag.</p></dd>
+<dt><b class="const">version</b></dt>
+<dd><p>Version information as 2-element list of integers.</p></dd>
+<dt><b class="const">tags</b></dt>
+<dd><p>Yaml type tags.</p></dd>
+</dl></dd>
+<dt><b class="const">document-end</b></dt>
+<dd><p>The current document has ended.</p>
+<dl class="definitions">
+<dt><b class="const">implicit</b></dt>
+<dd><p>Boolean flag.</p></dd>
+</dl></dd>
+<dt><b class="const">alias</b></dt>
+<dd><dl class="definitions">
+<dt><b class="const">anchor</b></dt>
+<dd><p>???</p></dd>
+</dl></dd>
+<dt><b class="const">scalar</b></dt>
+<dd><p>A scalar value has been found.</p>
+<dl class="definitions">
+<dt><b class="const">anchor</b></dt>
+<dd><p>???</p></dd>
+<dt><b class="const">tag</b></dt>
+<dd><p>Yaml type tag</p></dd>
+<dt><b class="const">scalar</b></dt>
+<dd><p>Value of the scalar, string.</p></dd>
+<dt><b class="const">plain-implicit</b></dt>
+<dd><p>Boolean flag.</p></dd>
+<dt><b class="const">quoted-implicit</b></dt>
+<dd><p>Boolean flag.</p></dd>
+<dt><b class="const">style</b></dt>
+<dd><p>One of <b class="const">any</b>, <b class="const">plain</b>, <b class="const">single</b>,
+                    <b class="const">double</b>, <b class="const">literal</b>, or <b class="const">folded</b>.</p></dd>
+</dl></dd>
+<dt><b class="const">sequence-start</b></dt>
+<dd><p>A sequence (aka list) has started.</p>
+<dl class="definitions">
+<dt><b class="const">anchor</b></dt>
+<dd><p>???</p></dd>
+<dt><b class="const">tag</b></dt>
+<dd><p>Yaml type tag.</p></dd>
+<dt><b class="const">implicit</b></dt>
+<dd><p>Boolean flag.</p></dd>
+<dt><b class="const">style</b></dt>
+<dd><p>One of <b class="const">any</b>, <b class="const">block</b>, or <b class="const">flow</b>.</p></dd>
+</dl></dd>
+<dt><b class="const">sequence-end</b></dt>
+<dd><p>The current sequence ends. No details.</p></dd>
+<dt><b class="const">mapping-start</b></dt>
+<dd><dl class="definitions">
+A mapping (aka dictionary) has started.
+<dt><b class="const">anchor</b></dt>
+<dd><p>???</p></dd>
+<dt><b class="const">tag</b></dt>
+<dd><p>Yaml type tag.</p></dd>
+<dt><b class="const">implicit</b></dt>
+<dd><p>Boolean flag.</p></dd>
+<dt><b class="const">style</b></dt>
+<dd><p>One of <b class="const">any</b>, <b class="const">block</b>, or <b class="const">flow</b>.</p></dd>
+</dl></dd>
+<dt><b class="const">mapping-end</b></dt>
+<dd><p>The current mapping ends. No details.</p></dd>
+</dl></dd>
 </dl>
 </div>
 <div id="section3" class="section"><h2><a name="section3">Generating YAML</a></h2>
@@ -193,17 +281,106 @@ of the <i class="arg">value</i>, but separate from the value itself.</p>
 <p>The resulting YAML is written to a channel (<i class="arg">chan</i>, expected to be
 open for writing), or file (<i class="arg">path</i>). For the latter, an existing file is
 overwritten.</p>
-<p>%%TODO%% Describe structure of <i class="arg">spec</i>.</p></dd>
+<p>The syntax of structure <i class="arg">spec</i>ification is:</p>
+<ol class="enumerated">
+<li><p>A list of one or more elements.</p></li>
+<li><p>The first element of the list is the name of the type.
+       This name has to be the name of a conversion command
+       declared via <b class="cmd">tclyaml write deftype</b>, see below.</p></li>
+<li><p>The command name can be followed by additional arguments
+       and detail information. The detail information is always
+       the last element of the list, if the list did not contain
+       just the command name, and anything else between command
+       name and details are considered the additional arguments.</p></li>
+<li><p>If the list contains only the command name no additional
+       arguments are assumed, and the detail information defaults
+       to the empty string or list.</p></li>
+<li><p>The interpretation of the detail information depends on the
+       conversion command. For more information see the descriptions
+       of the standard converters the package makes available.</p></li>
+</ol>
+<p>To convert the <i class="arg">value</i> the conversion command is run, with
+the additional arguments from the <i class="arg">spec</i>, followed by the
+handle of the low-level writer object, the detail information
+from the <i class="arg">spec</i>, and the <i class="arg">value</i> itself. The conversion
+command then uses the API of the writer object to add YAML
+structures to it, representing the value.</p></dd>
 <dt><a name="8"><b class="cmd">tclyaml write deftype</b> <i class="arg">name</i> <i class="arg">arguments</i> <i class="arg">body</i></a></dt>
 <dd><p>This command defines a new type conversion command <i class="arg">name</i> for use in the
 <b class="cmd">tclyaml write ...</b> commands above.</p>
 <p>The <i class="arg">arguments</i> are what has to be specified in a structure
 specification (see <i class="arg">spec</i> above). Beyond these the <i class="arg">body</i> will have
-access to three standard arguments named &quot;writer&quot;, &quot;structure&quot;, and &quot;value&quot;.</p>
-<p>%%TODO%% describe the standard arguments.</p></dd>
+access to three standard arguments, namely:</p>
+<dl class="arguments">
+<dt>object <i class="arg">writer</i></dt>
+<dd><p>The low-level object holding the YAML structures we wish to generate.
+The conversion command has to use its API to add the structures it
+needs to represent the <i class="arg">value</i>.</p></dd>
+<dt>list <i class="arg">structure</i></dt>
+<dd><p>This is the detail information from the structure specification
+given to the <b class="cmd">tclyaml write</b> commands. The conversion command
+may interpret this as it sees fit.</p></dd>
+<dt>any <i class="arg">value</i></dt>
+<dd><p>This argument holds the Tcl structure to convert.</p></dd>
+</dl>
+<p>%%TODO%% describe the writer object, and its API.</p>
+<p>%%TODO%% describe the API for invokation/use of nested type specs.</p></dd>
 </dl>
 </div>
-<div id="section4" class="section"><h2><a name="section4">Bugs, Ideas, Feedback</a></h2>
+<div id="section4" class="section"><h2><a name="section4">Standard converters for YAML generation</a></h2>
+<p>The package provides the following pre-defined conversion commands
+for use in structure specifications taken by the
+<b class="cmd">tclyaml write</b> commands.</p>
+<dl class="definitions">
+<dt><a name="9"><b class="cmd">string</b></a></dt>
+<dd></dd>
+<dt><a name="10"><b class="cmd">scalar</b></a></dt>
+<dd><p>This command/type is for the conversion of plain Tcl strings.</p>
+<p>No additional arguments.</p>
+<p>The detail information is ignored.</p>
+<p>Adds a scalar entry to the writer, with the value is the value
+of the scalar.</p></dd>
+<dt><a name="11"><b class="cmd">list</b></a></dt>
+<dd></dd>
+<dt><a name="12"><b class="cmd">array</b></a></dt>
+<dd></dd>
+<dt><a name="13"><b class="cmd">sequence</b></a></dt>
+<dd><p>This command/type is for the conversion of Tcl lists.
+In YAML parlance, sequences.
+In JSON parlance, arrays.</p>
+<p>No additional arguments.</p>
+<p>The detail information is treated as a single structure specification
+as taken by the <b class="cmd">tclyaml write</b> commands. This specification
+describes the type with which to convert the elements of the Tcl list
+held in the <i class="arg">value</i>.</p>
+<p>The converter starts a sequence in the writer object, then converts
+all list elements, and at last ends the sequence in the writer.</p></dd>
+<dt><a name="14"><b class="cmd">dict</b></a></dt>
+<dd></dd>
+<dt><a name="15"><b class="cmd">object</b></a></dt>
+<dd></dd>
+<dt><a name="16"><b class="cmd">mapping</b></a></dt>
+<dd><p>This command/type is for the conversion of Tcl dictionaries.
+In YAML parlance, mappings.
+In JSON parlance, objects.</p>
+<p>No additional arguments.</p>
+<p>The detail information is treated as a dictionary of structure
+specifications as taken by the <b class="cmd">tclyaml write</b> commands. This
+dictionary describes the types with which to convert the values of the
+Tcl dictionary held in the <i class="arg">value</i>.
+All keys in <i class="arg">value</i> also found as key in the <i class="arg">structure</i> use
+the associated type specification for the conversion of their value.
+The values of all keys without an explicit conversion are converted
+with the type specification found under the key <b class="const">*</b>. If such
+a key does not exist their conversion is done with type &quot;scalar&quot;.</p>
+<p>The keys of <i class="arg">value</i> themselves are always converted with
+type &quot;scalar&quot;.</p>
+<p>The converter starts a mapping in the writer object, then converts
+all dictionary elements (keys, and values), and at last ends the mapping
+in the writer.</p></dd>
+</dl>
+</div>
+<div id="section5" class="section"><h2><a name="section5">Bugs, Ideas, Feedback</a></h2>
 <p>This document, and the package it describes, will undoubtedly contain
 bugs and other problems.
 Please report such at the <a href="http://chiselapp.com/user/andreas_kupries/repository/tclyaml">TclYAML Tracker</a>.

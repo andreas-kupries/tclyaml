@@ -264,6 +264,22 @@ package require \fBtclyaml  ?0.1?\fR
 .sp
 \fBtclyaml write deftype\fR \fIname\fR \fIarguments\fR \fIbody\fR
 .sp
+\fBstring\fR
+.sp
+\fBscalar\fR
+.sp
+\fBlist\fR
+.sp
+\fBarray\fR
+.sp
+\fBsequence\fR
+.sp
+\fBdict\fR
+.sp
+\fBobject\fR
+.sp
+\fBmapping\fR
+.sp
 .BE
 .SH DESCRIPTION
 .PP
@@ -308,10 +324,119 @@ This command provides the lowest level of access to the YAML parser. Reading
 YAML data from the specified \fIchannel\fR each structural element encountered
 is reported through an invokation of the command prefix \fIcmd\fR...
 .sp
-This command prefix is invoked with two additional arguments, the type of
-the found element, and a dictionary holding detailed information about it.
+This command prefix is invoked with one or two additional arguments,
+the type of the found element, and a dictionary holding detailed information
+about it. The contents of the latter are type specific, and may be missing
+completely if the type does not have details.
 .sp
-%%TODO%% Describe the 'events', and their dictionaries.
+The possible types, with their details, if any, are listed below. For
+the details, the dictionary keys and their meanings are listed.
+.RS
+.TP
+\fBstream-start\fR
+Parsing has begun.
+.RS
+.TP
+\fBencoding\fR
+Name of the character encoding used by the input.
+.RE
+.TP
+\fBstream-end\fR
+Parsing of the current stream ended. No details.
+.TP
+\fBdocument-start\fR
+A new document has begun.
+.RS
+.TP
+\fBimplicit\fR
+Boolean flag.
+.TP
+\fBversion\fR
+Version information as 2-element list of integers.
+.TP
+\fBtags\fR
+Yaml type tags.
+.RE
+.TP
+\fBdocument-end\fR
+The current document has ended.
+.RS
+.TP
+\fBimplicit\fR
+Boolean flag.
+.RE
+.TP
+\fBalias\fR
+.RS
+.TP
+\fBanchor\fR
+???
+.RE
+.TP
+\fBscalar\fR
+A scalar value has been found.
+.RS
+.TP
+\fBanchor\fR
+???
+.TP
+\fBtag\fR
+Yaml type tag
+.TP
+\fBscalar\fR
+Value of the scalar, string.
+.TP
+\fBplain-implicit\fR
+Boolean flag.
+.TP
+\fBquoted-implicit\fR
+Boolean flag.
+.TP
+\fBstyle\fR
+One of \fBany\fR, \fBplain\fR, \fBsingle\fR,
+\fBdouble\fR, \fBliteral\fR, or \fBfolded\fR.
+.RE
+.TP
+\fBsequence-start\fR
+A sequence (aka list) has started.
+.RS
+.TP
+\fBanchor\fR
+???
+.TP
+\fBtag\fR
+Yaml type tag.
+.TP
+\fBimplicit\fR
+Boolean flag.
+.TP
+\fBstyle\fR
+One of \fBany\fR, \fBblock\fR, or \fBflow\fR.
+.RE
+.TP
+\fBsequence-end\fR
+The current sequence ends. No details.
+.TP
+\fBmapping-start\fR
+.RS
+A mapping (aka dictionary) has started.
+.TP
+\fBanchor\fR
+???
+.TP
+\fBtag\fR
+Yaml type tag.
+.TP
+\fBimplicit\fR
+Boolean flag.
+.TP
+\fBstyle\fR
+One of \fBany\fR, \fBblock\fR, or \fBflow\fR.
+.RE
+.TP
+\fBmapping-end\fR
+The current mapping ends. No details.
+.RE
 .PP
 .SH "GENERATING YAML"
 .TP
@@ -327,7 +452,36 @@ The resulting YAML is written to a channel (\fIchan\fR, expected to be
 open for writing), or file (\fIpath\fR). For the latter, an existing file is
 overwritten.
 .sp
-%%TODO%% Describe structure of \fIspec\fR.
+The syntax of structure \fIspec\fRification is:
+.RS
+.IP [1]
+A list of one or more elements.
+.IP [2]
+The first element of the list is the name of the type.
+This name has to be the name of a conversion command
+declared via \fBtclyaml write deftype\fR, see below.
+.IP [3]
+The command name can be followed by additional arguments
+and detail information. The detail information is always
+the last element of the list, if the list did not contain
+just the command name, and anything else between command
+name and details are considered the additional arguments.
+.IP [4]
+If the list contains only the command name no additional
+arguments are assumed, and the detail information defaults
+to the empty string or list.
+.IP [5]
+The interpretation of the detail information depends on the
+conversion command. For more information see the descriptions
+of the standard converters the package makes available.
+.RE
+.IP
+To convert the \fIvalue\fR the conversion command is run, with
+the additional arguments from the \fIspec\fR, followed by the
+handle of the low-level writer object, the detail information
+from the \fIspec\fR, and the \fIvalue\fR itself. The conversion
+command then uses the API of the writer object to add YAML
+structures to it, representing the value.
 .TP
 \fBtclyaml write deftype\fR \fIname\fR \fIarguments\fR \fIbody\fR
 This command defines a new type conversion command \fIname\fR for use in the
@@ -335,9 +489,90 @@ This command defines a new type conversion command \fIname\fR for use in the
 .sp
 The \fIarguments\fR are what has to be specified in a structure
 specification (see \fIspec\fR above). Beyond these the \fIbody\fR will have
-access to three standard arguments named "writer", "structure", and "value".
+access to three standard arguments, namely:
+.RS
+.TP
+object \fIwriter\fR
+The low-level object holding the YAML structures we wish to generate.
+The conversion command has to use its API to add the structures it
+needs to represent the \fIvalue\fR.
+.TP
+list \fIstructure\fR
+This is the detail information from the structure specification
+given to the \fBtclyaml write\fR commands. The conversion command
+may interpret this as it sees fit.
+.TP
+any \fIvalue\fR
+This argument holds the Tcl structure to convert.
+.RE
 .sp
-%%TODO%% describe the standard arguments.
+%%TODO%% describe the writer object, and its API.
+.sp
+%%TODO%% describe the API for invokation/use of nested type specs.
+.PP
+.SH "STANDARD CONVERTERS FOR YAML GENERATION"
+The package provides the following pre-defined conversion commands
+for use in structure specifications taken by the
+\fBtclyaml write\fR commands.
+.TP
+\fBstring\fR
+.TP
+\fBscalar\fR
+This command/type is for the conversion of plain Tcl strings.
+.sp
+No additional arguments.
+.sp
+The detail information is ignored.
+.sp
+Adds a scalar entry to the writer, with the value is the value
+of the scalar.
+.TP
+\fBlist\fR
+.TP
+\fBarray\fR
+.TP
+\fBsequence\fR
+This command/type is for the conversion of Tcl lists.
+In YAML parlance, sequences.
+In JSON parlance, arrays.
+.sp
+No additional arguments.
+.sp
+The detail information is treated as a single structure specification
+as taken by the \fBtclyaml write\fR commands. This specification
+describes the type with which to convert the elements of the Tcl list
+held in the \fIvalue\fR.
+.sp
+The converter starts a sequence in the writer object, then converts
+all list elements, and at last ends the sequence in the writer.
+.TP
+\fBdict\fR
+.TP
+\fBobject\fR
+.TP
+\fBmapping\fR
+This command/type is for the conversion of Tcl dictionaries.
+In YAML parlance, mappings.
+In JSON parlance, objects.
+.sp
+No additional arguments.
+.sp
+The detail information is treated as a dictionary of structure
+specifications as taken by the \fBtclyaml write\fR commands. This
+dictionary describes the types with which to convert the values of the
+Tcl dictionary held in the \fIvalue\fR.
+All keys in \fIvalue\fR also found as key in the \fIstructure\fR use
+the associated type specification for the conversion of their value.
+The values of all keys without an explicit conversion are converted
+with the type specification found under the key \fB*\fR. If such
+a key does not exist their conversion is done with type "scalar".
+.sp
+The keys of \fIvalue\fR themselves are always converted with
+type "scalar".
+.sp
+The converter starts a mapping in the writer object, then converts
+all dictionary elements (keys, and values), and at last ends the mapping
+in the writer.
 .PP
 .SH "BUGS, IDEAS, FEEDBACK"
 This document, and the package it describes, will undoubtedly contain
