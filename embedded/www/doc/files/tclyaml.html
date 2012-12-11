@@ -253,8 +253,8 @@ the details, the dictionary keys and their meanings are listed.</p>
 <dt><b class="const">sequence-end</b></dt>
 <dd><p>The current sequence ends. No details.</p></dd>
 <dt><b class="const">mapping-start</b></dt>
-<dd><dl class="definitions">
-A mapping (aka dictionary) has started.
+<dd><p>A mapping (aka dictionary) has started.</p>
+<dl class="definitions">
 <dt><b class="const">anchor</b></dt>
 <dd><p>???</p></dd>
 <dt><b class="const">tag</b></dt>
@@ -281,22 +281,22 @@ of the <i class="arg">value</i>, but separate from the value itself.</p>
 <p>The resulting YAML is written to a channel (<i class="arg">chan</i>, expected to be
 open for writing), or file (<i class="arg">path</i>). For the latter, an existing file is
 overwritten.</p>
-<p>The syntax of structure <i class="arg">spec</i>ification is:</p>
+<p>The syntax of structure <i class="arg">spec</i>'ification is:</p>
 <ol class="enumerated">
 <li><p>A list of one or more elements.</p></li>
 <li><p>The first element of the list is the name of the type.
        This name has to be the name of a conversion command
        declared via <b class="cmd">tclyaml write deftype</b>, see below.</p></li>
 <li><p>The command name can be followed by additional arguments
-       and detail information. The detail information is always
-       the last element of the list, if the list did not contain
-       just the command name, and anything else between command
-       name and details are considered the additional arguments.</p></li>
-<li><p>If the list contains only the command name no additional
+       and detail information.</p></li>
+<li><p>If the list contains only the command name then no additional
        arguments are assumed, and the detail information defaults
-       to the empty string or list.</p></li>
+       to the empty string or list.</p>
+<p>Ohterwise the detail information is the last element of the list and
+       anything else between command name and details are the additional
+       arguments to use.</p></li>
 <li><p>The interpretation of the detail information depends on the
-       conversion command. For more information see the descriptions
+       conversion command. For examples see the descriptions
        of the standard converters the package makes available.</p></li>
 </ol>
 <p>To convert the <i class="arg">value</i> the conversion command is run, with
@@ -313,7 +313,7 @@ specification (see <i class="arg">spec</i> above). Beyond these the <i class="ar
 access to three standard arguments, namely:</p>
 <dl class="arguments">
 <dt>object <i class="arg">writer</i></dt>
-<dd><p>The low-level object holding the YAML structures we wish to generate.
+<dd><p>The low-level object instance holding the YAML structures we wish to generate.
 The conversion command has to use its API to add the structures it
 needs to represent the <i class="arg">value</i>.</p></dd>
 <dt>list <i class="arg">structure</i></dt>
@@ -338,7 +338,7 @@ for use in structure specifications taken by the
 <dd><p>This command/type is for the conversion of plain Tcl strings.</p>
 <p>No additional arguments.</p>
 <p>The detail information is ignored.</p>
-<p>Adds a scalar entry to the writer, with the value is the value
+<p>Adds a scalar entry to the writer, with the value as the value
 of the scalar.</p></dd>
 <dt><a name="11"><b class="cmd">list</b></a></dt>
 <dd></dd>

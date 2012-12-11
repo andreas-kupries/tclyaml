@@ -418,8 +418,8 @@ One of \fBany\fR, \fBblock\fR, or \fBflow\fR.
 The current sequence ends. No details.
 .TP
 \fBmapping-start\fR
-.RS
 A mapping (aka dictionary) has started.
+.RS
 .TP
 \fBanchor\fR
 ???
@@ -452,7 +452,7 @@ The resulting YAML is written to a channel (\fIchan\fR, expected to be
 open for writing), or file (\fIpath\fR). For the latter, an existing file is
 overwritten.
 .sp
-The syntax of structure \fIspec\fRification is:
+The syntax of structure \fIspec\fR'ification is:
 .RS
 .IP [1]
 A list of one or more elements.
@@ -462,17 +462,18 @@ This name has to be the name of a conversion command
 declared via \fBtclyaml write deftype\fR, see below.
 .IP [3]
 The command name can be followed by additional arguments
-and detail information. The detail information is always
-the last element of the list, if the list did not contain
-just the command name, and anything else between command
-name and details are considered the additional arguments.
+and detail information.
 .IP [4]
-If the list contains only the command name no additional
+If the list contains only the command name then no additional
 arguments are assumed, and the detail information defaults
 to the empty string or list.
+.sp
+Ohterwise the detail information is the last element of the list and
+anything else between command name and details are the additional
+arguments to use.
 .IP [5]
 The interpretation of the detail information depends on the
-conversion command. For more information see the descriptions
+conversion command. For examples see the descriptions
 of the standard converters the package makes available.
 .RE
 .IP
@@ -493,7 +494,7 @@ access to three standard arguments, namely:
 .RS
 .TP
 object \fIwriter\fR
-The low-level object holding the YAML structures we wish to generate.
+The low-level object instance holding the YAML structures we wish to generate.
 The conversion command has to use its API to add the structures it
 needs to represent the \fIvalue\fR.
 .TP
@@ -524,7 +525,7 @@ No additional arguments.
 .sp
 The detail information is ignored.
 .sp
-Adds a scalar entry to the writer, with the value is the value
+Adds a scalar entry to the writer, with the value as the value
 of the scalar.
 .TP
 \fBlist\fR
