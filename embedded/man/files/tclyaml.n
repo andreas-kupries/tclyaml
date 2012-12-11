@@ -248,11 +248,97 @@ package require \fBTcl  8.5\fR
 .sp
 package require \fBtclyaml  ?0.1?\fR
 .sp
+\fBtclyaml read channel\fR \fIchan\fR
+.sp
+\fBtclyaml read file\fR \fIpath\fR
+.sp
+\fBtclyaml readTags channel\fR \fIchan\fR
+.sp
+\fBtclyaml readTags file\fR \fIpath\fR
+.sp
+\fBtclyaml parse channel\fR \fIchannel\fR \fIcmd\fR...
+.sp
+\fBtclyaml write channel\fR \fIspec\fR \fIchan\fR \fIvalue\fR
+.sp
+\fBtclyaml write file\fR \fIspec\fR \fIpath\fR \fIvalue\fR
+.sp
+\fBtclyaml write deftype\fR \fIname\fR \fIarguments\fR \fIbody\fR
+.sp
 .BE
 .SH DESCRIPTION
 .PP
 Welcome to TclYAML, a binding to the C-based libyaml parser
 library for \fIYAML\fR [http://yaml.org] (YAML Ain't Markup Language).
+.PP
+This document is the reference manpage for the publicly visible API,
+i.e. the API a user will see, and use.
+This API falls into two big sections, for the generation of YAML from Tcl
+data structures on one side, and the parsing of YAML into Tcl structures on
+the other.
+.SH "PARSING YAML"
+.TP
+\fBtclyaml read channel\fR \fIchan\fR
+.TP
+\fBtclyaml read file\fR \fIpath\fR
+These two commands read the YAML documents found in the channel (\fIchan\fR),
+or file (\fIpath\fR) and return a Tcl list where each element represents a
+single document found in the input.
+.sp
+For each document YAML scalars are converted to Tcl strings, and YAML
+sequences and mappings to Tcl lists and dictionaries.
+.TP
+\fBtclyaml readTags channel\fR \fIchan\fR
+.TP
+\fBtclyaml readTags file\fR \fIpath\fR
+These two commands behave like their plain \fBread\fR counterparts above,
+except that the data structure they return per element is a \fItagged\fR
+structure where each YAML construct is converted into a 2-element list of
+type-tag and value (in this order).
+.sp
+While this type of structure is more difficult to access due to the
+additional nesting levels, in return it does not lose YAML's type information.
+This allows users to properly distinguish between lists and dictionaries, for
+example, if the input YAML allows different syntax for specific keys. Another
+example would be string versus list, for example in a key allowing one to many
+things of some kind, and a string is the same as a list of one element. In an
+untagged conversion these cases are difficult to impossible to distinguish.
+.TP
+\fBtclyaml parse channel\fR \fIchannel\fR \fIcmd\fR...
+This command provides the lowest level of access to the YAML parser. Reading
+YAML data from the specified \fIchannel\fR each structural element encountered
+is reported through an invokation of the command prefix \fIcmd\fR...
+.sp
+This command prefix is invoked with two additional arguments, the type of
+the found element, and a dictionary holding detailed information about it.
+.sp
+%%TODO%% Describe the 'events', and their dictionaries.
+.PP
+.SH "GENERATING YAML"
+.TP
+\fBtclyaml write channel\fR \fIspec\fR \fIchan\fR \fIvalue\fR
+.TP
+\fBtclyaml write file\fR \fIspec\fR \fIpath\fR \fIvalue\fR
+These two commands convert the Tcl data structure \fIvalue\fR into YAML, under
+the guidance of the type information in \fIspec\fR, which describes the expected
+structure of the \fIvalue\fR, i.e. essentially provides type annotation/tagging
+of the \fIvalue\fR, but separate from the value itself.
+.sp
+The resulting YAML is written to a channel (\fIchan\fR, expected to be
+open for writing), or file (\fIpath\fR). For the latter, an existing file is
+overwritten.
+.sp
+%%TODO%% Describe structure of \fIspec\fR.
+.TP
+\fBtclyaml write deftype\fR \fIname\fR \fIarguments\fR \fIbody\fR
+This command defines a new type conversion command \fIname\fR for use in the
+\fBtclyaml write ...\fR commands above.
+.sp
+The \fIarguments\fR are what has to be specified in a structure
+specification (see \fIspec\fR above). Beyond these the \fIbody\fR will have
+access to three standard arguments named "writer", "structure", and "value".
+.sp
+%%TODO%% describe the standard arguments.
+.PP
 .SH "BUGS, IDEAS, FEEDBACK"
 This document, and the package it describes, will undoubtedly contain
 bugs and other problems.

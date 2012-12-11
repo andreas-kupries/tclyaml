@@ -319,11 +319,16 @@ Mainly the conversion of style values from and to Tcl strings.
 "\fIly_emitter.tcl\fR"
 The generator side of the package, a \fBcritcl::class\fR-based
 class whose instances can convert various Tcl data structures into
-proper YAML.
+proper YAML. This class is internal, the user only sees regular Tcl
+commands, which instantiate and destroy emitter objects as needed.
 .TP
 "\fIly_parser.tcl\fR"
 The low-level commands for parsing YAML, returning it in the form
 of various Tcl data structures. Plain commands, not object-based.
+.TP
+"\fIlibyaml/\fR"
+A copy of the libyaml 0.4.1 sources.
+Built as part of TclYAML.
 .RE
 .TP
 Package Code, Per Package
@@ -341,6 +346,12 @@ Package Code, Per Package
 "\fIly_global.tcl\fR"
 .TP
 "\fIly_parser.tcl\fR"
+.RE
+.TP
+\fBlibyaml\fR
+.RS
+.TP
+"\fIlibyaml/\fR"
 .RE
 .RE
 .PP

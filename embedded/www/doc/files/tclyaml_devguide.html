@@ -190,10 +190,14 @@ Mainly the conversion of style values from and to Tcl strings.</p></dd>
 <dt>&quot;<b class="file">ly_emitter.tcl</b>&quot;</dt>
 <dd><p>The generator side of the package, a <b class="package">critcl::class</b>-based
 class whose instances can convert various Tcl data structures into
-proper YAML.</p></dd>
+proper YAML. This class is internal, the user only sees regular Tcl
+commands, which instantiate and destroy emitter objects as needed.</p></dd>
 <dt>&quot;<b class="file">ly_parser.tcl</b>&quot;</dt>
 <dd><p>The low-level commands for parsing YAML, returning it in the form
 of various Tcl data structures. Plain commands, not object-based.</p></dd>
+<dt>&quot;<b class="file">libyaml/</b>&quot;</dt>
+<dd><p>A copy of the libyaml 0.4.1 sources.
+Built as part of TclYAML.</p></dd>
 </dl></dd>
 <dt>Package Code, Per Package</dt>
 <dd><dl class="definitions">
@@ -208,6 +212,11 @@ of various Tcl data structures. Plain commands, not object-based.</p></dd>
 <dt>&quot;<b class="file">ly_global.tcl</b>&quot;</dt>
 <dd></dd>
 <dt>&quot;<b class="file">ly_parser.tcl</b>&quot;</dt>
+<dd></dd>
+</dl></dd>
+<dt><b class="package">libyaml</b></dt>
+<dd><dl class="definitions">
+<dt>&quot;<b class="file">libyaml/</b>&quot;</dt>
 <dd></dd>
 </dl></dd>
 </dl></dd>
