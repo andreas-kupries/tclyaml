@@ -92,7 +92,7 @@ The current document has ended.
 [comment {= = == === ===== ======== ============= =====================}]
 [def [const alias]]
 [list_begin definitions]
-[def [const anchor]] ???
+[def [const anchor]] %%TODO%% explain
 [list_end]
 
 [comment {= = == === ===== ======== ============= =====================}]
@@ -100,8 +100,8 @@ The current document has ended.
 A scalar value has been found.
 
 [list_begin definitions]
-[def [const anchor]]          ???
-[def [const tag]]             Yaml type tag
+[def [const anchor]]          %%TODO%% explain
+[def [const tag]]             Yaml type tag.  %%TODO%% which known
 [def [const scalar]]          Value of the scalar, string.
 [def [const plain-implicit]]  Boolean flag.
 [def [const quoted-implicit]] Boolean flag.
@@ -114,8 +114,8 @@ A scalar value has been found.
 A sequence (aka list) has started.
 
 [list_begin definitions]
-[def [const anchor]]   ???
-[def [const tag]]      Yaml type tag.
+[def [const anchor]]   %%TODO%% explain
+[def [const tag]]      Yaml type tag. %%TODO%% which known
 [def [const implicit]] Boolean flag.
 [def [const style]]    One of [const any], [const block], or [const flow].
 [list_end]
@@ -129,8 +129,8 @@ The current sequence ends. No details.
 A mapping (aka dictionary) has started.
 
 [list_begin definitions]
-[def [const anchor]]   ???
-[def [const tag]]      Yaml type tag.
+[def [const anchor]]   %%TODO%% explain
+[def [const tag]]      Yaml type tag.  %%TODO%% which known
 [def [const implicit]] Boolean flag.
 [def [const style]]    One of [const any], [const block], or [const flow].
 [list_end]

@@ -386,7 +386,7 @@ Boolean flag.
 .RS
 .TP
 \fBanchor\fR
-???
+%%TODO%% explain
 .RE
 .TP
 \fBscalar\fR
@@ -394,10 +394,10 @@ A scalar value has been found.
 .RS
 .TP
 \fBanchor\fR
-???
+%%TODO%% explain
 .TP
 \fBtag\fR
-Yaml type tag
+Yaml type tag.  %%TODO%% which known
 .TP
 \fBscalar\fR
 Value of the scalar, string.
@@ -418,10 +418,10 @@ A sequence (aka list) has started.
 .RS
 .TP
 \fBanchor\fR
-???
+%%TODO%% explain
 .TP
 \fBtag\fR
-Yaml type tag.
+Yaml type tag. %%TODO%% which known
 .TP
 \fBimplicit\fR
 Boolean flag.
@@ -438,10 +438,10 @@ A mapping (aka dictionary) has started.
 .RS
 .TP
 \fBanchor\fR
-???
+%%TODO%% explain
 .TP
 \fBtag\fR
-Yaml type tag.
+Yaml type tag.  %%TODO%% which known
 .TP
 \fBimplicit\fR
 Boolean flag.
