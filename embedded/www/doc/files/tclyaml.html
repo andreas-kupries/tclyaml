@@ -116,7 +116,8 @@
 <li class="section"><a href="#section2">Parsing YAML</a></li>
 <li class="section"><a href="#section3">Generating YAML</a></li>
 <li class="section"><a href="#section4">Standard converters for YAML generation</a></li>
-<li class="section"><a href="#section5">Bugs, Ideas, Feedback</a></li>
+<li class="section"><a href="#section5">The Writer Object API</a></li>
+<li class="section"><a href="#section6">Bugs, Ideas, Feedback</a></li>
 <li class="section"><a href="#keywords">Keywords</a></li>
 <li class="section"><a href="#category">Category</a></li>
 <li class="section"><a href="#copyright">Copyright</a></li>
@@ -145,6 +146,11 @@
 <li><a href="#14"><b class="cmd">dict</b></a></li>
 <li><a href="#15"><b class="cmd">object</b></a></li>
 <li><a href="#16"><b class="cmd">mapping</b></a></li>
+<li><a href="#17"><i class="arg">writer</i> <b class="method">sequence-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></li>
+<li><a href="#18"><i class="arg">writer</i> <b class="method">sequence-end</b></a></li>
+<li><a href="#19"><i class="arg">writer</i> <b class="method">mapping-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></li>
+<li><a href="#20"><i class="arg">writer</i> <b class="method">mapping-end</b></a></li>
+<li><a href="#21"><i class="arg">writer</i> <b class="method">scalar</b> <i class="arg">value</i> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">plain</i>?</span> <span class="opt">?<i class="arg">quoted</i>?</span></a></li>
 </ul>
 </div>
 </div>
@@ -307,24 +313,26 @@ command then uses the API of the writer object to add YAML
 structures to it, representing the value.</p></dd>
 <dt><a name="8"><b class="cmd">tclyaml write deftype</b> <i class="arg">name</i> <i class="arg">arguments</i> <i class="arg">body</i></a></dt>
 <dd><p>This command defines a new type conversion command <i class="arg">name</i> for use in the
-<b class="cmd">tclyaml write ...</b> commands above.</p>
+<b class="cmd">tclyaml write ...</b> commands above. This part of tclyaml is only
+relevant to users wishing to write their own type conversions.</p>
 <p>The <i class="arg">arguments</i> are what has to be specified in a structure
 specification (see <i class="arg">spec</i> above). Beyond these the <i class="arg">body</i> will have
 access to three standard arguments, namely:</p>
 <dl class="arguments">
 <dt>object <i class="arg">writer</i></dt>
-<dd><p>The low-level object instance holding the YAML structures we wish to generate.
+<dd><p>This is the low-level object instance holding the YAML structures we wish to generate.
 The conversion command has to use its API to add the structures it
-needs to represent the <i class="arg">value</i>.</p></dd>
+needs to represent the <i class="arg">value</i>.</p>
+<p>For more details about this object and its API please section
+<span class="sectref"><a href="#section5">The Writer Object API</a></span>.</p>
+<p>%%TODO%% describe the API for invokation/use of nested type specs.</p></dd>
 <dt>list <i class="arg">structure</i></dt>
 <dd><p>This is the detail information from the structure specification
 given to the <b class="cmd">tclyaml write</b> commands. The conversion command
 may interpret this as it sees fit.</p></dd>
 <dt>any <i class="arg">value</i></dt>
 <dd><p>This argument holds the Tcl structure to convert.</p></dd>
-</dl>
-<p>%%TODO%% describe the writer object, and its API.</p>
-<p>%%TODO%% describe the API for invokation/use of nested type specs.</p></dd>
+</dl></dd>
 </dl>
 </div>
 <div id="section4" class="section"><h2><a name="section4">Standard converters for YAML generation</a></h2>
@@ -380,7 +388,41 @@ all dictionary elements (keys, and values), and at last ends the mapping
 in the writer.</p></dd>
 </dl>
 </div>
-<div id="section5" class="section"><h2><a name="section5">Bugs, Ideas, Feedback</a></h2>
+<div id="section5" class="section"><h2><a name="section5">The Writer Object API</a></h2>
+<p>This section is only relevant to users wishing to write their own type
+conversions. See the command <b class="cmd">tclyaml write deftype</b> above, also.</p>
+<p>Here we are documenting the instance API of the low-level object
+holding the YAML structures we wish to generate. Construction and
+destruction of these instances is done internally by the package as needed
+and the relevant APIs are not documented. Neither are the instance methods
+reserved for use by the package internals.</p>
+<dl class="definitions">
+<dt><a name="17"><i class="arg">writer</i> <b class="method">sequence-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></dt>
+<dd><p>This method starts a sequence (list) of yaml values.</p>
+<p>After this method the user has to issue calls for
+each value in the sequence, followed lastly by a call to
+<b class="method">sequence-end</b> (see below), to close it.</p></dd>
+<dt><a name="18"><i class="arg">writer</i> <b class="method">sequence-end</b></a></dt>
+<dd><p>This method is the complement to <b class="method">sequence-start</b>, above.
+Calling it closes the currently open sequence (which may be nested
+in other sequences, mappings, etc). Calling it while not within
+an open sequence is an error.</p></dd>
+<dt><a name="19"><i class="arg">writer</i> <b class="method">mapping-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></dt>
+<dd><p>The method starts a mapping (dictionary) of yaml values.</p>
+<p>After this method the user has to issue calls for
+each key and value in the mapping, followed lastly by a call to
+<b class="method">mapping-end</b> (see below), to close it.</p></dd>
+<dt><a name="20"><i class="arg">writer</i> <b class="method">mapping-end</b></a></dt>
+<dd><p>This method is the complement to <b class="method">mapping-start</b>, above.
+Calling it closes the currently open mapping (which may be nested
+in other sequences, mappings, etc). Calling it while not within
+an open mapping is an error.</p></dd>
+<dt><a name="21"><i class="arg">writer</i> <b class="method">scalar</b> <i class="arg">value</i> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">plain</i>?</span> <span class="opt">?<i class="arg">quoted</i>?</span></a></dt>
+<dd><p>This method adds a single scalar <i class="arg">value</i> to the yaml structure,
+i.e. a string, roughly.</p></dd>
+</dl>
+</div>
+<div id="section6" class="section"><h2><a name="section6">Bugs, Ideas, Feedback</a></h2>
 <p>This document, and the package it describes, will undoubtedly contain
 bugs and other problems.
 Please report such at the <a href="http://chiselapp.com/user/andreas_kupries/repository/tclyaml">TclYAML Tracker</a>.

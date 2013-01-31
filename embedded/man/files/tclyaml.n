@@ -280,6 +280,16 @@ package require \fBtclyaml  ?0.1?\fR
 .sp
 \fBmapping\fR
 .sp
+\fIwriter\fR \fBsequence-start\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIimplicit\fR?
+.sp
+\fIwriter\fR \fBsequence-end\fR
+.sp
+\fIwriter\fR \fBmapping-start\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIimplicit\fR?
+.sp
+\fIwriter\fR \fBmapping-end\fR
+.sp
+\fIwriter\fR \fBscalar\fR \fIvalue\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIplain\fR? ?\fIquoted\fR?
+.sp
 .BE
 .SH DESCRIPTION
 .PP
@@ -486,7 +496,8 @@ structures to it, representing the value.
 .TP
 \fBtclyaml write deftype\fR \fIname\fR \fIarguments\fR \fIbody\fR
 This command defines a new type conversion command \fIname\fR for use in the
-\fBtclyaml write ...\fR commands above.
+\fBtclyaml write ...\fR commands above. This part of tclyaml is only
+relevant to users wishing to write their own type conversions.
 .sp
 The \fIarguments\fR are what has to be specified in a structure
 specification (see \fIspec\fR above). Beyond these the \fIbody\fR will have
@@ -494,9 +505,14 @@ access to three standard arguments, namely:
 .RS
 .TP
 object \fIwriter\fR
-The low-level object instance holding the YAML structures we wish to generate.
+This is the low-level object instance holding the YAML structures we wish to generate.
 The conversion command has to use its API to add the structures it
 needs to represent the \fIvalue\fR.
+.sp
+For more details about this object and its API please section
+\fBThe Writer Object API\fR.
+.sp
+%%TODO%% describe the API for invokation/use of nested type specs.
 .TP
 list \fIstructure\fR
 This is the detail information from the structure specification
@@ -506,10 +522,6 @@ may interpret this as it sees fit.
 any \fIvalue\fR
 This argument holds the Tcl structure to convert.
 .RE
-.sp
-%%TODO%% describe the writer object, and its API.
-.sp
-%%TODO%% describe the API for invokation/use of nested type specs.
 .PP
 .SH "STANDARD CONVERTERS FOR YAML GENERATION"
 The package provides the following pre-defined conversion commands
@@ -574,6 +586,46 @@ type "scalar".
 The converter starts a mapping in the writer object, then converts
 all dictionary elements (keys, and values), and at last ends the mapping
 in the writer.
+.PP
+.SH "THE WRITER OBJECT API"
+This section is only relevant to users wishing to write their own type
+conversions. See the command \fBtclyaml write deftype\fR above, also.
+.PP
+Here we are documenting the instance API of the low-level object
+holding the YAML structures we wish to generate. Construction and
+destruction of these instances is done internally by the package as needed
+and the relevant APIs are not documented. Neither are the instance methods
+reserved for use by the package internals.
+.TP
+\fIwriter\fR \fBsequence-start\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIimplicit\fR?
+This method starts a sequence (list) of yaml values.
+.sp
+After this method the user has to issue calls for
+each value in the sequence, followed lastly by a call to
+\fBsequence-end\fR (see below), to close it.
+.TP
+\fIwriter\fR \fBsequence-end\fR
+This method is the complement to \fBsequence-start\fR, above.
+Calling it closes the currently open sequence (which may be nested
+in other sequences, mappings, etc). Calling it while not within
+an open sequence is an error.
+.TP
+\fIwriter\fR \fBmapping-start\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIimplicit\fR?
+The method starts a mapping (dictionary) of yaml values.
+.sp
+After this method the user has to issue calls for
+each key and value in the mapping, followed lastly by a call to
+\fBmapping-end\fR (see below), to close it.
+.TP
+\fIwriter\fR \fBmapping-end\fR
+This method is the complement to \fBmapping-start\fR, above.
+Calling it closes the currently open mapping (which may be nested
+in other sequences, mappings, etc). Calling it while not within
+an open mapping is an error.
+.TP
+\fIwriter\fR \fBscalar\fR \fIvalue\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIplain\fR? ?\fIquoted\fR?
+This method adds a single scalar \fIvalue\fR to the yaml structure,
+i.e. a string, roughly.
 .PP
 .SH "BUGS, IDEAS, FEEDBACK"
 This document, and the package it describes, will undoubtedly contain

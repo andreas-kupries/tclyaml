@@ -191,7 +191,8 @@ structures to it, representing the value.
 [call [cmd {tclyaml write deftype}] [arg name] [arg arguments] [arg body]]
 
 This command defines a new type conversion command [arg name] for use in the
-[cmd {tclyaml write ...}] commands above.
+[cmd {tclyaml write ...}] commands above. This part of tclyaml is only
+relevant to users wishing to write their own type conversions.
 
 [para] The [arg arguments] are what has to be specified in a structure
 specification (see [arg spec] above). Beyond these the [arg body] will have
@@ -199,9 +200,17 @@ access to three standard arguments, namely:
 
 [list_begin args]
 [arg_def object writer]
-The low-level object instance holding the YAML structures we wish to generate.
+
+This is the low-level object instance holding the YAML structures we wish to generate.
 The conversion command has to use its API to add the structures it
 needs to represent the [arg value].
+
+[para] For more details about this object and its API please section
+[sectref {The Writer Object API}].
+
+
+[para] %%TODO%% describe the API for invokation/use of nested type specs.
+
 
 [arg_def list structure]
 
@@ -213,9 +222,6 @@ may interpret this as it sees fit.
 This argument holds the Tcl structure to convert.
 
 [list_end]
-
-[para] %%TODO%% describe the writer object, and its API.
-[para] %%TODO%% describe the API for invokation/use of nested type specs.
 
 [list_end]
 
@@ -287,6 +293,74 @@ all dictionary elements (keys, and values), and at last ends the mapping
 in the writer.
 
 [list_end]
+
+[section {The Writer Object API}]
+
+This section is only relevant to users wishing to write their own type
+conversions. See the command [cmd {tclyaml write deftype}] above, also.
+
+[para] Here we are documenting the instance API of the low-level object
+holding the YAML structures we wish to generate. Construction and
+destruction of these instances is done internally by the package as needed
+and the relevant APIs are not documented. Neither are the instance methods
+reserved for use by the package internals.
+
+[list_begin definitions]
+
+[comment {%%TODO%% document alias}]
+
+[call [arg writer] [method sequence-start] \
+     [opt [arg anchor]] \
+     [opt [arg tag]] \
+     [opt [arg implicit]]]
+
+This method starts a sequence (list) of yaml values.
+
+[para] After this method the user has to issue calls for
+each value in the sequence, followed lastly by a call to
+[method sequence-end] (see below), to close it.
+
+[comment {%%TODO%% sequence-start explain the arguments}]
+
+[call [arg writer] [method sequence-end]]
+
+This method is the complement to [method sequence-start], above.
+Calling it closes the currently open sequence (which may be nested
+in other sequences, mappings, etc). Calling it while not within
+an open sequence is an error.
+
+[call [arg writer] [method mapping-start] \
+     [opt [arg anchor]] \
+     [opt [arg tag]] \
+     [opt [arg implicit]]]
+
+The method starts a mapping (dictionary) of yaml values.
+
+[para] After this method the user has to issue calls for
+each key and value in the mapping, followed lastly by a call to
+[method mapping-end] (see below), to close it.
+
+[comment {%%TODO%% mapping-start explain the arguments}]
+
+[call [arg writer] [method mapping-end]]
+
+This method is the complement to [method mapping-start], above.
+Calling it closes the currently open mapping (which may be nested
+in other sequences, mappings, etc). Calling it while not within
+an open mapping is an error.
+
+[call [arg writer] [method scalar] \
+     [arg value] \
+     [opt [arg anchor]] \
+     [opt [arg tag]] \
+     [opt [arg plain]] \
+     [opt [arg quoted]]]
+
+This method adds a single scalar [arg value] to the yaml structure,
+i.e. a string, roughly.
+
+[list_end]
+
 
 [include include/feedback.inc]
 [manpage_end]
