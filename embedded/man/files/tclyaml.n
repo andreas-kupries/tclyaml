@@ -535,6 +535,11 @@ and the value to apply it to (extracted from our current value).
 This allows new type converters to make use of all other
 types known to the system in their type specifications, be they
 builtin or custom.
+.sp
+Note, when going this far for custom conversions it is
+strongly recommended to look at the implementations of the
+standard converters for sequences and mappings provided by the
+package.
 .TP
 any \fIvalue\fR
 This argument holds the Tcl structure to convert.

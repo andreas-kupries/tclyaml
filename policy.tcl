@@ -481,13 +481,13 @@ proc ::tclyaml::write::type::mapping {writer structure value} {
     set keys [lsort -dict [::dict keys $value]]
     foreach k $keys {
 	if {[::dict exists $structure $k]} {
-	    set vtype [::dict get $structure $k]
+	    set valuetype [::dict get $structure $k]
 	} else {
-	    set vtype $defaulttype
+	    set valuetype $defaulttype
 	}
 
-	__convert $writer scalar $k
-	__convert $writer $vtype [::dict get $value $k]
+	__convert $writer scalar     $k
+	__convert $writer $valuetype [::dict get $value $k]
     }
 
     $writer mapping-end

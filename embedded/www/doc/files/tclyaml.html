@@ -342,7 +342,11 @@ relevant type structure (extracted from our current structure),
 and the value to apply it to (extracted from our current value).</p>
 <p>This allows new type converters to make use of all other
 types known to the system in their type specifications, be they
-builtin or custom.</p></dd>
+builtin or custom.</p>
+<p>Note, when going this far for custom conversions it is
+strongly recommended to look at the implementations of the
+standard converters for sequences and mappings provided by the
+package.</p></dd>
 <dt>any <i class="arg">value</i></dt>
 <dd><p>This argument holds the Tcl structure to convert.</p></dd>
 </dl></dd>
