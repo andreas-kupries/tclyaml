@@ -10,7 +10,7 @@ used to run their build & installation processes.
 [para] TclYAML [emph must] have version 3.1, and critcl::class version 1.0.3
 
 [para] The relevant github repository can be found at
-[uri http://jcw.github.com/critcl].
+[uri http://andreas-kupries.github.com/critcl].
 
 [para] The relevant repository branch is [emph master].
 
