@@ -173,7 +173,7 @@ overwritten.
 [enum] If the list contains only the command name then no additional
        arguments are assumed, and the detail information defaults
        to the empty string or list.
-[para] Ohterwise the detail information is the last element of the list and
+[para] Otherwise the detail information is the last element of the list and
        anything else between command name and details are the additional
        arguments to use.
 [enum] The interpretation of the detail information depends on the

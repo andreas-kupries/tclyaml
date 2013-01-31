@@ -484,7 +484,7 @@ If the list contains only the command name then no additional
 arguments are assumed, and the detail information defaults
 to the empty string or list.
 .sp
-Ohterwise the detail information is the last element of the list and
+Otherwise the detail information is the last element of the list and
 anything else between command name and details are the additional
 arguments to use.
 .IP [5]
