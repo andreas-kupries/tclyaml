@@ -146,11 +146,14 @@
 <li><a href="#14"><b class="cmd">dict</b></a></li>
 <li><a href="#15"><b class="cmd">object</b></a></li>
 <li><a href="#16"><b class="cmd">mapping</b></a></li>
-<li><a href="#17"><i class="arg">writer</i> <b class="method">sequence-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></li>
-<li><a href="#18"><i class="arg">writer</i> <b class="method">sequence-end</b></a></li>
-<li><a href="#19"><i class="arg">writer</i> <b class="method">mapping-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></li>
-<li><a href="#20"><i class="arg">writer</i> <b class="method">mapping-end</b></a></li>
-<li><a href="#21"><i class="arg">writer</i> <b class="method">scalar</b> <i class="arg">value</i> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">plain</i>?</span> <span class="opt">?<i class="arg">quoted</i>?</span></a></li>
+<li><a href="#17"><i class="arg">writer</i> <b class="method">alias</b> <i class="arg">anchor</i></a></li>
+<li><a href="#18"><i class="arg">writer</i> <b class="method">sequence-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></li>
+<li><a href="#19"><i class="arg">writer</i> <b class="method">sequence-end</b></a></li>
+<li><a href="#20"><i class="arg">writer</i> <b class="method">mapping-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></li>
+<li><a href="#21"><i class="arg">writer</i> <b class="method">mapping-end</b></a></li>
+<li><a href="#22"><i class="arg">writer</i> <b class="method">scalar</b> <i class="arg">value</i> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">plain</i>?</span> <span class="opt">?<i class="arg">quoted</i>?</span></a></li>
+<li><a href="#23"><i class="arg">writer</i> <b class="method">blockstyle</b> <i class="arg">style</i></a></li>
+<li><a href="#24"><i class="arg">writer</i> <b class="method">scalarstyle</b> <i class="arg">style</i></a></li>
 </ul>
 </div>
 </div>
@@ -302,8 +305,9 @@ overwritten.</p>
        anything else between command name and details are the additional
        arguments to use.</p></li>
 <li><p>The interpretation of the detail information depends on the
-       conversion command. For examples see the descriptions
-       of the standard converters the package makes available.</p></li>
+       conversion command. For examples please see the descriptions
+       of the standard converters the package makes available in
+       section <span class="sectref"><a href="#section4">Standard converters for YAML generation</a></span>.</p></li>
 </ol>
 <p>To convert the <i class="arg">value</i> the conversion command is run, with
 the additional arguments from the <i class="arg">spec</i>, followed by the
@@ -324,12 +328,21 @@ access to three standard arguments, namely:</p>
 The conversion command has to use its API to add the structures it
 needs to represent the <i class="arg">value</i>.</p>
 <p>For more details about this object and its API please section
-<span class="sectref"><a href="#section5">The Writer Object API</a></span>.</p>
-<p>%%TODO%% describe the API for invokation/use of nested type specs.</p></dd>
+<span class="sectref"><a href="#section5">The Writer Object API</a></span>.</p></dd>
 <dt>list <i class="arg">structure</i></dt>
 <dd><p>This is the detail information from the structure specification
 given to the <b class="cmd">tclyaml write</b> commands. The conversion command
-may interpret this as it sees fit.</p></dd>
+may interpret this as it sees fit.</p>
+<p>For the use type information in this data, to be applied
+to parts of the <i class="arg">value</i> (see below) the body has access to
+the otherwise internal command
+<b class="cmd">::tclyaml::write::type::__convert</b>.
+It has to be called with three arguments, the <i class="arg">writer</i>, the
+relevant type structure (extracted from our current structure),
+and the value to apply it to (extracted from our current value).</p>
+<p>This allows new type converters to make use of all other
+types known to the system in their type specifications, be they
+builtin or custom.</p></dd>
 <dt>any <i class="arg">value</i></dt>
 <dd><p>This argument holds the Tcl structure to convert.</p></dd>
 </dl></dd>
@@ -397,29 +410,96 @@ destruction of these instances is done internally by the package as needed
 and the relevant APIs are not documented. Neither are the instance methods
 reserved for use by the package internals.</p>
 <dl class="definitions">
-<dt><a name="17"><i class="arg">writer</i> <b class="method">sequence-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></dt>
+<dt><a name="17"><i class="arg">writer</i> <b class="method">alias</b> <i class="arg">anchor</i></a></dt>
+<dd><p>%%TODO%% method - alias - description</p>
+<dl class="arguments">
+<dt>?? <i class="arg">anchor</i></dt>
+<dd><p>%%TODO%% description</p></dd>
+</dl></dd>
+<dt><a name="18"><i class="arg">writer</i> <b class="method">sequence-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></dt>
 <dd><p>This method starts a sequence (list) of yaml values.</p>
 <p>After this method the user has to issue calls for
 each value in the sequence, followed lastly by a call to
-<b class="method">sequence-end</b> (see below), to close it.</p></dd>
-<dt><a name="18"><i class="arg">writer</i> <b class="method">sequence-end</b></a></dt>
+<b class="method">sequence-end</b> (see below), to close it.</p>
+<dl class="arguments">
+<dt>?? <i class="arg">anchor</i></dt>
+<dd><p>%%TODO%% description</p></dd>
+<dt>?? <i class="arg">tag</i></dt>
+<dd><p>%%TODO%% description</p></dd>
+<dt>boolean <i class="arg">implicit</i></dt>
+<dd><p>%%TODO%% description</p></dd>
+</dl></dd>
+<dt><a name="19"><i class="arg">writer</i> <b class="method">sequence-end</b></a></dt>
 <dd><p>This method is the complement to <b class="method">sequence-start</b>, above.
 Calling it closes the currently open sequence (which may be nested
 in other sequences, mappings, etc). Calling it while not within
 an open sequence is an error.</p></dd>
-<dt><a name="19"><i class="arg">writer</i> <b class="method">mapping-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></dt>
+<dt><a name="20"><i class="arg">writer</i> <b class="method">mapping-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></dt>
 <dd><p>The method starts a mapping (dictionary) of yaml values.</p>
 <p>After this method the user has to issue calls for
 each key and value in the mapping, followed lastly by a call to
-<b class="method">mapping-end</b> (see below), to close it.</p></dd>
-<dt><a name="20"><i class="arg">writer</i> <b class="method">mapping-end</b></a></dt>
+<b class="method">mapping-end</b> (see below), to close it.</p>
+<dl class="arguments">
+<dt>?? <i class="arg">anchor</i></dt>
+<dd><p>%%TODO%% description</p></dd>
+<dt>?? <i class="arg">tag</i></dt>
+<dd><p>%%TODO%% description</p></dd>
+<dt>boolean <i class="arg">implicit</i></dt>
+<dd><p>%%TODO%% description</p></dd>
+</dl></dd>
+<dt><a name="21"><i class="arg">writer</i> <b class="method">mapping-end</b></a></dt>
 <dd><p>This method is the complement to <b class="method">mapping-start</b>, above.
 Calling it closes the currently open mapping (which may be nested
 in other sequences, mappings, etc). Calling it while not within
 an open mapping is an error.</p></dd>
-<dt><a name="21"><i class="arg">writer</i> <b class="method">scalar</b> <i class="arg">value</i> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">plain</i>?</span> <span class="opt">?<i class="arg">quoted</i>?</span></a></dt>
+<dt><a name="22"><i class="arg">writer</i> <b class="method">scalar</b> <i class="arg">value</i> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">plain</i>?</span> <span class="opt">?<i class="arg">quoted</i>?</span></a></dt>
 <dd><p>This method adds a single scalar <i class="arg">value</i> to the yaml structure,
-i.e. a string, roughly.</p></dd>
+i.e. a string, roughly.</p>
+<dl class="arguments">
+<dt>?? <i class="arg">anchor</i></dt>
+<dd><p>%%TODO%% description</p></dd>
+<dt>?? <i class="arg">tag</i></dt>
+<dd><p>%%TODO%% description</p></dd>
+<dt>boolean <i class="arg">plain</i></dt>
+<dd><p>%%TODO%% description</p></dd>
+<dt>boolean <i class="arg">quoted</i></dt>
+<dd><p>%%TODO%% description</p></dd>
+</dl></dd>
+<dt><a name="23"><i class="arg">writer</i> <b class="method">blockstyle</b> <i class="arg">style</i></a></dt>
+<dd><p>These methods set the currently active formatting style for blocks
+(sequences, mappings). The active style applies only to blocks
+started after it was set. A block opened, but not yet closed during
+a style change is <em>not</em> affected by that change.</p>
+<p>The default, i.e. initial style is &quot;any&quot;.</p>
+<p>The available styles are:</p>
+<dl class="definitions">
+<dt>any</dt>
+<dd><p>%%TODO%% description</p></dd>
+<dt>block</dt>
+<dd><p>%%TODO%% description</p></dd>
+<dt>flow</dt>
+<dd><p>%%TODO%% description</p></dd>
+</dl></dd>
+<dt><a name="24"><i class="arg">writer</i> <b class="method">scalarstyle</b> <i class="arg">style</i></a></dt>
+<dd><p>These methods set the currently active formatting style for scalar
+values. The active style applies only to scalars added after it was
+set.</p>
+<p>The default, i.e. initial style is &quot;any&quot;.</p>
+<p>The available styles are</p>
+<dl class="definitions">
+<dt>any</dt>
+<dd><p>%%TODO%% description</p></dd>
+<dt>plain</dt>
+<dd><p>%%TODO%% description</p></dd>
+<dt>single</dt>
+<dd><p>%%TODO%% description</p></dd>
+<dt>double</dt>
+<dd><p>%%TODO%% description</p></dd>
+<dt>literal</dt>
+<dd><p>%%TODO%% description</p></dd>
+<dt>folded</dt>
+<dd><p>%%TODO%% description</p></dd>
+</dl></dd>
 </dl>
 </div>
 <div id="section6" class="section"><h2><a name="section6">Bugs, Ideas, Feedback</a></h2>

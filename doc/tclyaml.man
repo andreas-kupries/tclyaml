@@ -177,8 +177,9 @@ overwritten.
        anything else between command name and details are the additional
        arguments to use.
 [enum] The interpretation of the detail information depends on the
-       conversion command. For examples see the descriptions
-       of the standard converters the package makes available.
+       conversion command. For examples please see the descriptions
+       of the standard converters the package makes available in
+       section [sectref {Standard converters for YAML generation}].
 [list_end]
 
 To convert the [arg value] the conversion command is run, with
@@ -208,20 +209,29 @@ needs to represent the [arg value].
 [para] For more details about this object and its API please section
 [sectref {The Writer Object API}].
 
-
-[para] %%TODO%% describe the API for invokation/use of nested type specs.
-
-
 [arg_def list structure]
 
 This is the detail information from the structure specification
 given to the [cmd {tclyaml write}] commands. The conversion command
 may interpret this as it sees fit.
 
+[para] For the use type information in this data, to be applied
+to parts of the [arg value] (see below) the body has access to
+the otherwise internal command
+[cmd ::tclyaml::write::type::__convert].
+
+It has to be called with three arguments, the [arg writer], the
+relevant type structure (extracted from our current structure),
+and the value to apply it to (extracted from our current value).
+
+[para] This allows new type converters to make use of all other
+types known to the system in their type specifications, be they
+builtin or custom.
+
 [arg_def any value]
 This argument holds the Tcl structure to convert.
 
-[list_end]
+[list_end][comment {-- arguments}]
 
 [list_end]
 
@@ -307,7 +317,13 @@ reserved for use by the package internals.
 
 [list_begin definitions]
 
-[comment {%%TODO%% document alias}]
+[call [arg writer] [method alias] [arg anchor]]
+
+%%TODO%% method - alias - description
+
+[list_begin arguments]
+[arg_def ?? anchor]   %%TODO%% description
+[list_end]
 
 [call [arg writer] [method sequence-start] \
      [opt [arg anchor]] \
@@ -320,7 +336,11 @@ This method starts a sequence (list) of yaml values.
 each value in the sequence, followed lastly by a call to
 [method sequence-end] (see below), to close it.
 
-[comment {%%TODO%% sequence-start explain the arguments}]
+[list_begin arguments]
+[arg_def ??      anchor]   %%TODO%% description
+[arg_def ??      tag]      %%TODO%% description
+[arg_def boolean implicit] %%TODO%% description
+[list_end]
 
 [call [arg writer] [method sequence-end]]
 
@@ -340,7 +360,11 @@ The method starts a mapping (dictionary) of yaml values.
 each key and value in the mapping, followed lastly by a call to
 [method mapping-end] (see below), to close it.
 
-[comment {%%TODO%% mapping-start explain the arguments}]
+[list_begin arguments]
+[arg_def ??      anchor]   %%TODO%% description
+[arg_def ??      tag]      %%TODO%% description
+[arg_def boolean implicit] %%TODO%% description
+[list_end]
 
 [call [arg writer] [method mapping-end]]
 
@@ -359,8 +383,48 @@ an open mapping is an error.
 This method adds a single scalar [arg value] to the yaml structure,
 i.e. a string, roughly.
 
+[list_begin arguments]
+[arg_def ??      anchor]   %%TODO%% description
+[arg_def ??      tag]      %%TODO%% description
+[arg_def boolean plain]    %%TODO%% description
+[arg_def boolean quoted]   %%TODO%% description
 [list_end]
 
+[call [arg writer] [method blockstyle] [arg style]]
+
+These methods set the currently active formatting style for blocks
+(sequences, mappings). The active style applies only to blocks
+started after it was set. A block opened, but not yet closed during
+a style change is [emph not] affected by that change.
+
+[para] The default, i.e. initial style is "any".
+[para] The available styles are:
+
+[list_begin definitions]
+[def any]   %%TODO%% description
+[def block] %%TODO%% description
+[def flow]  %%TODO%% description
+[list_end]
+
+[call [arg writer] [method scalarstyle] [arg style]]
+
+These methods set the currently active formatting style for scalar
+values. The active style applies only to scalars added after it was
+set.
+
+[para] The default, i.e. initial style is "any".
+[para] The available styles are
+
+[list_begin definitions]
+[def any]     %%TODO%% description
+[def plain]   %%TODO%% description
+[def single]  %%TODO%% description
+[def double]  %%TODO%% description
+[def literal] %%TODO%% description
+[def folded]  %%TODO%% description
+[list_end]
+
+[list_end]
 
 [include include/feedback.inc]
 [manpage_end]

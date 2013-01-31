@@ -280,6 +280,8 @@ package require \fBtclyaml  ?0.1?\fR
 .sp
 \fBmapping\fR
 .sp
+\fIwriter\fR \fBalias\fR \fIanchor\fR
+.sp
 \fIwriter\fR \fBsequence-start\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIimplicit\fR?
 .sp
 \fIwriter\fR \fBsequence-end\fR
@@ -289,6 +291,10 @@ package require \fBtclyaml  ?0.1?\fR
 \fIwriter\fR \fBmapping-end\fR
 .sp
 \fIwriter\fR \fBscalar\fR \fIvalue\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIplain\fR? ?\fIquoted\fR?
+.sp
+\fIwriter\fR \fBblockstyle\fR \fIstyle\fR
+.sp
+\fIwriter\fR \fBscalarstyle\fR \fIstyle\fR
 .sp
 .BE
 .SH DESCRIPTION
@@ -483,8 +489,9 @@ anything else between command name and details are the additional
 arguments to use.
 .IP [5]
 The interpretation of the detail information depends on the
-conversion command. For examples see the descriptions
-of the standard converters the package makes available.
+conversion command. For examples please see the descriptions
+of the standard converters the package makes available in
+section \fBStandard converters for YAML generation\fR.
 .RE
 .IP
 To convert the \fIvalue\fR the conversion command is run, with
@@ -511,13 +518,23 @@ needs to represent the \fIvalue\fR.
 .sp
 For more details about this object and its API please section
 \fBThe Writer Object API\fR.
-.sp
-%%TODO%% describe the API for invokation/use of nested type specs.
 .TP
 list \fIstructure\fR
 This is the detail information from the structure specification
 given to the \fBtclyaml write\fR commands. The conversion command
 may interpret this as it sees fit.
+.sp
+For the use type information in this data, to be applied
+to parts of the \fIvalue\fR (see below) the body has access to
+the otherwise internal command
+\fB::tclyaml::write::type::__convert\fR.
+It has to be called with three arguments, the \fIwriter\fR, the
+relevant type structure (extracted from our current structure),
+and the value to apply it to (extracted from our current value).
+.sp
+This allows new type converters to make use of all other
+types known to the system in their type specifications, be they
+builtin or custom.
 .TP
 any \fIvalue\fR
 This argument holds the Tcl structure to convert.
@@ -597,12 +614,31 @@ destruction of these instances is done internally by the package as needed
 and the relevant APIs are not documented. Neither are the instance methods
 reserved for use by the package internals.
 .TP
+\fIwriter\fR \fBalias\fR \fIanchor\fR
+%%TODO%% method - alias - description
+.RS
+.TP
+?? \fIanchor\fR
+%%TODO%% description
+.RE
+.TP
 \fIwriter\fR \fBsequence-start\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIimplicit\fR?
 This method starts a sequence (list) of yaml values.
 .sp
 After this method the user has to issue calls for
 each value in the sequence, followed lastly by a call to
 \fBsequence-end\fR (see below), to close it.
+.RS
+.TP
+?? \fIanchor\fR
+%%TODO%% description
+.TP
+?? \fItag\fR
+%%TODO%% description
+.TP
+boolean \fIimplicit\fR
+%%TODO%% description
+.RE
 .TP
 \fIwriter\fR \fBsequence-end\fR
 This method is the complement to \fBsequence-start\fR, above.
@@ -616,6 +652,17 @@ The method starts a mapping (dictionary) of yaml values.
 After this method the user has to issue calls for
 each key and value in the mapping, followed lastly by a call to
 \fBmapping-end\fR (see below), to close it.
+.RS
+.TP
+?? \fIanchor\fR
+%%TODO%% description
+.TP
+?? \fItag\fR
+%%TODO%% description
+.TP
+boolean \fIimplicit\fR
+%%TODO%% description
+.RE
 .TP
 \fIwriter\fR \fBmapping-end\fR
 This method is the complement to \fBmapping-start\fR, above.
@@ -626,6 +673,70 @@ an open mapping is an error.
 \fIwriter\fR \fBscalar\fR \fIvalue\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIplain\fR? ?\fIquoted\fR?
 This method adds a single scalar \fIvalue\fR to the yaml structure,
 i.e. a string, roughly.
+.RS
+.TP
+?? \fIanchor\fR
+%%TODO%% description
+.TP
+?? \fItag\fR
+%%TODO%% description
+.TP
+boolean \fIplain\fR
+%%TODO%% description
+.TP
+boolean \fIquoted\fR
+%%TODO%% description
+.RE
+.TP
+\fIwriter\fR \fBblockstyle\fR \fIstyle\fR
+These methods set the currently active formatting style for blocks
+(sequences, mappings). The active style applies only to blocks
+started after it was set. A block opened, but not yet closed during
+a style change is \fInot\fR affected by that change.
+.sp
+The default, i.e. initial style is "any".
+.sp
+The available styles are:
+.RS
+.TP
+any
+%%TODO%% description
+.TP
+block
+%%TODO%% description
+.TP
+flow
+%%TODO%% description
+.RE
+.TP
+\fIwriter\fR \fBscalarstyle\fR \fIstyle\fR
+These methods set the currently active formatting style for scalar
+values. The active style applies only to scalars added after it was
+set.
+.sp
+The default, i.e. initial style is "any".
+.sp
+The available styles are
+.RS
+.TP
+any
+%%TODO%% description
+.TP
+plain
+%%TODO%% description
+.TP
+single
+%%TODO%% description
+.TP
+double
+%%TODO%% description
+.TP
+literal
+%%TODO%% description
+.TP
+folded
+%%TODO%% description
+.RE
 .PP
 .SH "BUGS, IDEAS, FEEDBACK"
 This document, and the package it describes, will undoubtedly contain
