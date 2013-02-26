@@ -244,9 +244,6 @@ doc
 markup language
 .RS
 .TP
-\fBfiles/license.n\fR
-tclyaml_license
-.TP
 \fBfiles/tclyaml.n\fR
 tclyaml
 .TP
@@ -258,6 +255,9 @@ tclyaml_install_guide
 .TP
 \fBfiles/tclyaml_intro.n\fR
 tclyaml_introduction
+.TP
+\fBfiles/license.n\fR
+tclyaml_license
 .TP
 \fBfiles/tclyaml_sources.n\fR
 tclyaml_sources
@@ -265,9 +265,6 @@ tclyaml_sources
 serialization
 .RS
 .TP
-\fBfiles/license.n\fR
-tclyaml_license
-.TP
 \fBfiles/tclyaml.n\fR
 tclyaml
 .TP
@@ -279,6 +276,9 @@ tclyaml_install_guide
 .TP
 \fBfiles/tclyaml_intro.n\fR
 tclyaml_introduction
+.TP
+\fBfiles/license.n\fR
+tclyaml_license
 .TP
 \fBfiles/tclyaml_sources.n\fR
 tclyaml_sources
@@ -286,9 +286,6 @@ tclyaml_sources
 YAML
 .RS
 .TP
-\fBfiles/license.n\fR
-tclyaml_license
-.TP
 \fBfiles/tclyaml.n\fR
 tclyaml
 .TP
@@ -300,6 +297,9 @@ tclyaml_install_guide
 .TP
 \fBfiles/tclyaml_intro.n\fR
 tclyaml_introduction
+.TP
+\fBfiles/license.n\fR
+tclyaml_license
 .TP
 \fBfiles/tclyaml_sources.n\fR
 tclyaml_sources

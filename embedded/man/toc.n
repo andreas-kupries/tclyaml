@@ -245,8 +245,11 @@ doc
 \fBtclyaml\fR
 \fIfiles/tclyaml.n\fR: TclYAML - API
 .TP
-\fBtclyaml_sources\fR
-\fIfiles/tclyaml_sources.n\fR: TclYAML - How To Get The Sources
+\fBtclyaml_devguide\fR
+\fIfiles/tclyaml_devguide.n\fR: TclYAML - The Developer's Guide
+.TP
+\fBtclyaml_install_guide\fR
+\fIfiles/tclyaml_installer.n\fR: TclYAML - The Installer's Guide
 .TP
 \fBtclyaml_introduction\fR
 \fIfiles/tclyaml_intro.n\fR: TclYAML - Introduction to TclYAML
@@ -254,8 +257,5 @@ doc
 \fBtclyaml_license\fR
 \fIfiles/license.n\fR: TclYAML - License
 .TP
-\fBtclyaml_devguide\fR
-\fIfiles/tclyaml_devguide.n\fR: TclYAML - The Developer's Guide
-.TP
-\fBtclyaml_install_guide\fR
-\fIfiles/tclyaml_installer.n\fR: TclYAML - The Installer's Guide
+\fBtclyaml_sources\fR
+\fIfiles/tclyaml_sources.n\fR: TclYAML - How To Get The Sources
