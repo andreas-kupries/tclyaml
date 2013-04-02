@@ -1,0 +1,761 @@
+'\"
+'\" Generated from file '/home/aku/Projects/TclYaml/dev-tclyaml/embedded/man/files/tclyaml.n' by tcllib/doctools with format 'nroff'
+'\" Copyright (c) 2012 Andreas Kupries
+'\" Copyright (c) 2012 Documentation, Andreas Kupries
+'\"
+'\" The definitions below are for supplemental macros used in Tcl/Tk
+'\" manual entries.
+'\"
+'\" .AP type name in/out ?indent?
+'\"	Start paragraph describing an argument to a library procedure.
+'\"	type is type of argument (int, etc.), in/out is either "in", "out",
+'\"	or "in/out" to describe whether procedure reads or modifies arg,
+'\"	and indent is equivalent to second arg of .IP (shouldn't ever be
+'\"	needed;  use .AS below instead)
+'\"
+'\" .AS ?type? ?name?
+'\"	Give maximum sizes of arguments for setting tab stops.  Type and
+'\"	name are examples of largest possible arguments that will be passed
+'\"	to .AP later.  If args are omitted, default tab stops are used.
+'\"
+'\" .BS
+'\"	Start box enclosure.  From here until next .BE, everything will be
+'\"	enclosed in one large box.
+'\"
+'\" .BE
+'\"	End of box enclosure.
+'\"
+'\" .CS
+'\"	Begin code excerpt.
+'\"
+'\" .CE
+'\"	End code excerpt.
+'\"
+'\" .VS ?version? ?br?
+'\"	Begin vertical sidebar, for use in marking newly-changed parts
+'\"	of man pages.  The first argument is ignored and used for recording
+'\"	the version when the .VS was added, so that the sidebars can be
+'\"	found and removed when they reach a certain age.  If another argument
+'\"	is present, then a line break is forced before starting the sidebar.
+'\"
+'\" .VE
+'\"	End of vertical sidebar.
+'\"
+'\" .DS
+'\"	Begin an indented unfilled display.
+'\"
+'\" .DE
+'\"	End of indented unfilled display.
+'\"
+'\" .SO
+'\"	Start of list of standard options for a Tk widget.  The
+'\"	options follow on successive lines, in four columns separated
+'\"	by tabs.
+'\"
+'\" .SE
+'\"	End of list of standard options for a Tk widget.
+'\"
+'\" .OP cmdName dbName dbClass
+'\"	Start of description of a specific option.  cmdName gives the
+'\"	option's name as specified in the class command, dbName gives
+'\"	the option's name in the option database, and dbClass gives
+'\"	the option's class in the option database.
+'\"
+'\" .UL arg1 arg2
+'\"	Print arg1 underlined, then print arg2 normally.
+'\"
+'\" RCS: @(#) $Id: man.macros,v 1.1 2009/01/30 04:56:47 andreas_kupries Exp $
+'\"
+'\"	# Set up traps and other miscellaneous stuff for Tcl/Tk man pages.
+.if t .wh -1.3i ^B
+.nr ^l \n(.l
+.ad b
+'\"	# Start an argument description
+.de AP
+.ie !"\\$4"" .TP \\$4
+.el \{\
+.   ie !"\\$2"" .TP \\n()Cu
+.   el          .TP 15
+.\}
+.ta \\n()Au \\n()Bu
+.ie !"\\$3"" \{\
+\&\\$1	\\fI\\$2\\fP	(\\$3)
+.\".b
+.\}
+.el \{\
+.br
+.ie !"\\$2"" \{\
+\&\\$1	\\fI\\$2\\fP
+.\}
+.el \{\
+\&\\fI\\$1\\fP
+.\}
+.\}
+..
+'\"	# define tabbing values for .AP
+.de AS
+.nr )A 10n
+.if !"\\$1"" .nr )A \\w'\\$1'u+3n
+.nr )B \\n()Au+15n
+.\"
+.if !"\\$2"" .nr )B \\w'\\$2'u+\\n()Au+3n
+.nr )C \\n()Bu+\\w'(in/out)'u+2n
+..
+.AS Tcl_Interp Tcl_CreateInterp in/out
+'\"	# BS - start boxed text
+'\"	# ^y = starting y location
+'\"	# ^b = 1
+.de BS
+.br
+.mk ^y
+.nr ^b 1u
+.if n .nf
+.if n .ti 0
+.if n \l'\\n(.lu\(ul'
+.if n .fi
+..
+'\"	# BE - end boxed text (draw box now)
+.de BE
+.nf
+.ti 0
+.mk ^t
+.ie n \l'\\n(^lu\(ul'
+.el \{\
+.\"	Draw four-sided box normally, but don't draw top of
+.\"	box if the box started on an earlier page.
+.ie !\\n(^b-1 \{\
+\h'-1.5n'\L'|\\n(^yu-1v'\l'\\n(^lu+3n\(ul'\L'\\n(^tu+1v-\\n(^yu'\l'|0u-1.5n\(ul'
+.\}
+.el \}\
+\h'-1.5n'\L'|\\n(^yu-1v'\h'\\n(^lu+3n'\L'\\n(^tu+1v-\\n(^yu'\l'|0u-1.5n\(ul'
+.\}
+.\}
+.fi
+.br
+.nr ^b 0
+..
+'\"	# VS - start vertical sidebar
+'\"	# ^Y = starting y location
+'\"	# ^v = 1 (for troff;  for nroff this doesn't matter)
+.de VS
+.if !"\\$2"" .br
+.mk ^Y
+.ie n 'mc \s12\(br\s0
+.el .nr ^v 1u
+..
+'\"	# VE - end of vertical sidebar
+.de VE
+.ie n 'mc
+.el \{\
+.ev 2
+.nf
+.ti 0
+.mk ^t
+\h'|\\n(^lu+3n'\L'|\\n(^Yu-1v\(bv'\v'\\n(^tu+1v-\\n(^Yu'\h'-|\\n(^lu+3n'
+.sp -1
+.fi
+.ev
+.\}
+.nr ^v 0
+..
+'\"	# Special macro to handle page bottom:  finish off current
+'\"	# box/sidebar if in box/sidebar mode, then invoked standard
+'\"	# page bottom macro.
+.de ^B
+.ev 2
+'ti 0
+'nf
+.mk ^t
+.if \\n(^b \{\
+.\"	Draw three-sided box if this is the box's first page,
+.\"	draw two sides but no top otherwise.
+.ie !\\n(^b-1 \h'-1.5n'\L'|\\n(^yu-1v'\l'\\n(^lu+3n\(ul'\L'\\n(^tu+1v-\\n(^yu'\h'|0u'\c
+.el \h'-1.5n'\L'|\\n(^yu-1v'\h'\\n(^lu+3n'\L'\\n(^tu+1v-\\n(^yu'\h'|0u'\c
+.\}
+.if \\n(^v \{\
+.nr ^x \\n(^tu+1v-\\n(^Yu
+\kx\h'-\\nxu'\h'|\\n(^lu+3n'\ky\L'-\\n(^xu'\v'\\n(^xu'\h'|0u'\c
+.\}
+.bp
+'fi
+.ev
+.if \\n(^b \{\
+.mk ^y
+.nr ^b 2
+.\}
+.if \\n(^v \{\
+.mk ^Y
+.\}
+..
+'\"	# DS - begin display
+.de DS
+.RS
+.nf
+.sp
+..
+'\"	# DE - end display
+.de DE
+.fi
+.RE
+.sp
+..
+'\"	# SO - start of list of standard options
+.de SO
+.SH "STANDARD OPTIONS"
+.LP
+.nf
+.ta 4c 8c 12c
+.ft B
+..
+'\"	# SE - end of list of standard options
+.de SE
+.fi
+.ft R
+.LP
+See the \\fBoptions\\fR manual entry for details on the standard options.
+..
+'\"	# OP - start of full description for a single option
+.de OP
+.LP
+.nf
+.ta 4c
+Command-Line Name:	\\fB\\$1\\fR
+Database Name:	\\fB\\$2\\fR
+Database Class:	\\fB\\$3\\fR
+.fi
+.IP
+..
+'\"	# CS - begin code excerpt
+.de CS
+.RS
+.nf
+.ta .25i .5i .75i 1i
+..
+'\"	# CE - end code excerpt
+.de CE
+.fi
+.RE
+..
+.de UL
+\\$1\l'|0\(ul'\\$2
+..
+.TH "tclyaml" n 0.1 doc "TclYAML"
+.BS
+.SH NAME
+tclyaml \- TclYAML - API
+.SH SYNOPSIS
+package require \fBTcl  8.5\fR
+.sp
+package require \fBtclyaml  ?0.1?\fR
+.sp
+\fBtclyaml read channel\fR \fIchan\fR
+.sp
+\fBtclyaml read file\fR \fIpath\fR
+.sp
+\fBtclyaml readTags channel\fR \fIchan\fR
+.sp
+\fBtclyaml readTags file\fR \fIpath\fR
+.sp
+\fBtclyaml parse channel\fR \fIchannel\fR \fIcmd\fR...
+.sp
+\fBtclyaml write channel\fR \fIspec\fR \fIchan\fR \fIvalue\fR
+.sp
+\fBtclyaml write file\fR \fIspec\fR \fIpath\fR \fIvalue\fR
+.sp
+\fBtclyaml write deftype\fR \fIname\fR \fIarguments\fR \fIbody\fR
+.sp
+\fBstring\fR
+.sp
+\fBscalar\fR
+.sp
+\fBlist\fR
+.sp
+\fBarray\fR
+.sp
+\fBsequence\fR
+.sp
+\fBdict\fR
+.sp
+\fBobject\fR
+.sp
+\fBmapping\fR
+.sp
+\fIwriter\fR \fBalias\fR \fIanchor\fR
+.sp
+\fIwriter\fR \fBsequence-start\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIimplicit\fR?
+.sp
+\fIwriter\fR \fBsequence-end\fR
+.sp
+\fIwriter\fR \fBmapping-start\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIimplicit\fR?
+.sp
+\fIwriter\fR \fBmapping-end\fR
+.sp
+\fIwriter\fR \fBscalar\fR \fIvalue\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIplain\fR? ?\fIquoted\fR?
+.sp
+\fIwriter\fR \fBblockstyle\fR \fIstyle\fR
+.sp
+\fIwriter\fR \fBscalarstyle\fR \fIstyle\fR
+.sp
+.BE
+.SH DESCRIPTION
+.PP
+Welcome to TclYAML, a binding to the C-based libyaml parser
+library for \fIYAML\fR [http://yaml.org] (YAML Ain't Markup Language).
+.PP
+This document is the reference manpage for the publicly visible API,
+i.e. the API a user will see, and use.
+This API falls into two big sections, for the generation of YAML from Tcl
+data structures on one side, and the parsing of YAML into Tcl structures on
+the other.
+.SH "PARSING YAML"
+.TP
+\fBtclyaml read channel\fR \fIchan\fR
+.TP
+\fBtclyaml read file\fR \fIpath\fR
+These two commands read the YAML documents found in the channel (\fIchan\fR),
+or file (\fIpath\fR) and return a Tcl list where each element represents a
+single document found in the input.
+.sp
+For each document YAML scalars are converted to Tcl strings, and YAML
+sequences and mappings to Tcl lists and dictionaries.
+.TP
+\fBtclyaml readTags channel\fR \fIchan\fR
+.TP
+\fBtclyaml readTags file\fR \fIpath\fR
+These two commands behave like their plain \fBread\fR counterparts above,
+except that the data structure they return per element is a \fItagged\fR
+structure where each YAML construct is converted into a 2-element list of
+type-tag and value (in this order).
+.sp
+While this type of structure is more difficult to access due to the
+additional nesting levels, in return it does not lose YAML's type information.
+This allows users to properly distinguish between lists and dictionaries, for
+example, if the input YAML allows different syntax for specific keys. Another
+example would be string versus list, for example in a key allowing one to many
+things of some kind, and a string is the same as a list of one element. In an
+untagged conversion these cases are difficult to impossible to distinguish.
+.TP
+\fBtclyaml parse channel\fR \fIchannel\fR \fIcmd\fR...
+This command provides the lowest level of access to the YAML parser. Reading
+YAML data from the specified \fIchannel\fR each structural element encountered
+is reported through an invokation of the command prefix \fIcmd\fR...
+.sp
+This command prefix is invoked with one or two additional arguments,
+the type of the found element, and a dictionary holding detailed information
+about it. The contents of the latter are type specific, and may be missing
+completely if the type does not have details.
+.sp
+The possible types, with their details, if any, are listed below. For
+the details, the dictionary keys and their meanings are listed.
+.RS
+.TP
+\fBstream-start\fR
+Parsing has begun.
+.RS
+.TP
+\fBencoding\fR
+Name of the character encoding used by the input.
+.RE
+.TP
+\fBstream-end\fR
+Parsing of the current stream ended. No details.
+.TP
+\fBdocument-start\fR
+A new document has begun.
+.RS
+.TP
+\fBimplicit\fR
+Boolean flag.
+.TP
+\fBversion\fR
+Version information as 2-element list of integers.
+.TP
+\fBtags\fR
+Yaml type tags.
+.RE
+.TP
+\fBdocument-end\fR
+The current document has ended.
+.RS
+.TP
+\fBimplicit\fR
+Boolean flag.
+.RE
+.TP
+\fBalias\fR
+.RS
+.TP
+\fBanchor\fR
+%%TODO%% explain
+.RE
+.TP
+\fBscalar\fR
+A scalar value has been found.
+.RS
+.TP
+\fBanchor\fR
+%%TODO%% explain
+.TP
+\fBtag\fR
+Yaml type tag.  %%TODO%% which known
+.TP
+\fBscalar\fR
+Value of the scalar, string.
+.TP
+\fBplain-implicit\fR
+Boolean flag.
+.TP
+\fBquoted-implicit\fR
+Boolean flag.
+.TP
+\fBstyle\fR
+One of \fBany\fR, \fBplain\fR, \fBsingle\fR,
+\fBdouble\fR, \fBliteral\fR, or \fBfolded\fR.
+.RE
+.TP
+\fBsequence-start\fR
+A sequence (aka list) has started.
+.RS
+.TP
+\fBanchor\fR
+%%TODO%% explain
+.TP
+\fBtag\fR
+Yaml type tag. %%TODO%% which known
+.TP
+\fBimplicit\fR
+Boolean flag.
+.TP
+\fBstyle\fR
+One of \fBany\fR, \fBblock\fR, or \fBflow\fR.
+.RE
+.TP
+\fBsequence-end\fR
+The current sequence ends. No details.
+.TP
+\fBmapping-start\fR
+A mapping (aka dictionary) has started.
+.RS
+.TP
+\fBanchor\fR
+%%TODO%% explain
+.TP
+\fBtag\fR
+Yaml type tag.  %%TODO%% which known
+.TP
+\fBimplicit\fR
+Boolean flag.
+.TP
+\fBstyle\fR
+One of \fBany\fR, \fBblock\fR, or \fBflow\fR.
+.RE
+.TP
+\fBmapping-end\fR
+The current mapping ends. No details.
+.RE
+.PP
+.SH "GENERATING YAML"
+.TP
+\fBtclyaml write channel\fR \fIspec\fR \fIchan\fR \fIvalue\fR
+.TP
+\fBtclyaml write file\fR \fIspec\fR \fIpath\fR \fIvalue\fR
+These two commands convert the Tcl data structure \fIvalue\fR into YAML, under
+the guidance of the type information in \fIspec\fR, which describes the expected
+structure of the \fIvalue\fR, i.e. essentially provides type annotation/tagging
+of the \fIvalue\fR, but separate from the value itself.
+.sp
+The resulting YAML is written to a channel (\fIchan\fR, expected to be
+open for writing), or file (\fIpath\fR). For the latter, an existing file is
+overwritten.
+.sp
+The syntax of structure \fIspec\fR'ification is:
+.RS
+.IP [1]
+A list of one or more elements.
+.IP [2]
+The first element of the list is the name of the type.
+This name has to be the name of a conversion command
+declared via \fBtclyaml write deftype\fR, see below.
+.IP [3]
+The command name can be followed by additional arguments
+and detail information.
+.IP [4]
+If the list contains only the command name then no additional
+arguments are assumed, and the detail information defaults
+to the empty string or list.
+.sp
+Otherwise the detail information is the last element of the list and
+anything else between command name and details are the additional
+arguments to use.
+.IP [5]
+The interpretation of the detail information depends on the
+conversion command. For examples please see the descriptions
+of the standard converters the package makes available in
+section \fBStandard converters for YAML generation\fR.
+.RE
+.IP
+To convert the \fIvalue\fR the conversion command is run, with
+the additional arguments from the \fIspec\fR, followed by the
+handle of the low-level writer object, the detail information
+from the \fIspec\fR, and the \fIvalue\fR itself. The conversion
+command then uses the API of the writer object to add YAML
+structures to it, representing the value.
+.TP
+\fBtclyaml write deftype\fR \fIname\fR \fIarguments\fR \fIbody\fR
+This command defines a new type conversion command \fIname\fR for use in the
+\fBtclyaml write ...\fR commands above. This part of tclyaml is only
+relevant to users wishing to write their own type conversions.
+.sp
+The \fIarguments\fR are what has to be specified in a structure
+specification (see \fIspec\fR above). Beyond these the \fIbody\fR will have
+access to three standard arguments, namely:
+.RS
+.TP
+object \fIwriter\fR
+This is the low-level object instance holding the YAML structures we wish to generate.
+The conversion command has to use its API to add the structures it
+needs to represent the \fIvalue\fR.
+.sp
+For more details about this object and its API please section
+\fBThe Writer Object API\fR.
+.TP
+list \fIstructure\fR
+This is the detail information from the structure specification
+given to the \fBtclyaml write\fR commands. The conversion command
+may interpret this as it sees fit.
+.sp
+For the use type information in this data, to be applied
+to parts of the \fIvalue\fR (see below) the body has access to
+the otherwise internal command
+\fB::tclyaml::write::type::__convert\fR.
+It has to be called with three arguments, the \fIwriter\fR, the
+relevant type structure (extracted from our current structure),
+and the value to apply it to (extracted from our current value).
+.sp
+This allows new type converters to make use of all other
+types known to the system in their type specifications, be they
+builtin or custom.
+.sp
+Note, when going this far for custom conversions it is
+strongly recommended to look at the implementations of the
+standard converters for sequences and mappings provided by the
+package.
+.TP
+any \fIvalue\fR
+This argument holds the Tcl structure to convert.
+.RE
+.PP
+.SH "STANDARD CONVERTERS FOR YAML GENERATION"
+The package provides the following pre-defined conversion commands
+for use in structure specifications taken by the
+\fBtclyaml write\fR commands.
+.TP
+\fBstring\fR
+.TP
+\fBscalar\fR
+This command/type is for the conversion of plain Tcl strings.
+.sp
+No additional arguments.
+.sp
+The detail information is ignored.
+.sp
+Adds a scalar entry to the writer, with the value as the value
+of the scalar.
+.TP
+\fBlist\fR
+.TP
+\fBarray\fR
+.TP
+\fBsequence\fR
+This command/type is for the conversion of Tcl lists.
+In YAML parlance, sequences.
+In JSON parlance, arrays.
+.sp
+No additional arguments.
+.sp
+The detail information is treated as a single structure specification
+as taken by the \fBtclyaml write\fR commands. This specification
+describes the type with which to convert the elements of the Tcl list
+held in the \fIvalue\fR.
+.sp
+The converter starts a sequence in the writer object, then converts
+all list elements, and at last ends the sequence in the writer.
+.TP
+\fBdict\fR
+.TP
+\fBobject\fR
+.TP
+\fBmapping\fR
+This command/type is for the conversion of Tcl dictionaries.
+In YAML parlance, mappings.
+In JSON parlance, objects.
+.sp
+No additional arguments.
+.sp
+The detail information is treated as a dictionary of structure
+specifications as taken by the \fBtclyaml write\fR commands. This
+dictionary describes the types with which to convert the values of the
+Tcl dictionary held in the \fIvalue\fR.
+All keys in \fIvalue\fR also found as key in the \fIstructure\fR use
+the associated type specification for the conversion of their value.
+The values of all keys without an explicit conversion are converted
+with the type specification found under the key \fB*\fR. If such
+a key does not exist their conversion is done with type "scalar".
+.sp
+The keys of \fIvalue\fR themselves are always converted with
+type "scalar".
+.sp
+The converter starts a mapping in the writer object, then converts
+all dictionary elements (keys, and values), and at last ends the mapping
+in the writer.
+.PP
+.SH "THE WRITER OBJECT API"
+This section is only relevant to users wishing to write their own type
+conversions. See the command \fBtclyaml write deftype\fR above, also.
+.PP
+Here we are documenting the instance API of the low-level object
+holding the YAML structures we wish to generate. Construction and
+destruction of these instances is done internally by the package as needed
+and the relevant APIs are not documented. Neither are the instance methods
+reserved for use by the package internals.
+.TP
+\fIwriter\fR \fBalias\fR \fIanchor\fR
+%%TODO%% method - alias - description
+.RS
+.TP
+?? \fIanchor\fR
+%%TODO%% description
+.RE
+.TP
+\fIwriter\fR \fBsequence-start\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIimplicit\fR?
+This method starts a sequence (list) of yaml values.
+.sp
+After this method the user has to issue calls for
+each value in the sequence, followed lastly by a call to
+\fBsequence-end\fR (see below), to close it.
+.RS
+.TP
+?? \fIanchor\fR
+%%TODO%% description
+.TP
+?? \fItag\fR
+%%TODO%% description
+.TP
+boolean \fIimplicit\fR
+%%TODO%% description
+.RE
+.TP
+\fIwriter\fR \fBsequence-end\fR
+This method is the complement to \fBsequence-start\fR, above.
+Calling it closes the currently open sequence (which may be nested
+in other sequences, mappings, etc). Calling it while not within
+an open sequence is an error.
+.TP
+\fIwriter\fR \fBmapping-start\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIimplicit\fR?
+The method starts a mapping (dictionary) of yaml values.
+.sp
+After this method the user has to issue calls for
+each key and value in the mapping, followed lastly by a call to
+\fBmapping-end\fR (see below), to close it.
+.RS
+.TP
+?? \fIanchor\fR
+%%TODO%% description
+.TP
+?? \fItag\fR
+%%TODO%% description
+.TP
+boolean \fIimplicit\fR
+%%TODO%% description
+.RE
+.TP
+\fIwriter\fR \fBmapping-end\fR
+This method is the complement to \fBmapping-start\fR, above.
+Calling it closes the currently open mapping (which may be nested
+in other sequences, mappings, etc). Calling it while not within
+an open mapping is an error.
+.TP
+\fIwriter\fR \fBscalar\fR \fIvalue\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIplain\fR? ?\fIquoted\fR?
+This method adds a single scalar \fIvalue\fR to the yaml structure,
+i.e. a string, roughly.
+.RS
+.TP
+?? \fIanchor\fR
+%%TODO%% description
+.TP
+?? \fItag\fR
+%%TODO%% description
+.TP
+boolean \fIplain\fR
+%%TODO%% description
+.TP
+boolean \fIquoted\fR
+%%TODO%% description
+.RE
+.TP
+\fIwriter\fR \fBblockstyle\fR \fIstyle\fR
+These methods set the currently active formatting style for blocks
+(sequences, mappings). The active style applies only to blocks
+started after it was set. A block opened, but not yet closed during
+a style change is \fInot\fR affected by that change.
+.sp
+The default, i.e. initial style is "any".
+.sp
+The available styles are:
+.RS
+.TP
+any
+%%TODO%% description
+.TP
+block
+%%TODO%% description
+.TP
+flow
+%%TODO%% description
+.RE
+.TP
+\fIwriter\fR \fBscalarstyle\fR \fIstyle\fR
+These methods set the currently active formatting style for scalar
+values. The active style applies only to scalars added after it was
+set.
+.sp
+The default, i.e. initial style is "any".
+.sp
+The available styles are
+.RS
+.TP
+any
+%%TODO%% description
+.TP
+plain
+%%TODO%% description
+.TP
+single
+%%TODO%% description
+.TP
+double
+%%TODO%% description
+.TP
+literal
+%%TODO%% description
+.TP
+folded
+%%TODO%% description
+.RE
+.PP
+.SH "BUGS, IDEAS, FEEDBACK"
+This document, and the package it describes, will undoubtedly contain
+bugs and other problems.
+Please report such at the \fITclYAML Tracker\fR [http://chiselapp.com/user/andreas_kupries/repository/tclyaml].
+Please also report any ideas for enhancements you may have for either
+package and/or documentation.
+.SH KEYWORDS
+YAML, markup language, serialization
+.SH CATEGORY
+3rd party library binding
+.SH COPYRIGHT
+.nf
+Copyright (c) 2012 Andreas Kupries
+Copyright (c) 2012 Documentation, Andreas Kupries
+
+.fi

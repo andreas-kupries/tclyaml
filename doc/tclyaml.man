@@ -1,0 +1,436 @@
+[comment {-*- tcl -*- doctools manpage}]
+[manpage_begin tclyaml n 0.1]
+[include include/module.inc]
+[titledesc {TclYAML - API}]
+[description]
+[include include/welcome.inc]
+
+[para] This document is the reference manpage for the publicly visible API,
+i.e. the API a user will see, and use.
+
+This API falls into two big sections, for the generation of YAML from Tcl
+data structures on one side, and the parsing of YAML into Tcl structures on
+the other.
+
+[comment {* * ** *** ***** ******** ************* *********************}]
+[section {Parsing YAML}]
+
+[list_begin definitions]
+
+[call [cmd {tclyaml read channel}] [arg chan]]
+[call [cmd {tclyaml read file}]    [arg path]]
+
+These two commands read the YAML documents found in the channel ([arg chan]),
+or file ([arg path]) and return a Tcl list where each element represents a
+single document found in the input.
+
+[para] For each document YAML scalars are converted to Tcl strings, and YAML
+sequences and mappings to Tcl lists and dictionaries.
+
+[call [cmd {tclyaml readTags channel}] [arg chan]]
+[call [cmd {tclyaml readTags file}]    [arg path]]
+
+These two commands behave like their plain [cmd read] counterparts above,
+except that the data structure they return per element is a [term tagged]
+structure where each YAML construct is converted into a 2-element list of
+type-tag and value (in this order).
+
+[para] While this type of structure is more difficult to access due to the
+additional nesting levels, in return it does not lose YAML's type information.
+This allows users to properly distinguish between lists and dictionaries, for
+example, if the input YAML allows different syntax for specific keys. Another
+example would be string versus list, for example in a key allowing one to many
+things of some kind, and a string is the same as a list of one element. In an
+untagged conversion these cases are difficult to impossible to distinguish.
+
+[call [cmd {tclyaml parse channel}] [arg channel] [arg cmd]...]
+
+This command provides the lowest level of access to the YAML parser. Reading
+YAML data from the specified [arg channel] each structural element encountered
+is reported through an invokation of the command prefix [arg cmd]...
+
+[para] This command prefix is invoked with one or two additional arguments,
+the type of the found element, and a dictionary holding detailed information
+about it. The contents of the latter are type specific, and may be missing
+completely if the type does not have details.
+
+[para] The possible types, with their details, if any, are listed below. For
+the details, the dictionary keys and their meanings are listed.
+
+[comment {= = == === ===== ======== ============= =====================}]
+[comment {= = == === ===== ======== ============= =====================}]
+[list_begin definitions]
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const stream-start]]
+Parsing has begun.
+
+[list_begin definitions]
+[def [const encoding]] Name of the character encoding used by the input.
+[list_end]
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const stream-end]]
+Parsing of the current stream ended. No details.
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const document-start]]
+A new document has begun.
+[list_begin definitions]
+[def [const implicit]] Boolean flag.
+[def [const version]]  Version information as 2-element list of integers.
+[def [const tags]]     Yaml type tags.
+[list_end]
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const document-end]]
+The current document has ended.
+[list_begin definitions]
+[def [const implicit]] Boolean flag.
+[list_end]
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const alias]]
+[list_begin definitions]
+[def [const anchor]] %%TODO%% explain
+[list_end]
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const scalar]]
+A scalar value has been found.
+
+[list_begin definitions]
+[def [const anchor]]          %%TODO%% explain
+[def [const tag]]             Yaml type tag.  %%TODO%% which known
+[def [const scalar]]          Value of the scalar, string.
+[def [const plain-implicit]]  Boolean flag.
+[def [const quoted-implicit]] Boolean flag.
+[def [const style]] One of [const any], [const plain], [const single],
+                    [const double], [const literal], or [const folded].
+[list_end]
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const sequence-start]]
+A sequence (aka list) has started.
+
+[list_begin definitions]
+[def [const anchor]]   %%TODO%% explain
+[def [const tag]]      Yaml type tag. %%TODO%% which known
+[def [const implicit]] Boolean flag.
+[def [const style]]    One of [const any], [const block], or [const flow].
+[list_end]
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const sequence-end]]
+The current sequence ends. No details.
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const mapping-start]]
+A mapping (aka dictionary) has started.
+
+[list_begin definitions]
+[def [const anchor]]   %%TODO%% explain
+[def [const tag]]      Yaml type tag.  %%TODO%% which known
+[def [const implicit]] Boolean flag.
+[def [const style]]    One of [const any], [const block], or [const flow].
+[list_end]
+
+[comment {= = == === ===== ======== ============= =====================}]
+[def [const mapping-end]]
+The current mapping ends. No details.
+[list_end]
+[list_end]
+[comment {= = == === ===== ======== ============= =====================}]
+
+
+
+[comment {* * ** *** ***** ******** ************* *********************}]
+[section {Generating YAML}]
+
+[list_begin definitions]
+
+[call [cmd {tclyaml write channel}] [arg spec] [arg chan] [arg value]]
+[call [cmd {tclyaml write file}]    [arg spec] [arg path] [arg value]]
+
+These two commands convert the Tcl data structure [arg value] into YAML, under
+the guidance of the type information in [arg spec], which describes the expected
+structure of the [arg value], i.e. essentially provides type annotation/tagging
+of the [arg value], but separate from the value itself.
+
+[para] The resulting YAML is written to a channel ([arg chan], expected to be
+open for writing), or file ([arg path]). For the latter, an existing file is
+overwritten.
+
+[para] The syntax of structure [arg spec]'ification is:
+
+[list_begin enumerated]
+[enum] A list of one or more elements.
+[enum] The first element of the list is the name of the type.
+       This name has to be the name of a conversion command
+       declared via [cmd {tclyaml write deftype}], see below.
+[enum] The command name can be followed by additional arguments
+       and detail information.
+[enum] If the list contains only the command name then no additional
+       arguments are assumed, and the detail information defaults
+       to the empty string or list.
+[para] Otherwise the detail information is the last element of the list and
+       anything else between command name and details are the additional
+       arguments to use.
+[enum] The interpretation of the detail information depends on the
+       conversion command. For examples please see the descriptions
+       of the standard converters the package makes available in
+       section [sectref {Standard converters for YAML generation}].
+[list_end]
+
+To convert the [arg value] the conversion command is run, with
+the additional arguments from the [arg spec], followed by the
+handle of the low-level writer object, the detail information
+from the [arg spec], and the [arg value] itself. The conversion
+command then uses the API of the writer object to add YAML
+structures to it, representing the value.
+
+[call [cmd {tclyaml write deftype}] [arg name] [arg arguments] [arg body]]
+
+This command defines a new type conversion command [arg name] for use in the
+[cmd {tclyaml write ...}] commands above. This part of tclyaml is only
+relevant to users wishing to write their own type conversions.
+
+[para] The [arg arguments] are what has to be specified in a structure
+specification (see [arg spec] above). Beyond these the [arg body] will have
+access to three standard arguments, namely:
+
+[list_begin args]
+[arg_def object writer]
+
+This is the low-level object instance holding the YAML structures we wish to generate.
+The conversion command has to use its API to add the structures it
+needs to represent the [arg value].
+
+[para] For more details about this object and its API please section
+[sectref {The Writer Object API}].
+
+[arg_def list structure]
+
+This is the detail information from the structure specification
+given to the [cmd {tclyaml write}] commands. The conversion command
+may interpret this as it sees fit.
+
+[para] For the use type information in this data, to be applied
+to parts of the [arg value] (see below) the body has access to
+the otherwise internal command
+[cmd ::tclyaml::write::type::__convert].
+
+It has to be called with three arguments, the [arg writer], the
+relevant type structure (extracted from our current structure),
+and the value to apply it to (extracted from our current value).
+
+[para] This allows new type converters to make use of all other
+types known to the system in their type specifications, be they
+builtin or custom.
+
+[para] Note, when going this far for custom conversions it is
+strongly recommended to look at the implementations of the
+standard converters for sequences and mappings provided by the
+package.
+
+[arg_def any value]
+This argument holds the Tcl structure to convert.
+
+[list_end][comment {-- arguments}]
+
+[list_end]
+
+[section {Standard converters for YAML generation}]
+
+The package provides the following pre-defined conversion commands
+for use in structure specifications taken by the
+[cmd {tclyaml write}] commands.
+
+[list_begin definitions]
+[call [cmd string]]
+[call [cmd scalar]]
+
+This command/type is for the conversion of plain Tcl strings.
+
+[para] No additional arguments.
+
+[para] The detail information is ignored.
+
+[para] Adds a scalar entry to the writer, with the value as the value
+of the scalar.
+
+[call [cmd list]]
+[call [cmd array]]
+[call [cmd sequence]]
+
+This command/type is for the conversion of Tcl lists.
+In YAML parlance, sequences.
+In JSON parlance, arrays.
+
+[para] No additional arguments.
+
+[para] The detail information is treated as a single structure specification
+as taken by the [cmd {tclyaml write}] commands. This specification
+describes the type with which to convert the elements of the Tcl list
+held in the [arg value].
+
+[para] The converter starts a sequence in the writer object, then converts
+all list elements, and at last ends the sequence in the writer.
+
+
+[call [cmd dict]]
+[call [cmd object]]
+[call [cmd mapping]]
+
+This command/type is for the conversion of Tcl dictionaries.
+In YAML parlance, mappings.
+In JSON parlance, objects.
+
+[para] No additional arguments.
+
+[para] The detail information is treated as a dictionary of structure
+specifications as taken by the [cmd {tclyaml write}] commands. This
+dictionary describes the types with which to convert the values of the
+Tcl dictionary held in the [arg value].
+
+All keys in [arg value] also found as key in the [arg structure] use
+the associated type specification for the conversion of their value.
+
+The values of all keys without an explicit conversion are converted
+with the type specification found under the key [const *]. If such
+a key does not exist their conversion is done with type "scalar".
+
+[para] The keys of [arg value] themselves are always converted with
+type "scalar".
+
+[para] The converter starts a mapping in the writer object, then converts
+all dictionary elements (keys, and values), and at last ends the mapping
+in the writer.
+
+[list_end]
+
+[section {The Writer Object API}]
+
+This section is only relevant to users wishing to write their own type
+conversions. See the command [cmd {tclyaml write deftype}] above, also.
+
+[para] Here we are documenting the instance API of the low-level object
+holding the YAML structures we wish to generate. Construction and
+destruction of these instances is done internally by the package as needed
+and the relevant APIs are not documented. Neither are the instance methods
+reserved for use by the package internals.
+
+[list_begin definitions]
+
+[call [arg writer] [method alias] [arg anchor]]
+
+%%TODO%% method - alias - description
+
+[list_begin arguments]
+[arg_def ?? anchor]   %%TODO%% description
+[list_end]
+
+[call [arg writer] [method sequence-start] \
+     [opt [arg anchor]] \
+     [opt [arg tag]] \
+     [opt [arg implicit]]]
+
+This method starts a sequence (list) of yaml values.
+
+[para] After this method the user has to issue calls for
+each value in the sequence, followed lastly by a call to
+[method sequence-end] (see below), to close it.
+
+[list_begin arguments]
+[arg_def ??      anchor]   %%TODO%% description
+[arg_def ??      tag]      %%TODO%% description
+[arg_def boolean implicit] %%TODO%% description
+[list_end]
+
+[call [arg writer] [method sequence-end]]
+
+This method is the complement to [method sequence-start], above.
+Calling it closes the currently open sequence (which may be nested
+in other sequences, mappings, etc). Calling it while not within
+an open sequence is an error.
+
+[call [arg writer] [method mapping-start] \
+     [opt [arg anchor]] \
+     [opt [arg tag]] \
+     [opt [arg implicit]]]
+
+The method starts a mapping (dictionary) of yaml values.
+
+[para] After this method the user has to issue calls for
+each key and value in the mapping, followed lastly by a call to
+[method mapping-end] (see below), to close it.
+
+[list_begin arguments]
+[arg_def ??      anchor]   %%TODO%% description
+[arg_def ??      tag]      %%TODO%% description
+[arg_def boolean implicit] %%TODO%% description
+[list_end]
+
+[call [arg writer] [method mapping-end]]
+
+This method is the complement to [method mapping-start], above.
+Calling it closes the currently open mapping (which may be nested
+in other sequences, mappings, etc). Calling it while not within
+an open mapping is an error.
+
+[call [arg writer] [method scalar] \
+     [arg value] \
+     [opt [arg anchor]] \
+     [opt [arg tag]] \
+     [opt [arg plain]] \
+     [opt [arg quoted]]]
+
+This method adds a single scalar [arg value] to the yaml structure,
+i.e. a string, roughly.
+
+[list_begin arguments]
+[arg_def ??      anchor]   %%TODO%% description
+[arg_def ??      tag]      %%TODO%% description
+[arg_def boolean plain]    %%TODO%% description
+[arg_def boolean quoted]   %%TODO%% description
+[list_end]
+
+[call [arg writer] [method blockstyle] [arg style]]
+
+These methods set the currently active formatting style for blocks
+(sequences, mappings). The active style applies only to blocks
+started after it was set. A block opened, but not yet closed during
+a style change is [emph not] affected by that change.
+
+[para] The default, i.e. initial style is "any".
+[para] The available styles are:
+
+[list_begin definitions]
+[def any]   %%TODO%% description
+[def block] %%TODO%% description
+[def flow]  %%TODO%% description
+[list_end]
+
+[call [arg writer] [method scalarstyle] [arg style]]
+
+These methods set the currently active formatting style for scalar
+values. The active style applies only to scalars added after it was
+set.
+
+[para] The default, i.e. initial style is "any".
+[para] The available styles are
+
+[list_begin definitions]
+[def any]     %%TODO%% description
+[def plain]   %%TODO%% description
+[def single]  %%TODO%% description
+[def double]  %%TODO%% description
+[def literal] %%TODO%% description
+[def folded]  %%TODO%% description
+[list_end]
+
+[list_end]
+
+[include include/feedback.inc]
+[manpage_end]
+

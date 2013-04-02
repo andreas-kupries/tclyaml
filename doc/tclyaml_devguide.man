@@ -1,0 +1,140 @@
+[comment {-*- tcl -*- doctools manpage}]
+[manpage_begin tclyaml_devguide n 1]
+[include include/module.inc]
+[titledesc {TclYAML - The Developer's Guide}]
+[description]
+[include include/welcome.inc]
+
+[para] This document is a guide for developers working on TclYAML,
+i.e. maintainers fixing bugs, extending the package's functionality,
+etc.
+
+[para]
+
+Please read
+
+[list_begin enum]
+[enum] [term {TclYAML - License}],
+[enum] [term {TclYAML - How To Get The Sources}], and
+[enum] [term {TclYAML - The Installer's Guide}]
+[list_end]
+
+first, if that was not done already.
+
+Here we assume that the sources are already available in a directory
+of your choice, and that you not only know how to build and install
+them, but also have all the necessary requisites to actually do
+so. The guide to the sources in particular also explains which source
+code management system is used, where to find it, how to set it up,
+etc.
+
+[section {Developing for TclYAML}]
+
+[comment @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@]
+[subsection {Directory structure}]
+
+[list_begin definitions][comment {___1___}]
+
+[comment =====================================================================]
+[def Helpers]
+
+[comment =====================================================================]
+[def Documentation]
+
+[list_begin definitions]
+[def [file doc/]]
+
+This directory contains the documentation sources. The texts are written
+in [term doctools] format.
+
+[def [file embedded/]]
+
+This directory contains the documentation converted to regular manpages
+(nroff) and HTML.
+
+It is called embedded because these files, while derived, are part of the
+fossil repository, i.e. embedded into it. This enables fossil to access
+and display these files when serving the repositories' web interface.
+The "Command Reference" link at
+
+[uri http://chiselapp.com/user/andreas_kupries/repository/tclyaml/home]
+
+is, for example, accessing the generated HTML.
+
+[list_end]
+
+[comment =====================================================================]
+[def {Package Code, General structure}]
+
+[list_begin definitions]
+[def [file tclyaml.tcl]]
+
+This is the master file of the package. Based on [cmd critcl] (v3.1) it
+contain alls the necessary declarations to build the package.
+
+[def [file policy.tcl]]
+
+This is the companions to the [file tclyaml.tcl] file which implements
+the higher-level interfaces on top of the C-based primitive
+operations, and determines policies.
+
+[para]
+
+The documentation (see [file doc/]) mainly describes the higher-level API,
+plus the few primitives which are passed through unchanged, i.e. without
+getting wrapped into Tcl procedures.
+
+[def [file ly_global.tcl]]
+
+Common global code useful to both parsing and generator sides.
+Mainly the conversion of style values from and to Tcl strings.
+
+[def [file ly_emitter.tcl]]
+
+The generator side of the package, a [package critcl::class]-based
+class whose instances can convert various Tcl data structures into
+proper YAML. This class is internal, the user only sees regular Tcl
+commands, which instantiate and destroy emitter objects as needed.
+
+[def [file ly_parser.tcl]]
+
+The low-level commands for parsing YAML, returning it in the form
+of various Tcl data structures. Plain commands, not object-based.
+
+
+[def [file libyaml/]]
+
+A copy of the libyaml 0.4.1 sources.
+Built as part of TclYAML.
+
+[list_end]
+
+[comment =====================================================================]
+[def {Package Code, Per Package}]
+
+[list_begin definitions]
+
+[def [package tclyaml]]
+
+[list_begin definitions]
+[def [file tclyaml.tcl]]
+[def [file policy.tcl]]
+[def [file ly_emitter.tcl]]
+[def [file ly_global.tcl]]
+[def [file ly_parser.tcl]]
+[list_end]
+
+
+[def [package libyaml]]
+
+[list_begin definitions]
+[def [file libyaml/]]
+[list_end]
+
+
+[list_end]
+
+[list_end][comment {___1___}]
+
+[include include/feedback.inc]
+[manpage_end]

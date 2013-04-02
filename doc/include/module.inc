@@ -1,0 +1,8 @@
+[comment {--- Standard header for all manpages in this module --}]
+[copyright {2012 Andreas Kupries}]
+[copyright {2012 Documentation, Andreas Kupries}]
+[moddesc   {TclYAML}]
+[keywords YAML {markup language} serialization]
+[require Tcl 8.5]
+[require tclyaml [opt 0.1]]
+[category {3rd party library binding}]
