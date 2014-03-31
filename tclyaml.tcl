@@ -3,7 +3,7 @@
 # Note that this doesn't export the libyaml C API as stubs.
 # It directly exposes libyaml functionality to Tcl script.
 #
-# (c) 2012 Andreas Kupries http://wiki.tcl.tk/andreas%20kupries
+# (c) 2012-2014 Andreas Kupries http://wiki.tcl.tk/andreas%20kupries
 #
 
 # # ## ### ##### ######## #############
@@ -138,7 +138,7 @@ if {![critcl::load]} {
 
 # # ## ### ##### ######## #############
 
-package provide tclyaml 0.1
+package provide tclyaml 0.2
 return
 
 # vim: set sts=4 sw=4 tw=80 et ft=tcl:
