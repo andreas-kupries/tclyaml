@@ -151,15 +151,16 @@ The current mapping ends. No details.
 
 [call [cmd {tclyaml write channel}] [arg spec] [arg chan] [arg value]]
 [call [cmd {tclyaml write file}]    [arg spec] [arg path] [arg value]]
+[call [cmd {tclyaml write string}]  [arg spec]            [arg value]]
 
-These two commands convert the Tcl data structure [arg value] into YAML, under
+These three commands convert the Tcl data structure [arg value] into YAML, under
 the guidance of the type information in [arg spec], which describes the expected
 structure of the [arg value], i.e. essentially provides type annotation/tagging
 of the [arg value], but separate from the value itself.
 
 [para] The resulting YAML is written to a channel ([arg chan], expected to be
-open for writing), or file ([arg path]). For the latter, an existing file is
-overwritten.
+open for writing), a file ([arg path]), or returned as the result of the command.
+For files, an existing file is overwritten.
 
 [para] The syntax of structure [arg spec]'ification is:
 
@@ -237,6 +238,22 @@ package.
 This argument holds the Tcl structure to convert.
 
 [list_end][comment {-- arguments}]
+
+
+
+[call [cmd {tclyaml writeTags channel}] [arg chan] [arg value]]
+[call [cmd {tclyaml writeTags file}]    [arg path] [arg value]]
+[call [cmd {tclyaml writeTags string}]             [arg value]]
+
+These three commands convert the Tcl data structure [arg value] into YAML.
+Instead of taking a separate structure holding the necessary type information
+these commands expected a data structure where all elements are [term pairs]
+of type and a value proper for that type. In other words, the type tags are part
+of the incoming [arg value].
+
+[para] The resulting YAML is written to a channel ([arg chan], expected to be
+open for writing), a file ([arg path]), or returned as the result of the command.
+For files, an existing file is overwritten.
 
 [list_end]
 

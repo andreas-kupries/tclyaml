@@ -19,12 +19,12 @@ namespace eval ::tclyaml {
     }
 
     namespace eval write {
-	namespace export channel file deftype
+	namespace export channel file string deftype
 	namespace ensemble create
     }
 
     namespace eval writeTags {
-	namespace export channel file
+	namespace export channel file string
 	namespace ensemble create
     }
 
@@ -119,7 +119,7 @@ oo::class create ::tclyaml::reader {
     method scalar {details} {
 	# details = (
 	#   anchor          -> string
-	#   tag            -> string
+	#   tag             -> string
 	#   scalar          -> string
 	#   plain-implicit  -> bool
 	#   quoted-implicit -> bool
@@ -217,7 +217,7 @@ oo::class create ::tclyaml::taggedreader {
     method scalar {details} {
 	# details = (
 	#   anchor          -> string
-	#   tag            -> string
+	#   tag             -> string
 	#   scalar          -> string
 	#   plain-implicit  -> bool
 	#   quoted-implicit -> bool
@@ -348,6 +348,10 @@ proc ::tclyaml::writeTags::file {path value} {
     return
 }
 
+proc ::tclyaml::writeTags::string {value} {
+    return [Core $value]
+}
+
 proc ::tclyaml::writeTags::Core {value} {
     set writer [::tclyaml::writer new]
 
@@ -408,6 +412,10 @@ proc ::tclyaml::write::file {def path value} {
     puts -nonewline $chan $data
     close $chan
     return
+}
+
+proc ::tclyaml::write::string {def value} {
+    return [Core $def $value]
 }
 
 proc ::tclyaml::write::deftype {name arguments body} {
