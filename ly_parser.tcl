@@ -234,7 +234,7 @@ critcl::ccode {
     {
 	char buf [60];
 
-	sprintf (buf, "line %d, column %d",
+	sprintf (buf, "line %ld, column %ld",
 		 yp->problem_mark.line,
 		 yp->problem_mark.column);
 
@@ -244,7 +244,7 @@ critcl::ccode {
 			  NULL);
 
 	if (yp->context) {
-	    sprintf (buf, "line %d column %d",
+	    sprintf (buf, "line %ld column %ld",
 		     yp->context_mark.line,
 		     yp->context_mark.column);
 

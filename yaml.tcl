@@ -1,6 +1,6 @@
 # -*- tcl -*-
 # # ## ### ##### ######## ############# #####################
-## Utility commands for prcessing yaml files.
+## Utility commands for processing yaml files.
 ## Tagged structures etc.
 
 # # ## ### ##### ######## ############# #####################

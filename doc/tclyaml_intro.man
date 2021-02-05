@@ -1,5 +1,6 @@
 [comment {-*- tcl -*- doctools manpage}]
-[manpage_begin tclyaml_introduction n 1]
+[include include/version.inc]
+[manpage_begin tclyaml_introduction n [vset VERSION]]
 [include include/module.inc]
 [titledesc {TclYAML - Introduction to TclYAML}]
 [description]

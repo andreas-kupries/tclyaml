@@ -1,28 +1,89 @@
-From: Kirill Simonov <xi@resolvent.net>
+From: Tina Müller <post@tinita.de>
 To: yaml-core@lists.sourceforge.net
-Subject: LibYAML-0.1.4: A minor bugfix release
+Subject: [ANN] LibYAML-0.2.5: A new release
 
-This is a minor bugfix release of LibYAML, a YAML parser and emitter
-written in C:
+=========================
+ Announcing LibYAML-0.2.5
+=========================
 
-* Fixed a bug that prevented an empty mapping being used as a simple key
-  (thank to spitzak(at)rhythm(dot)com).
-* Fixed pointer overflow when calculating the position of a potential
-  simple key (thank to ppelletier(at)oblong(dot)com).
-* Fixed yaml.dll not exporting any symbols
-  (thank to pxn11432(at)nifty(dot)com).
-* Added pkg-config support (thank to rainwoodman(at)gmail(dot)com).
+A new release of LibYAML is now available:
+https://github.com/yaml/libyaml/tree/0.2.5
 
-LibYAML homepage:   http://pyyaml.org/wiki/LibYAML
-TAR.GZ package:     http://pyyaml.org/download/libyaml/yaml-0.1.4.tar.gz
-SVN repository:     http://svn.pyyaml.org/libyaml/branches/stable
-Bug tracker:        http://pyyaml.org/newticket?component=libyaml
+The LibYAML project is now maintained by the YAML community. Planning happens
+on the #yaml-dev and #libyaml IRC channels on irc.freenode.net.
 
-The library is functionally complete, but the documentation is scarce
-and the API may change.  For more information, you may check the project
-homepage, the doxygen-generated documentation in the `doc` directory of
-the source distribution, and examples in the `tests` directory.
 
-LibYAML is written by Kirill Simonov <xi@resolvent.net> and released
-under the MIT license; see the file LICENSE for more details.
+Changes
+=======
 
+
+https://github.com/yaml/libyaml/pull/187
+Add -h and --flow (on|off|keep) to run-*-test-suite
+
+https://github.com/yaml/libyaml/pull/182
+Remove unnecessary include and malloc
+
+https://github.com/yaml/libyaml/pull/177
+Add specific files back to .gitignore
+
+https://github.com/yaml/libyaml/pull/181
+Output error position in run-parser-test-suite.c
+
+https://github.com/yaml/libyaml/pull/105
+Allow question marks in plain scalars in flow collections
+
+https://github.com/yaml/libyaml/pull/186
+Emitter: Don't output trailing space for empty scalar nodes
+
+https://github.com/yaml/libyaml/pull/185
+Emitter: Output space after an alias mapping key
+
+https://github.com/yaml/libyaml/pull/191
+A couple patches to improve test suite support
+
+
+Resources
+=========
+
+LibYAML IRC Channel:  #libyaml on irc.freenode.net
+LibYAML homepage:     https://github.com/yaml/libyaml
+Source download:      https://github.com/yaml/libyaml/archive/dist-0.2.3.zip
+GitHub repository:    https://github.com/yaml/libyaml
+Bug tracking:          https://github.com/yaml/libyaml/issues
+
+YAML homepage: http://yaml.org/
+YAML-core mailing list: http://lists.sourceforge.net/lists/listinfo/yaml-core
+
+
+About LibYAML
+=============
+
+YAML is a data serialization format designed for human readability and
+interaction with scripting languages.
+
+LibYAML is a C library for parsing and emitting YAML. LibYAML is the underlying
+parser/emitter code for YAML frameworks in many programming languages.
+
+
+Maintainers
+===========
+
+The following people are responsible for maintaining LibYAML:
+
+* Ingy döt Net
+
+and many thanks to all who have contribributed!
+See: https://github.com/yaml/libyaml/pulls
+
+
+Copyright
+=========
+
+Copyright (c) 2017-2020 Ingy döt Net <ingy@ingy.net>
+Copyright (c) 2006-2016 Kirill Simonov <xi@resolvent.net>
+
+The LibYAML module was written by Kirill Simonov.
+It is currently maintained by the YAML community.
+
+LibYAML is released under the MIT license.
+See the file LICENSE for more details.

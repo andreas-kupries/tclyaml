@@ -4,6 +4,7 @@
 # It directly exposes libyaml functionality to Tcl script.
 #
 # (c) 2012-2014 Andreas Kupries http://wiki.tcl.tk/andreas%20kupries
+# (c) 2021      Andreas Kupries http://wiki.tcl.tk/andreas%20kupries
 #
 
 # # ## ### ##### ######## #############
@@ -98,9 +99,9 @@ proc grep {glob lines} {
     #puts patch'=$patch
 
     # And push the configuration into the build setup.
-    critcl::cflags -DYAML_VERSION_MAJOR=\"$major\"
-    critcl::cflags -DYAML_VERSION_MINOR=\"$minor\"
-    critcl::cflags -DYAML_VERSION_PATCH=\"$patch\"
+    critcl::cflags -DYAML_VERSION_MAJOR=$major
+    critcl::cflags -DYAML_VERSION_MINOR=$minor
+    critcl::cflags -DYAML_VERSION_PATCH=$patch
     critcl::cflags -DYAML_VERSION_STRING=\"$major.$minor.$patch\"
 
     critcl::msg -nonewline " (using libyaml $major.$minor.$patch)"
@@ -138,7 +139,7 @@ if {![critcl::load]} {
 
 # # ## ### ##### ######## #############
 
-package provide tclyaml 0.3
+package provide tclyaml 0.4
 return
 
 # vim: set sts=4 sw=4 tw=80 et ft=tcl:

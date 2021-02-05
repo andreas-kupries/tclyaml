@@ -1,5 +1,6 @@
 [comment {-*- tcl -*- doctools manpage}]
-[manpage_begin tclyaml n 0.1]
+[include include/version.inc]
+[manpage_begin tclyaml n [vset VERSION]]
 [include include/module.inc]
 [titledesc {TclYAML - API}]
 [description]
@@ -11,6 +12,17 @@ i.e. the API a user will see, and use.
 This API falls into two big sections, for the generation of YAML from Tcl
 data structures on one side, and the parsing of YAML into Tcl structures on
 the other.
+
+[comment {* * ** *** ***** ******** ************* *********************}]
+[section Introspection]
+
+[list_begin definitions]
+[call [cmd {tclyaml version}]]
+
+This command returns a string containing the version number of the
+libyaml library wrapped and provided by this Tcl package.
+
+[list_end]
 
 [comment {* * ** *** ***** ******** ************* *********************}]
 [section {Parsing YAML}]

@@ -28,7 +28,7 @@ namespace eval ::tclyaml {
 	namespace ensemble create
     }
 
-    namespace export read readTags write writeTags
+    namespace export read readTags write writeTags version
     namespace ensemble create
 }
 
