@@ -38,7 +38,7 @@ critcl::description {
 }
 
 critcl::subject yaml {parsing yaml} {emitting yaml} {writing yaml}
-critcl::subject parser json serialization deserialization 
+critcl::subject parser json serialization deserialization
 critcl::subject {data exchange format} {transfer format}
 
 # # ## ### ##### ######## #############

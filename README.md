@@ -30,9 +30,9 @@ Please note the :warning: at the top.
 
 # Guides and other Documentation
 
-   * [Command Reference](embedded/www/doc/files/tclyaml.html)
-   * [License](embedded/www/doc/files/tclyaml_license.html)
-   * [How To Get The Sources](embedded/www/doc/files/tclyaml_sources.html)
-   * [How To Build And Install TclYAML](embedded/www/doc/files/tclyaml_installer.html)
-   * [The Developer's Guide](embedded/www/doc/files/tclyaml_devguide.html)
-   * [The Release Manager's Guide](embedded/www/doc/files/tclyaml_releasemgr.html)
+   * [Command Reference](embedded/md/doc/files/tclyaml.md)
+   * [License](embedded/md/doc/files/tclyaml_license.md)
+   * [How To Get The Sources](embedded/md/doc/files/tclyaml_sources.md)
+   * [How To Build And Install TclYAML](embedded/md/doc/files/tclyaml_installer.md)
+   * [The Developer's Guide](embedded/md/doc/files/tclyaml_devguide.md)
+   * [The Release Manager's Guide](embedded/md/doc/files/tclyaml_releasemgr.md)

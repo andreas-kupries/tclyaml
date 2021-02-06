@@ -62,7 +62,7 @@ where [file /path/to/tclsh8.5] is the tclsh of your Tcl installation, and
 [para]
 
 This builds all packages and then places them in a directory where the
-[cmd tclsh8.5] will find them. 
+[cmd tclsh8.5] will find them.
 
 [para]
 
