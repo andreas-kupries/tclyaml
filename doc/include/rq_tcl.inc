@@ -16,8 +16,8 @@ by yurself.
 ActiveTcl 8.5 distribution during development of the binding, as I am
 most familiar with it.
 
-[para] [emph {(Disclosure: I, Andreas Kupries, work for ActiveState,
-maintaining ActiveTcl and TclDevKit for them).}]
+[para] [emph {(Disclosure: I, Andreas Kupries, worked for ActiveState
+until 2015, maintaining ActiveTcl and TclDevKit for them).}]
 
 [para] This distribution can be found at
 [uri http://www.activestate.com/activetcl]. Retrieve the archive of

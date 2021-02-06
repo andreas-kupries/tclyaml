@@ -97,8 +97,8 @@ from a distribution\-independent vendor, or built by yurself\.
 Myself, I used [ActiveState's](http://www\.activestate\.com) ActiveTcl 8\.5
 distribution during development of the binding, as I am most familiar with it\.
 
-*\(Disclosure: I, Andreas Kupries, work for ActiveState, maintaining ActiveTcl
-and TclDevKit for them\)\.*
+*\(Disclosure: I, Andreas Kupries, worked for ActiveState until 2015,
+maintaining ActiveTcl and TclDevKit for them\)\.*
 
 This distribution can be found at
 [http://www\.activestate\.com/activetcl](http://www\.activestate\.com/activetcl)\.
