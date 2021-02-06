@@ -43,8 +43,8 @@ package require tclyaml ?0\.4?
 
 # <a name='description'></a>DESCRIPTION
 
-Welcome to TclYAML, a binding to the C\-based libyaml parser library for
-[YAML](http://yaml\.org) \(YAML Ain't Markup Language\)\.
+Welcome to TclYAML, a binding to the C\-based libyaml parser library for [YAML
+Ain't Markup Language](http://yaml\.org)\.
 
 The audience of this document is anyone wishing to either have just a look at
 TclYAML's source code, or build the packages, or to extend and modify them\.
@@ -62,7 +62,11 @@ respectively\.
 # <a name='section2'></a>Source Location
 
 The official repository for TclYAML can be found at
-[http://chiselapp\.com/user/andreas\_kupries/repository/tclyaml](http://chiselapp\.com/user/andreas\_kupries/repository/tclyaml)
+[https://core\.tcl\-lang\.org/akupries/tclyaml](https://core\.tcl\-lang\.org/akupries/tclyaml),
+with mirrors at
+[https://chiselapp\.com/user/andreas\_kupries/repository/tclyaml](https://chiselapp\.com/user/andreas\_kupries/repository/tclyaml)
+and
+[https://github\.com/andreas\-kupries/tclyaml](https://github\.com/andreas\-kupries/tclyaml)\.
 
 # <a name='section3'></a>Retrieval
 
@@ -84,12 +88,12 @@ revision, the easiest way of retrieving it is to:
 # <a name='section4'></a>Source Code Management
 
 For the curious \(or a developer\-to\-be\), the sources are managed by the [Fossil
-SCM](http://www\.fossil\-scm\.org)\. Binaries for popular platforms can be found
-directly at its [download page](http://www\.fossil\-scm\.org/download\.html)\.
+SCM](https://www\.fossil\-scm\.org)\. Binaries for popular platforms can be found
+directly at its [download page](https://www\.fossil\-scm\.org/download\.html)\.
 
 With that tool available the full history can be retrieved via:
 
-    fossil clone  http://chiselapp\.com/user/andreas\_kupries/repository/tclyaml  tclyaml\.fossil
+    fossil clone  https://core\.tcl\-lang\.org/akupries/tclyaml  tclyaml\.fossil
 
 followed by
 
@@ -103,9 +107,8 @@ to get a checkout of the head of the trunk\.
 
 This document, and the package it describes, will undoubtedly contain bugs and
 other problems\. Please report such at the [TclYAML
-Tracker](http://chiselapp\.com/user/andreas\_kupries/repository/tclyaml)\.
-Please also report any ideas for enhancements you may have for either package
-and/or documentation\.
+Tracker](https://core\.tcl\-lang\.org/akupries/tclyaml)\. Please also report any
+ideas for enhancements you may have for either package and/or documentation\.
 
 # <a name='keywords'></a>KEYWORDS
 

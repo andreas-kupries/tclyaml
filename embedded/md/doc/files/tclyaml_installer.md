@@ -47,8 +47,8 @@ package require tclyaml ?0\.4?
 
 # <a name='description'></a>DESCRIPTION
 
-Welcome to TclYAML, a binding to the C\-based libyaml parser library for
-[YAML](http://yaml\.org) \(YAML Ain't Markup Language\)\.
+Welcome to TclYAML, a binding to the C\-based libyaml parser library for [YAML
+Ain't Markup Language](http://yaml\.org)\.
 
 The audience of this document is anyone wishing to build the packages, for
 either themselves, or others\.
@@ -94,16 +94,16 @@ Tcl 8\.5, or higher\.
 This may be a Tcl installation provided by your operating system distribution,
 from a distribution\-independent vendor, or built by yurself\.
 
-Myself, I used [ActiveState's](http://www\.activestate\.com) ActiveTcl 8\.5
-distribution during development of the binding, as I am most familiar with it\.
+Myself, I used [ActiveState](https://www\.activestate\.com)'s
+[ActiveTcl](https://www\.activestate\.com/activetcl) 8\.5 distribution during
+development of the binding, as I am most familiar with it\.
 
 *\(Disclosure: I, Andreas Kupries, worked for ActiveState until 2015,
 maintaining ActiveTcl and TclDevKit for them\)\.*
 
 This distribution can be found at
-[http://www\.activestate\.com/activetcl](http://www\.activestate\.com/activetcl)\.
-Retrieve the archive of ActiveTcl 8\.5 for your platform and install it as
-directed by ActiveState\.
+[ActiveTcl](https://www\.activestate\.com/activetcl)\. Retrieve the archive of
+ActiveTcl 8\.5 for your platform and install it as directed by ActiveState\.
 
 Assuming that ActiveTcl got installed I usually run the command
 
@@ -121,23 +121,19 @@ required, and install only these using
     teacup install $packagename
 
 Both __teacup__ commands above assume that ActiveState's TEApot repository
-at [http://teapot\.activestate\.com](http://teapot\.activestate\.com) is in the
-list of repositories accessible to __teacup__\. This is automatically ensured
-for the ActiveTcl distribution\. Others may have to run
+at [https://teapot\.activestate\.com](https://teapot\.activestate\.com) is in
+the list of repositories accessible to __teacup__\. This is automatically
+ensured for the ActiveTcl distribution\. Others may have to run
 
     teacup archive add http://teapot\.activestate\.com
 
 to make this happen\.
 
-For those wishing to build Tcl/Tk on their own, their sources can be found at
+For those wishing to build Tcl on their own, its sources can be found at
 
   - Tcl
 
-    [http://core\.tcl\.tk/tcl/](http://core\.tcl\.tk/tcl/)
-
-  - Tk
-
-    [http://core\.tcl\.tk/tk/](http://core\.tcl\.tk/tk/)
+    [https://core\.tcl\-lang\.org/tcl](https://core\.tcl\-lang\.org/tcl)
 
 ## <a name='subsection2'></a>CriTcl
 
@@ -147,10 +143,11 @@ TclYAML's build systems accepts it either as an application found in the PATH,
 or as a Tcl package available to the __tclsh__ used to run their build &
 installation processes\.
 
-TclYAML *must* have version 3\.1, and critcl::class version 1\.0\.3
+TclYAML *must* have at least version 3\.1 of critcl itself, and at least
+version 1\.0\.3 of __critcl::class__\.
 
 The relevant github repository can be found at
-[http://andreas\-kupries\.github\.com/critcl](http://andreas\-kupries\.github\.com/critcl)\.
+[Critcl](https://github\.com/andreas\-kupries/critcl)\.
 
 The relevant repository branch is *master*\.
 
@@ -169,7 +166,11 @@ This package must be available to the __tclsh__ used to run TclYAML's build
 & installation process\.
 
 The package's fossil repository can be found at
-[http://chiselapp\.com/user/andreas\_kupries/repository/Kettle](http://chiselapp\.com/user/andreas\_kupries/repository/Kettle)\.
+[https://core\.tcl\-lang\.org/akupries/kettle](https://core\.tcl\-lang\.org/akupries/kettle)\.
+Alternate locations are
+[https://chiselapp\.com/user/andreas\_kupries/repository/Kettle](https://chiselapp\.com/user/andreas\_kupries/repository/Kettle)
+and
+[https://github\.com/andreas\-kupries/kettle](https://github\.com/andreas\-kupries/kettle)\.
 
 The relevant repository branch is *trunk*\.
 
@@ -177,7 +178,7 @@ Kettle has a build and installation guide much like this one for TclYAML, which
 can be found at the above site and explains how to retrieve its sources and
 build the package, which dependencies are required, etc\. The direct link to this
 guide is
-[http://chiselapp\.com/user/andreas\_kupries/repository/Kettle/doc/tip/embedded/www/doc/files/kettle\_installer\.html](http://chiselapp\.com/user/andreas\_kupries/repository/Kettle/doc/tip/embedded/www/doc/files/kettle\_installer\.html)
+[https://core\.tcl\-lang\.org/akupries/kettle/doc/trunk/embedded/md/doc/files/kettle\_installer\.md](https://core\.tcl\-lang\.org/akupries/kettle/doc/trunk/embedded/md/doc/files/kettle\_installer\.md)\.
 
 Its instructions will not be repeated here\. If there are problems with their
 directions please file a bug against the Kettle project, and not TclYAML\.
@@ -210,9 +211,8 @@ To get help about the methods of "build\.tcl", and their complete syntax, invoke
 
 This document, and the package it describes, will undoubtedly contain bugs and
 other problems\. Please report such at the [TclYAML
-Tracker](http://chiselapp\.com/user/andreas\_kupries/repository/tclyaml)\.
-Please also report any ideas for enhancements you may have for either package
-and/or documentation\.
+Tracker](https://core\.tcl\-lang\.org/akupries/tclyaml)\. Please also report any
+ideas for enhancements you may have for either package and/or documentation\.
 
 # <a name='keywords'></a>KEYWORDS
 

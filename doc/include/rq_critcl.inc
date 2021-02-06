@@ -7,10 +7,10 @@ To build TclYAML the tool [syscmd critcl] is required.
 found in the PATH, or as a Tcl package available to the [syscmd tclsh]
 used to run their build & installation processes.
 
-[para] TclYAML [emph must] have version 3.1, and critcl::class version 1.0.3
+[para] TclYAML [emph must] have at least version 3.1 of critcl itself,
+and at least version 1.0.3 of [package critcl::class].
 
-[para] The relevant github repository can be found at
-[uri http://andreas-kupries.github.com/critcl].
+[para] The relevant github repository can be found at [vset critcl].
 
 [para] The relevant repository branch is [emph master].
 

@@ -283,7 +283,7 @@ package require \fBtclyaml  ?0\&.4?\fR
 .SH DESCRIPTION
 .PP
 Welcome to TclYAML, a binding to the C-based libyaml parser
-library for \fIYAML\fR [http://yaml\&.org] (YAML Ain't Markup Language)\&.
+library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
 .PP
 The audience of this document is anyone wishing to build the
 packages, for either themselves, or others\&.
@@ -329,17 +329,16 @@ This may be a Tcl installation provided by your operating
 system distribution, from a distribution-independent vendor, or built
 by yurself\&.
 .PP
-Myself, I used \fIActiveState's\fR [http://www\&.activestate\&.com]
-ActiveTcl 8\&.5 distribution during development of the binding, as I am
-most familiar with it\&.
+Myself, I used \fIActiveState\fR [https://www\&.activestate\&.com]'s \fIActiveTcl\fR [https://www\&.activestate\&.com/activetcl] 8\&.5
+distribution during development of the binding, as I am most familiar
+with it\&.
 .PP
 \fI(Disclosure: I, Andreas Kupries, worked for ActiveState
 until 2015, maintaining ActiveTcl and TclDevKit for them)\&.\fR
 .PP
-This distribution can be found at
-\fIhttp://www\&.activestate\&.com/activetcl\fR\&. Retrieve the archive of
-ActiveTcl 8\&.5 for your platform and install it as directed by
-ActiveState\&.
+This distribution can be found at \fIActiveTcl\fR [https://www\&.activestate\&.com/activetcl]\&. Retrieve
+the archive of ActiveTcl 8\&.5 for your platform and install it as
+directed by ActiveState\&.
 .PP
 Assuming that ActiveTcl got installed I usually run the command
 .CS
@@ -364,9 +363,9 @@ required, and install only these using
 .CE
 .PP
 Both \fBteacup\fR commands above assume that ActiveState's
-TEApot repository at \fIhttp://teapot\&.activestate\&.com\fR is in the
-list of repositories accessible to \fBteacup\fR\&. This is automatically
-ensured for the ActiveTcl distribution\&. Others may have to run
+TEApot repository at \fIhttps://teapot\&.activestate\&.com\fR is in the list of repositories
+accessible to \fBteacup\fR\&. This is automatically ensured for the
+ActiveTcl distribution\&. Others may have to run
 .CS
 
 
@@ -375,14 +374,11 @@ ensured for the ActiveTcl distribution\&. Others may have to run
 .CE
 to make this happen\&.
 .PP
-For those wishing to build Tcl/Tk on their own, their sources
-can be found at
+For those wishing to build Tcl on their own, its sources can be
+found at
 .TP
 Tcl
-\fIhttp://core\&.tcl\&.tk/tcl/\fR
-.TP
-Tk
-\fIhttp://core\&.tcl\&.tk/tk/\fR
+\fIhttps://core\&.tcl-lang\&.org/tcl\fR
 .PP
 .SS CRITCL
 To build TclYAML the tool \fBcritcl\fR is required\&.
@@ -391,10 +387,10 @@ TclYAML's build systems accepts it either as an application
 found in the PATH, or as a Tcl package available to the \fBtclsh\fR
 used to run their build & installation processes\&.
 .PP
-TclYAML \fImust\fR have version 3\&.1, and critcl::class version 1\&.0\&.3
+TclYAML \fImust\fR have at least version 3\&.1 of critcl itself,
+and at least version 1\&.0\&.3 of \fBcritcl::class\fR\&.
 .PP
-The relevant github repository can be found at
-\fIhttp://andreas-kupries\&.github\&.com/critcl\fR\&.
+The relevant github repository can be found at \fICritcl\fR [https://github\&.com/andreas-kupries/critcl]\&.
 .PP
 The relevant repository branch is \fImaster\fR\&.
 .PP
@@ -412,15 +408,15 @@ This package must be available to the \fBtclsh\fR used to
 run TclYAML's build & installation process\&.
 .PP
 The package's fossil repository can be found at
-\fIhttp://chiselapp\&.com/user/andreas_kupries/repository/Kettle\fR\&.
+\fIhttps://core\&.tcl-lang\&.org/akupries/kettle\fR\&. Alternate locations are \fIhttps://chiselapp\&.com/user/andreas_kupries/repository/Kettle\fR and
+\fIhttps://github\&.com/andreas-kupries/kettle\fR\&.
 .PP
 The relevant repository branch is \fItrunk\fR\&.
 .PP
 Kettle has a build and installation guide much like this one
 for TclYAML, which can be found at the above site and explains how to
 retrieve its sources and build the package, which dependencies are
-required, etc\&. The direct link to this guide is
-\fIhttp://chiselapp\&.com/user/andreas_kupries/repository/Kettle/doc/tip/embedded/www/doc/files/kettle_installer\&.html\fR
+required, etc\&. The direct link to this guide is \fIhttps://core\&.tcl-lang\&.org/akupries/kettle/doc/trunk/embedded/md/doc/files/kettle_installer\&.md\fR\&.
 .PP
 Its instructions will not be repeated here\&. If there are
 problems with their directions please file a bug against the Kettle
@@ -458,7 +454,7 @@ syntax, invoke  "\fIbuild\&.tcl\fR" with argument \fBhelp\fR, i\&.e\&., like
 .SH "BUGS, IDEAS, FEEDBACK"
 This document, and the package it describes, will undoubtedly contain
 bugs and other problems\&.
-Please report such at the \fITclYAML Tracker\fR [http://chiselapp\&.com/user/andreas_kupries/repository/tclyaml]\&.
+Please report such at the \fITclYAML Tracker\fR [https://core\&.tcl-lang\&.org/akupries/tclyaml]\&.
 Please also report any ideas for enhancements you may have for either
 package and/or documentation\&.
 .SH KEYWORDS

@@ -41,8 +41,8 @@ package require tclyaml ?0\.4?
 
 # <a name='description'></a>DESCRIPTION
 
-Welcome to TclYAML, a binding to the C\-based libyaml parser library for
-[YAML](http://yaml\.org) \(YAML Ain't Markup Language\)\.
+Welcome to TclYAML, a binding to the C\-based libyaml parser library for [YAML
+Ain't Markup Language](http://yaml\.org)\.
 
 # <a name='section2'></a>Related Documents
 
@@ -70,9 +70,8 @@ parsing and generation sides of libyaml\.
 
 This document, and the package it describes, will undoubtedly contain bugs and
 other problems\. Please report such at the [TclYAML
-Tracker](http://chiselapp\.com/user/andreas\_kupries/repository/tclyaml)\.
-Please also report any ideas for enhancements you may have for either package
-and/or documentation\.
+Tracker](https://core\.tcl\-lang\.org/akupries/tclyaml)\. Please also report any
+ideas for enhancements you may have for either package and/or documentation\.
 
 # <a name='keywords'></a>KEYWORDS
 

@@ -23,7 +23,8 @@ respectively.
 [section {Source Location}]
 
 The official repository for TclYAML can be found at
-[uri http://chiselapp.com/user/andreas_kupries/repository/tclyaml]
+[vset tclyaml/core], with mirrors at [vset tclyaml/chisel] and
+[vset tclyaml/github].
 
 [section Retrieval]
 
@@ -42,10 +43,8 @@ a copy of this revision in the format of your choice.
 [section {Source Code Management}]
 
 For the curious (or a developer-to-be), the sources are managed by the
-[uri http://www.fossil-scm.org {Fossil SCM}].
-
-Binaries for popular platforms can be found directly at its
-[uri http://www.fossil-scm.org/download.html {download page}].
+[vset fossil]. Binaries for popular platforms can be found directly at
+its [vset fossil/get].
 
 [para]
 
@@ -53,7 +52,7 @@ With that tool available the full history can be retrieved via:
 
 [example {
     fossil clone \
-        http://chiselapp.com/user/andreas_kupries/repository/tclyaml \
+	https://core.tcl-lang.org/akupries/tclyaml \
         tclyaml.fossil
 }]
 

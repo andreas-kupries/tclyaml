@@ -283,7 +283,7 @@ package require \fBtclyaml  ?0\&.4?\fR
 .SH DESCRIPTION
 .PP
 Welcome to TclYAML, a binding to the C-based libyaml parser
-library for \fIYAML\fR [http://yaml\&.org] (YAML Ain't Markup Language)\&.
+library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
 .PP
 The audience of this document is anyone wishing to either have
 just a look at TclYAML's source code, or build the packages, or to
@@ -300,7 +300,8 @@ For builders and developers we additionally provide
 respectively\&.
 .SH "SOURCE LOCATION"
 The official repository for TclYAML can be found at
-\fIhttp://chiselapp\&.com/user/andreas_kupries/repository/tclyaml\fR
+\fIhttps://core\&.tcl-lang\&.org/akupries/tclyaml\fR, with mirrors at \fIhttps://chiselapp\&.com/user/andreas_kupries/repository/tclyaml\fR and
+\fIhttps://github\&.com/andreas-kupries/tclyaml\fR\&.
 .SH RETRIEVAL
 Assuming that you simply wish to look at the sources, or build a
 specific revision, the easiest way of retrieving it is to:
@@ -318,15 +319,14 @@ a copy of this revision in the format of your choice\&.
 .PP
 .SH "SOURCE CODE MANAGEMENT"
 For the curious (or a developer-to-be), the sources are managed by the
-\fIFossil SCM\fR [http://www\&.fossil-scm\&.org]\&.
-Binaries for popular platforms can be found directly at its
-\fIdownload page\fR [http://www\&.fossil-scm\&.org/download\&.html]\&.
+\fIFossil SCM\fR [https://www\&.fossil-scm\&.org]\&. Binaries for popular platforms can be found directly at
+its \fIdownload page\fR [https://www\&.fossil-scm\&.org/download\&.html]\&.
 .PP
 With that tool available the full history can be retrieved via:
 .CS
 
 
-    fossil clone  http://chiselapp\&.com/user/andreas_kupries/repository/tclyaml  tclyaml\&.fossil
+    fossil clone  https://core\&.tcl-lang\&.org/akupries/tclyaml  tclyaml\&.fossil
 
 .CE
 followed by
@@ -342,7 +342,7 @@ to get a checkout of the head of the trunk\&.
 .SH "BUGS, IDEAS, FEEDBACK"
 This document, and the package it describes, will undoubtedly contain
 bugs and other problems\&.
-Please report such at the \fITclYAML Tracker\fR [http://chiselapp\&.com/user/andreas_kupries/repository/tclyaml]\&.
+Please report such at the \fITclYAML Tracker\fR [https://core\&.tcl-lang\&.org/akupries/tclyaml]\&.
 Please also report any ideas for enhancements you may have for either
 package and/or documentation\&.
 .SH KEYWORDS

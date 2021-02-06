@@ -12,17 +12,16 @@ as it provides Tcl 8.5, or higher.
 system distribution, from a distribution-independent vendor, or built
 by yurself.
 
-[para] Myself, I used [uri http://www.activestate.com ActiveState's]
-ActiveTcl 8.5 distribution during development of the binding, as I am
-most familiar with it.
+[para] Myself, I used [vset activestate]'s [vset activetcl] 8.5
+distribution during development of the binding, as I am most familiar
+with it.
 
 [para] [emph {(Disclosure: I, Andreas Kupries, worked for ActiveState
 until 2015, maintaining ActiveTcl and TclDevKit for them).}]
 
-[para] This distribution can be found at
-[uri http://www.activestate.com/activetcl]. Retrieve the archive of
-ActiveTcl 8.5 for your platform and install it as directed by
-ActiveState.
+[para] This distribution can be found at [vset activetcl]. Retrieve
+the archive of ActiveTcl 8.5 for your platform and install it as
+directed by ActiveState.
 
 [para] Assuming that ActiveTcl got installed I usually run the command
 
@@ -44,9 +43,9 @@ required, and install only these using
 }]
 
 [para] Both [syscmd teacup] commands above assume that ActiveState's
-TEApot repository at [uri http://teapot.activestate.com] is in the
-list of repositories accessible to [syscmd teacup]. This is automatically
-ensured for the ActiveTcl distribution. Others may have to run
+TEApot repository at [vset teapot] is in the list of repositories
+accessible to [syscmd teacup]. This is automatically ensured for the
+ActiveTcl distribution. Others may have to run
 
 [example {
     teacup archive add http://teapot.activestate.com
@@ -54,10 +53,9 @@ ensured for the ActiveTcl distribution. Others may have to run
 
 to make this happen.
 
-[para] For those wishing to build Tcl/Tk on their own, their sources
-can be found at
+[para] For those wishing to build Tcl on their own, its sources can be
+found at
 
 [list_begin definitions]
-[def Tcl]   [uri http://core.tcl.tk/tcl/]
-[def Tk]    [uri http://core.tcl.tk/tk/]
+[def Tcl] [vset core/tcl]
 [list_end]
