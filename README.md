@@ -35,4 +35,3 @@ Please note the :warning: at the top.
    * [How To Get The Sources](embedded/md/doc/files/tclyaml_sources.md)
    * [How To Build And Install TclYAML](embedded/md/doc/files/tclyaml_installer.md)
    * [The Developer's Guide](embedded/md/doc/files/tclyaml_devguide.md)
-   * [The Release Manager's Guide](embedded/md/doc/files/tclyaml_releasemgr.md)
