@@ -42,8 +42,8 @@ tclyaml\_install\_guide \- TclYAML \- The Installer's Guide
 
 # <a name='synopsis'></a>SYNOPSIS
 
-package require Tcl 8\.5
-package require tclyaml ?0\.4?
+package require Tcl 8\.5  
+package require tclyaml ?0\.4?  
 
 # <a name='description'></a>DESCRIPTION
 
@@ -226,5 +226,5 @@ language](\.\./\.\./index\.md\#markup\_language),
 
 # <a name='copyright'></a>COPYRIGHT
 
-Copyright &copy; 2012\-2014, 2021 Andreas Kupries
+Copyright &copy; 2012\-2014, 2021 Andreas Kupries  
 Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries

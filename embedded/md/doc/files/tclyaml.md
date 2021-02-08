@@ -42,38 +42,38 @@ tclyaml \- TclYAML \- API
 
 # <a name='synopsis'></a>SYNOPSIS
 
-package require Tcl 8\.5
-package require tclyaml ?0\.4?
+package require Tcl 8\.5  
+package require tclyaml ?0\.4?  
 
-[__tclyaml version__](#1)
-[__tclyaml read channel__ *chan*](#2)
-[__tclyaml read file__ *path*](#3)
-[__tclyaml readTags channel__ *chan*](#4)
-[__tclyaml readTags file__ *path*](#5)
-[__tclyaml parse channel__ *channel* *cmd*\.\.\.](#6)
-[__tclyaml write channel__ *spec* *chan* *value*](#7)
-[__tclyaml write file__ *spec* *path* *value*](#8)
-[__tclyaml write string__ *spec* *value*](#9)
-[__tclyaml write deftype__ *name* *arguments* *body*](#10)
-[__tclyaml writeTags channel__ *chan* *value*](#11)
-[__tclyaml writeTags file__ *path* *value*](#12)
-[__tclyaml writeTags string__ *value*](#13)
-[__string__](#14)
-[__scalar__](#15)
-[__list__](#16)
-[__array__](#17)
-[__sequence__](#18)
-[__dict__](#19)
-[__object__](#20)
-[__mapping__](#21)
-[*writer* __alias__ *anchor*](#22)
-[*writer* __sequence\-start__ ?*anchor*? ?*tag*? ?*implicit*?](#23)
-[*writer* __sequence\-end__](#24)
-[*writer* __mapping\-start__ ?*anchor*? ?*tag*? ?*implicit*?](#25)
-[*writer* __mapping\-end__](#26)
-[*writer* __scalar__ *value* ?*anchor*? ?*tag*? ?*plain*? ?*quoted*?](#27)
-[*writer* __blockstyle__ *style*](#28)
-[*writer* __scalarstyle__ *style*](#29)
+[__tclyaml version__](#1)  
+[__tclyaml read channel__ *chan*](#2)  
+[__tclyaml read file__ *path*](#3)  
+[__tclyaml readTags channel__ *chan*](#4)  
+[__tclyaml readTags file__ *path*](#5)  
+[__tclyaml parse channel__ *channel* *cmd*\.\.\.](#6)  
+[__tclyaml write channel__ *spec* *chan* *value*](#7)  
+[__tclyaml write file__ *spec* *path* *value*](#8)  
+[__tclyaml write string__ *spec* *value*](#9)  
+[__tclyaml write deftype__ *name* *arguments* *body*](#10)  
+[__tclyaml writeTags channel__ *chan* *value*](#11)  
+[__tclyaml writeTags file__ *path* *value*](#12)  
+[__tclyaml writeTags string__ *value*](#13)  
+[__string__](#14)  
+[__scalar__](#15)  
+[__list__](#16)  
+[__array__](#17)  
+[__sequence__](#18)  
+[__dict__](#19)  
+[__object__](#20)  
+[__mapping__](#21)  
+[*writer* __alias__ *anchor*](#22)  
+[*writer* __sequence\-start__ ?*anchor*? ?*tag*? ?*implicit*?](#23)  
+[*writer* __sequence\-end__](#24)  
+[*writer* __mapping\-start__ ?*anchor*? ?*tag*? ?*implicit*?](#25)  
+[*writer* __mapping\-end__](#26)  
+[*writer* __scalar__ *value* ?*anchor*? ?*tag*? ?*plain*? ?*quoted*?](#27)  
+[*writer* __blockstyle__ *style*](#28)  
+[*writer* __scalarstyle__ *style*](#29)  
 
 # <a name='description'></a>DESCRIPTION
 
@@ -592,5 +592,5 @@ language](\.\./\.\./index\.md\#markup\_language),
 
 # <a name='copyright'></a>COPYRIGHT
 
-Copyright &copy; 2012\-2014, 2021 Andreas Kupries
+Copyright &copy; 2012\-2014, 2021 Andreas Kupries  
 Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries
