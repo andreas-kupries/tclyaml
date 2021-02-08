@@ -301,7 +301,7 @@ respectively\&.
 .SH "SOURCE LOCATION"
 The official repository for TclYAML can be found at
 \fIhttps://core\&.tcl-lang\&.org/akupries/tclyaml\fR, with mirrors at \fIhttps://chiselapp\&.com/user/andreas_kupries/repository/tclyaml\fR and
-\fIhttps://github\&.com/andreas-kupries/tclyaml\fR\&.
+\fIhttps://github\&.com/andreas-kupries/tclyaml\fR, in case of trouble with the main location\&.
 .SH RETRIEVAL
 Assuming that you simply wish to look at the sources, or build a
 specific revision, the easiest way of retrieving it is to:

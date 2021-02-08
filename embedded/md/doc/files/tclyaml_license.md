@@ -1,13 +1,13 @@
 
 [//000000001]: # (tclyaml\_license \- TclYAML)
 [//000000002]: # (Generated from file 'tclyaml\_license\.man' by tcllib/doctools with format 'markdown')
-[//000000003]: # (Copyright &copy; 2012\-2014, 2021 Andreas Kupries
-Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries)
-[//000000004]: # (tclyaml\_license\(n\) 0\.4 doc "TclYAML")
+[//000000003]: # (Copyright &copy; 2012\-2014, 2021 Andreas Kupries)
+[//000000004]: # (Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries)
+[//000000005]: # (tclyaml\_license\(n\) 0\.4 doc "TclYAML")
 
-<hr> [ <a href="../../../../../../home">Home</a> | <a
-href="../../toc.md">Main Table Of Contents</a> | <a
-href="../toc.md">Table Of Contents</a> | <a
+<hr> [ <a href="../../../../../../home">Home</a> &#124; <a
+href="../../toc.md">Main Table Of Contents</a> &#124; <a
+href="../toc.md">Table Of Contents</a> &#124; <a
 href="../../index.md">Keyword Index</a> ] <hr>
 
 # NAME
@@ -90,8 +90,9 @@ ideas for enhancements you may have for either package and/or documentation\.
 
 # <a name='keywords'></a>KEYWORDS
 
-[YAML](\.\./\.\./index\.md\#key2), [markup language](\.\./\.\./index\.md\#key0),
-[serialization](\.\./\.\./index\.md\#key1)
+[YAML](\.\./\.\./index\.md\#yaml), [markup
+language](\.\./\.\./index\.md\#markup\_language),
+[serialization](\.\./\.\./index\.md\#serialization)
 
 # <a name='category'></a>CATEGORY
 

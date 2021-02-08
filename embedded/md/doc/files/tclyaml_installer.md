@@ -1,13 +1,13 @@
 
 [//000000001]: # (tclyaml\_install\_guide \- TclYAML)
 [//000000002]: # (Generated from file 'tclyaml\_installer\.man' by tcllib/doctools with format 'markdown')
-[//000000003]: # (Copyright &copy; 2012\-2014, 2021 Andreas Kupries
-Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries)
-[//000000004]: # (tclyaml\_install\_guide\(n\) 0\.4 doc "TclYAML")
+[//000000003]: # (Copyright &copy; 2012\-2014, 2021 Andreas Kupries)
+[//000000004]: # (Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries)
+[//000000005]: # (tclyaml\_install\_guide\(n\) 0\.4 doc "TclYAML")
 
-<hr> [ <a href="../../../../../../home">Home</a> | <a
-href="../../toc.md">Main Table Of Contents</a> | <a
-href="../toc.md">Table Of Contents</a> | <a
+<hr> [ <a href="../../../../../../home">Home</a> &#124; <a
+href="../../toc.md">Main Table Of Contents</a> &#124; <a
+href="../toc.md">Table Of Contents</a> &#124; <a
 href="../../index.md">Keyword Index</a> ] <hr>
 
 # NAME
@@ -98,7 +98,7 @@ Myself, I used [ActiveState](https://www\.activestate\.com)'s
 [ActiveTcl](https://www\.activestate\.com/activetcl) 8\.5 distribution during
 development of the binding, as I am most familiar with it\.
 
-*\(Disclosure: I, Andreas Kupries, worked for ActiveState until 2015,
+*\(Disclosure: I, Andreas Kupries, worked for ActiveState* *until 2015,
 maintaining ActiveTcl and TclDevKit for them\)\.*
 
 This distribution can be found at
@@ -125,7 +125,7 @@ at [https://teapot\.activestate\.com](https://teapot\.activestate\.com) is in
 the list of repositories accessible to __teacup__\. This is automatically
 ensured for the ActiveTcl distribution\. Others may have to run
 
-    teacup archive add http://teapot\.activestate\.com
+    teacup archive add http://teapot.activestate.com
 
 to make this happen\.
 
@@ -187,7 +187,7 @@ directions please file a bug against the Kettle project, and not TclYAML\.
 
 To install TclYAML simply run
 
-    /path/to/tclsh8\.5 /path/to/tclyaml/build\.tcl install
+    /path/to/tclsh8.5 /path/to/tclyaml/build.tcl install
 
 where "/path/to/tclsh8\.5" is the tclsh of your Tcl installation, and
 "/path/to/tclyaml" the location of the TclYAML sources on your system\.
@@ -205,7 +205,7 @@ On unix the same GUI is acessible by invoking "build\.tcl" without any arguments
 To get help about the methods of "build\.tcl", and their complete syntax, invoke
 "build\.tcl" with argument __help__, i\.e\., like
 
-    /path/to/tclsh8\.5 /path/to/tclyaml/build\.tcl help
+    /path/to/tclsh8.5 /path/to/tclyaml/build.tcl help
 
 # <a name='section4'></a>Bugs, Ideas, Feedback
 
@@ -216,8 +216,9 @@ ideas for enhancements you may have for either package and/or documentation\.
 
 # <a name='keywords'></a>KEYWORDS
 
-[YAML](\.\./\.\./index\.md\#key2), [markup language](\.\./\.\./index\.md\#key0),
-[serialization](\.\./\.\./index\.md\#key1)
+[YAML](\.\./\.\./index\.md\#yaml), [markup
+language](\.\./\.\./index\.md\#markup\_language),
+[serialization](\.\./\.\./index\.md\#serialization)
 
 # <a name='category'></a>CATEGORY
 

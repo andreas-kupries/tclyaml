@@ -24,7 +24,7 @@ respectively.
 
 The official repository for TclYAML can be found at
 [vset tclyaml/core], with mirrors at [vset tclyaml/chisel] and
-[vset tclyaml/github].
+[vset tclyaml/github], in case of trouble with the main location.
 
 [section Retrieval]
 

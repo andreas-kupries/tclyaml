@@ -1,13 +1,13 @@
 
 [//000000001]: # (tclyaml\_sources \- TclYAML)
 [//000000002]: # (Generated from file 'tclyaml\_sources\.man' by tcllib/doctools with format 'markdown')
-[//000000003]: # (Copyright &copy; 2012\-2014, 2021 Andreas Kupries
-Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries)
-[//000000004]: # (tclyaml\_sources\(n\) 0\.4 doc "TclYAML")
+[//000000003]: # (Copyright &copy; 2012\-2014, 2021 Andreas Kupries)
+[//000000004]: # (Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries)
+[//000000005]: # (tclyaml\_sources\(n\) 0\.4 doc "TclYAML")
 
-<hr> [ <a href="../../../../../../home">Home</a> | <a
-href="../../toc.md">Main Table Of Contents</a> | <a
-href="../toc.md">Table Of Contents</a> | <a
+<hr> [ <a href="../../../../../../home">Home</a> &#124; <a
+href="../../toc.md">Main Table Of Contents</a> &#124; <a
+href="../toc.md">Table Of Contents</a> &#124; <a
 href="../../index.md">Keyword Index</a> ] <hr>
 
 # NAME
@@ -66,7 +66,8 @@ The official repository for TclYAML can be found at
 with mirrors at
 [https://chiselapp\.com/user/andreas\_kupries/repository/tclyaml](https://chiselapp\.com/user/andreas\_kupries/repository/tclyaml)
 and
-[https://github\.com/andreas\-kupries/tclyaml](https://github\.com/andreas\-kupries/tclyaml)\.
+[https://github\.com/andreas\-kupries/tclyaml](https://github\.com/andreas\-kupries/tclyaml),
+in case of trouble with the main location\.
 
 # <a name='section3'></a>Retrieval
 
@@ -93,13 +94,13 @@ directly at its [download page](https://www\.fossil\-scm\.org/download\.html)\.
 
 With that tool available the full history can be retrieved via:
 
-    fossil clone  https://core\.tcl\-lang\.org/akupries/tclyaml  tclyaml\.fossil
+    fossil clone  https://core.tcl-lang.org/akupries/tclyaml  tclyaml.fossil
 
 followed by
 
     mkdir tclyaml
     cd tclyaml
-    fossil open \.\./tclyaml\.fossil
+    fossil open ../tclyaml.fossil
 
 to get a checkout of the head of the trunk\.
 
@@ -112,8 +113,9 @@ ideas for enhancements you may have for either package and/or documentation\.
 
 # <a name='keywords'></a>KEYWORDS
 
-[YAML](\.\./\.\./index\.md\#key2), [markup language](\.\./\.\./index\.md\#key0),
-[serialization](\.\./\.\./index\.md\#key1)
+[YAML](\.\./\.\./index\.md\#yaml), [markup
+language](\.\./\.\./index\.md\#markup\_language),
+[serialization](\.\./\.\./index\.md\#serialization)
 
 # <a name='category'></a>CATEGORY
 
