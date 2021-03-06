@@ -3,7 +3,7 @@
 [//000000002]: # (Generated from file 'tclyaml\.man' by tcllib/doctools with format 'markdown')
 [//000000003]: # (Copyright &copy; 2012\-2014, 2021 Andreas Kupries)
 [//000000004]: # (Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries)
-[//000000005]: # (tclyaml\(n\) 0\.4 doc "TclYAML")
+[//000000005]: # (tclyaml\(n\) 0\.5 doc "TclYAML")
 
 <hr> [ <a href="../../../../../../home">Home</a> &#124; <a
 href="../../toc.md">Main Table Of Contents</a> &#124; <a
@@ -43,37 +43,42 @@ tclyaml \- TclYAML \- API
 # <a name='synopsis'></a>SYNOPSIS
 
 package require Tcl 8\.5  
-package require tclyaml ?0\.4?  
+package require tclyaml ?0\.5?  
 
-[__tclyaml version__](#1)  
-[__tclyaml read channel__ *chan*](#2)  
-[__tclyaml read file__ *path*](#3)  
-[__tclyaml readTags channel__ *chan*](#4)  
-[__tclyaml readTags file__ *path*](#5)  
-[__tclyaml parse channel__ *channel* *cmd*\.\.\.](#6)  
-[__tclyaml write channel__ *spec* *chan* *value*](#7)  
-[__tclyaml write file__ *spec* *path* *value*](#8)  
-[__tclyaml write string__ *spec* *value*](#9)  
-[__tclyaml write deftype__ *name* *arguments* *body*](#10)  
-[__tclyaml writeTags channel__ *chan* *value*](#11)  
-[__tclyaml writeTags file__ *path* *value*](#12)  
-[__tclyaml writeTags string__ *value*](#13)  
-[__string__](#14)  
-[__scalar__](#15)  
-[__list__](#16)  
-[__array__](#17)  
-[__sequence__](#18)  
-[__dict__](#19)  
-[__object__](#20)  
-[__mapping__](#21)  
-[*writer* __alias__ *anchor*](#22)  
-[*writer* __sequence\-start__ ?*anchor*? ?*tag*? ?*implicit*?](#23)  
-[*writer* __sequence\-end__](#24)  
-[*writer* __mapping\-start__ ?*anchor*? ?*tag*? ?*implicit*?](#25)  
-[*writer* __mapping\-end__](#26)  
-[*writer* __scalar__ *value* ?*anchor*? ?*tag*? ?*plain*? ?*quoted*?](#27)  
-[*writer* __blockstyle__ *style*](#28)  
-[*writer* __scalarstyle__ *style*](#29)  
+[__tclyaml type__ *value*](#1)  
+[__tclyaml version__](#2)  
+[__tclyaml read channel__ *chan*](#3)  
+[__tclyaml read file__ *path*](#4)  
+[__tclyaml readTags channel__ *chan*](#5)  
+[__tclyaml readTags file__ *path*](#6)  
+[__tclyaml parse channel__ *channel* *cmd*\.\.\.](#7)  
+[__tclyaml write channel__ *spec* *chan* *value*](#8)  
+[__tclyaml write file__ *spec* *path* *value*](#9)  
+[__tclyaml write string__ *spec* *value*](#10)  
+[__tclyaml write deftype__ *name* *arguments* *body*](#11)  
+[__tclyaml writeTags channel__ *chan* *value*](#12)  
+[__tclyaml writeTags file__ *path* *value*](#13)  
+[__tclyaml writeTags string__ *value*](#14)  
+[__string__](#15)  
+[__scalar__](#16)  
+[__bool__](#17)  
+[__int__](#18)  
+[__float__](#19)  
+[__null__](#20)  
+[__list__](#21)  
+[__array__](#22)  
+[__sequence__](#23)  
+[__dict__](#24)  
+[__object__](#25)  
+[__mapping__](#26)  
+[*writer* __alias__ *anchor*](#27)  
+[*writer* __sequence\-start__ ?*anchor*? ?*tag*? ?*implicit*?](#28)  
+[*writer* __sequence\-end__](#29)  
+[*writer* __mapping\-start__ ?*anchor*? ?*tag*? ?*implicit*?](#30)  
+[*writer* __mapping\-end__](#31)  
+[*writer* __scalar__ *type* *value* ?*anchor*? ?*tag*?](#32)  
+[*writer* __blockstyle__ *style*](#33)  
+[*writer* __scalarstyle__ *style*](#34)  
 
 # <a name='description'></a>DESCRIPTION
 
@@ -87,16 +92,40 @@ into Tcl structures on the other\.
 
 # <a name='section2'></a>Introspection
 
-  - <a name='1'></a>__tclyaml version__
+  - <a name='1'></a>__tclyaml type__ *value*
+
+    This command applies the typing rules of the [YAML Core
+    Schema](https://yaml\.org/spec/1\.2/spec\.html\#id2804923) to the *value*
+    and returns a 2\-element list containing the type of the value, and the value
+    normalized according to the type, in this order\.
+
+    *Examples*:
+
+        % puts [type NULL]
+        null {}
+
+        % puts [type 0xff4f]
+        int 65359
+
+        % puts [type 0.1e3]
+        float 100.0
+
+        % puts [type .inf]
+        float Inf
+
+        % puts [type foo]
+        string foo
+
+  - <a name='2'></a>__tclyaml version__
 
     This command returns a string containing the version number of the libyaml
     library wrapped and provided by this Tcl package\.
 
 # <a name='section3'></a>Parsing YAML
 
-  - <a name='2'></a>__tclyaml read channel__ *chan*
+  - <a name='3'></a>__tclyaml read channel__ *chan*
 
-  - <a name='3'></a>__tclyaml read file__ *path*
+  - <a name='4'></a>__tclyaml read file__ *path*
 
     These two commands read the YAML documents found in the channel \(*chan*\),
     or file \(*path*\) and return a Tcl list where each element represents a
@@ -105,14 +134,22 @@ into Tcl structures on the other\.
     For each document YAML scalars are converted to Tcl strings, and YAML
     sequences and mappings to Tcl lists and dictionaries\.
 
-  - <a name='4'></a>__tclyaml readTags channel__ *chan*
+    *Note* that the command applies the typing rules of the [YAML Core
+    Schema](https://yaml\.org/spec/1\.2/spec\.html\#id2804923) to the retrieved
+    values\. While the type information is not part of the returned structure the
+    normalization implied by a type are applied to the values\.
 
-  - <a name='5'></a>__tclyaml readTags file__ *path*
+  - <a name='5'></a>__tclyaml readTags channel__ *chan*
+
+  - <a name='6'></a>__tclyaml readTags file__ *path*
 
     These two commands behave like their plain __read__ counterparts above,
     except that the data structure they return per element is a *tagged*
     structure where each YAML construct is converted into a 2\-element list of
-    type\-tag and value \(in this order\)\.
+    type\-tag and value \(in this order\)\. In other words, the type determined by
+    rules of the [YAML Core
+    Schema](https://yaml\.org/spec/1\.2/spec\.html\#id2804923) is not discarded
+    here\.
 
     While this type of structure is more difficult to access due to the
     additional nesting levels, in return it does not lose YAML's type
@@ -123,7 +160,40 @@ into Tcl structures on the other\.
     list of one element\. In an untagged conversion these cases are difficult to
     impossible to distinguish\.
 
-  - <a name='6'></a>__tclyaml parse channel__ *channel* *cmd*\.\.\.
+    The tags able to appear in the result are:
+
+      * bool
+
+        The value is a boolean\. The only possible values are __true__ and
+        __false__\.
+
+      * float
+
+        The value is a floating point number\.
+
+      * int
+
+        The value is an integer number
+
+      * mapping
+
+        The value is a mapping from keys to other values\. Note that the keys are
+        tagged structures as well, i\.e\. values\.
+
+      * null
+
+        The value indicates a nothingness\. The only possible value is the empty
+        string\.
+
+      * sequence
+
+        The value is a sequence of values\.
+
+      * string
+
+        The value is a string, and not any of the other types\.
+
+  - <a name='7'></a>__tclyaml parse channel__ *channel* *cmd*\.\.\.
 
     This command provides the lowest level of access to the YAML parser\. Reading
     YAML data from the specified *channel* each structural element encountered
@@ -258,20 +328,23 @@ into Tcl structures on the other\.
 
 # <a name='section4'></a>Generating YAML
 
-  - <a name='7'></a>__tclyaml write channel__ *spec* *chan* *value*
+  - <a name='8'></a>__tclyaml write channel__ *spec* *chan* *value*
 
-  - <a name='8'></a>__tclyaml write file__ *spec* *path* *value*
+  - <a name='9'></a>__tclyaml write file__ *spec* *path* *value*
 
-  - <a name='9'></a>__tclyaml write string__ *spec* *value*
+  - <a name='10'></a>__tclyaml write string__ *spec* *value*
 
-    These three commands convert the Tcl data structure *value* into YAML,
-    under the guidance of the type information in *spec*, which describes the
-    expected structure of the *value*, i\.e\. essentially provides type
-    annotation/tagging of the *value*, but separate from the value itself\.
+    These three commands convert the Tcl data structure in *value* into YAML,
+    under the guidance of the type information in *spec*\.
 
-    The resulting YAML is written to a channel \(*chan*, expected to be open
-    for writing\), a file \(*path*\), or returned as the result of the command\.
-    For files, an existing file is overwritten\.
+    The *spec* describes the expected structure of the *value*\. In essence
+    it is the type/tag information which is missing from the *value* itself\.
+
+    The resulting YAML is written to the channel *chan*, or to the file
+    referenced by *path*, or returned as the result of the command\.
+
+    For channels, *chan* is expected to be open for writing\. For files, an
+    existing file is overwritten with the generated YAML\.
 
     The syntax of structure *spec*'ification is:
 
@@ -303,7 +376,7 @@ into Tcl structures on the other\.
     The conversion command then uses the API of the writer object to add YAML
     structures to it, representing the value\.
 
-  - <a name='10'></a>__tclyaml write deftype__ *name* *arguments* *body*
+  - <a name='11'></a>__tclyaml write deftype__ *name* *arguments* *body*
 
     This command defines a new type conversion command *name* for use in the
     __tclyaml write \.\.\.__ commands above\. This part of tclyaml is only
@@ -346,11 +419,11 @@ into Tcl structures on the other\.
 
         This argument holds the Tcl structure to convert\.
 
-  - <a name='11'></a>__tclyaml writeTags channel__ *chan* *value*
+  - <a name='12'></a>__tclyaml writeTags channel__ *chan* *value*
 
-  - <a name='12'></a>__tclyaml writeTags file__ *path* *value*
+  - <a name='13'></a>__tclyaml writeTags file__ *path* *value*
 
-  - <a name='13'></a>__tclyaml writeTags string__ *value*
+  - <a name='14'></a>__tclyaml writeTags string__ *value*
 
     These three commands convert the Tcl data structure *value* into YAML\.
     Instead of taking a separate structure holding the necessary type
@@ -358,18 +431,23 @@ into Tcl structures on the other\.
     *pairs* of type and a value proper for that type\. In other words, the type
     tags are part of the incoming *value*\.
 
-    The resulting YAML is written to a channel \(*chan*, expected to be open
-    for writing\), a file \(*path*\), or returned as the result of the command\.
-    For files, an existing file is overwritten\.
+    *Note* that this is the same kind of data structure as is returned by the
+    __tclyaml readTags__ command\.
+
+    The resulting YAML is written to the channel *chan*, or to the file
+    referenced by *path*, or returned as the result of the command\.
+
+    For channels, *chan* is expected to be open for writing\. For files, an
+    existing file is overwritten with the generated YAML\.
 
 # <a name='section5'></a>Standard converters for YAML generation
 
 The package provides the following pre\-defined conversion commands for use in
 structure specifications taken by the __tclyaml write__ commands\.
 
-  - <a name='14'></a>__string__
+  - <a name='15'></a>__string__
 
-  - <a name='15'></a>__scalar__
+  - <a name='16'></a>__scalar__
 
     This command/type is for the conversion of plain Tcl strings\.
 
@@ -377,14 +455,46 @@ structure specifications taken by the __tclyaml write__ commands\.
 
     The detail information is ignored\.
 
-    Adds a scalar entry to the writer, with the value as the value of the
-    scalar\.
+    Adds a scalar entry of type string to the writer, with the value as the
+    value of the scalar\.
 
-  - <a name='16'></a>__list__
+  - <a name='17'></a>__bool__
 
-  - <a name='17'></a>__array__
+  - <a name='18'></a>__int__
 
-  - <a name='18'></a>__sequence__
+  - <a name='19'></a>__float__
+
+    This command/type is for the conversion of plain Tcl strings whose value
+    matches the particular type\.
+
+    No additional arguments\.
+
+    The detail information is ignored\.
+
+    Adds a scalar entry of the given type to the writer, with the value as the
+    value of the scalar\.
+
+    *Note* that the value is normalized according to its type, and the
+    capabilities of YAML, before being written\. For example, Tcl is able to
+    handle both positive and negative __NaN__'s\. YAML does not handle a
+    signed NaN, thus both kinds are mapped to that\.
+
+  - <a name='20'></a>__null__
+
+    This command/type forces the writing of a null value to the YAML, regardless
+    of the value in the provided data\. As such its use in a specification does
+    not truly makes sense\. It exists mainly to have full symmetry here with the
+    tags returned by __readTags__ and accepted by __writeTags__\.
+
+    No additional arguments\.
+
+    The detail information is ignored\.
+
+  - <a name='21'></a>__list__
+
+  - <a name='22'></a>__array__
+
+  - <a name='23'></a>__sequence__
 
     This command/type is for the conversion of Tcl lists\. In YAML parlance,
     sequences\. In JSON parlance, arrays\.
@@ -397,13 +507,13 @@ structure specifications taken by the __tclyaml write__ commands\.
     *value*\.
 
     The converter starts a sequence in the writer object, then converts all list
-    elements, and at last ends the sequence in the writer\.
+    elements as per the type, and at last ends the sequence in the writer\.
 
-  - <a name='19'></a>__dict__
+  - <a name='24'></a>__dict__
 
-  - <a name='20'></a>__object__
+  - <a name='25'></a>__object__
 
-  - <a name='21'></a>__mapping__
+  - <a name='26'></a>__mapping__
 
     This command/type is for the conversion of Tcl dictionaries\. In YAML
     parlance, mappings\. In JSON parlance, objects\.
@@ -417,13 +527,15 @@ structure specifications taken by the __tclyaml write__ commands\.
     the *structure* use the associated type specification for the conversion
     of their value\. The values of all keys without an explicit conversion are
     converted with the type specification found under the key __\*__\. If such
-    a key does not exist their conversion is done with type "scalar"\.
+    a key does not exist their conversion is done with type "string"\.
 
-    The keys of *value* themselves are always converted with type "scalar"\.
+    The keys of *value* themselves are always converted with type "string"\.
 
     The converter starts a mapping in the writer object, then converts all
     dictionary elements \(keys, and values\), and at last ends the mapping in the
     writer\.
+
+    *Note* that the mapping always writes the keys in dictionary order\.
 
 # <a name='section6'></a>The Writer Object API
 
@@ -436,7 +548,7 @@ instances is done internally by the package as needed and the relevant APIs are
 not documented\. Neither are the instance methods reserved for use by the package
 internals\.
 
-  - <a name='22'></a>*writer* __alias__ *anchor*
+  - <a name='27'></a>*writer* __alias__ *anchor*
 
     %%TODO%% method \- alias \- description
 
@@ -444,7 +556,7 @@ internals\.
 
         %%TODO%% description
 
-  - <a name='23'></a>*writer* __sequence\-start__ ?*anchor*? ?*tag*? ?*implicit*?
+  - <a name='28'></a>*writer* __sequence\-start__ ?*anchor*? ?*tag*? ?*implicit*?
 
     This method starts a sequence \(list\) of yaml values\.
 
@@ -464,13 +576,13 @@ internals\.
 
         %%TODO%% description
 
-  - <a name='24'></a>*writer* __sequence\-end__
+  - <a name='29'></a>*writer* __sequence\-end__
 
     This method is the complement to __sequence\-start__, above\. Calling it
     closes the currently open sequence \(which may be nested in other sequences,
     mappings, etc\)\. Calling it while not within an open sequence is an error\.
 
-  - <a name='25'></a>*writer* __mapping\-start__ ?*anchor*? ?*tag*? ?*implicit*?
+  - <a name='30'></a>*writer* __mapping\-start__ ?*anchor*? ?*tag*? ?*implicit*?
 
     The method starts a mapping \(dictionary\) of yaml values\.
 
@@ -490,16 +602,21 @@ internals\.
 
         %%TODO%% description
 
-  - <a name='26'></a>*writer* __mapping\-end__
+  - <a name='31'></a>*writer* __mapping\-end__
 
     This method is the complement to __mapping\-start__, above\. Calling it
     closes the currently open mapping \(which may be nested in other sequences,
     mappings, etc\)\. Calling it while not within an open mapping is an error\.
 
-  - <a name='27'></a>*writer* __scalar__ *value* ?*anchor*? ?*tag*? ?*plain*? ?*quoted*?
+  - <a name='32'></a>*writer* __scalar__ *type* *value* ?*anchor*? ?*tag*?
 
-    This method adds a single scalar *value* to the yaml structure, i\.e\. a
-    string, roughly\.
+    This method adds a single scalar *value* to the yaml structure, of the
+    given *type*\. The only acceptable types are the scalar types as returned
+    by __readTags__\. In other words, __bool__, __float__,
+    __int__, __null__, and __string__\.
+
+    The formatting of the value is decided automatically, based on the type,
+    and, in case of strings, on the actual value\.
 
       * ?? *anchor*
 
@@ -509,15 +626,7 @@ internals\.
 
         %%TODO%% description
 
-      * boolean *plain*
-
-        %%TODO%% description
-
-      * boolean *quoted*
-
-        %%TODO%% description
-
-  - <a name='28'></a>*writer* __blockstyle__ *style*
+  - <a name='33'></a>*writer* __blockstyle__ *style*
 
     These methods set the currently active formatting style for blocks
     \(sequences, mappings\)\. The active style applies only to blocks started after
@@ -540,7 +649,7 @@ internals\.
 
         %%TODO%% description
 
-  - <a name='29'></a>*writer* __scalarstyle__ *style*
+  - <a name='34'></a>*writer* __scalarstyle__ *style*
 
     These methods set the currently active formatting style for scalar values\.
     The active style applies only to scalars added after it was set\.

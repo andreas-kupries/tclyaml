@@ -1,0 +1,20 @@
+- foo: bar
+  or: else
+- box:
+    area: null
+    colored: true
+    fill: 25.0
+    grid: null
+    label: '23'
+    order: 1
+    stop: 'false'
+    visible: false
+    volume: null
+- footer: |
+    ring a rosie
+  glue: .nan
+  header: |
+    the quick brown fox
+    jumps over the lazy
+    dog
+  map: .inf

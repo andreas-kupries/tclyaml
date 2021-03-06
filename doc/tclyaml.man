@@ -17,6 +17,32 @@ the other.
 [section Introspection]
 
 [list_begin definitions]
+[call [cmd {tclyaml type}] [arg value]]
+
+This command applies the typing rules of the [vset yaml/schema/core]
+to the [arg value] and returns a 2-element list containing the type of
+the value, and the value normalized according to the type, in this
+order.
+
+[para][strong Examples]:
+
+[example {
+    % puts [type NULL]
+    null {}
+
+    % puts [type 0xff4f]
+    int 65359
+
+    % puts [type 0.1e3]
+    float 100.0
+
+    % puts [type .inf]
+    float Inf
+
+    % puts [type foo]
+    string foo
+}]
+
 [call [cmd {tclyaml version}]]
 
 This command returns a string containing the version number of the
@@ -39,21 +65,52 @@ single document found in the input.
 [para] For each document YAML scalars are converted to Tcl strings, and YAML
 sequences and mappings to Tcl lists and dictionaries.
 
+[para] [strong Note] that the command applies the typing rules of the
+[vset yaml/schema/core] to the retrieved values. While the type
+information is not part of the returned structure the normalization
+implied by a type are applied to the values.
+
 [call [cmd {tclyaml readTags channel}] [arg chan]]
 [call [cmd {tclyaml readTags file}]    [arg path]]
 
-These two commands behave like their plain [cmd read] counterparts above,
-except that the data structure they return per element is a [term tagged]
-structure where each YAML construct is converted into a 2-element list of
-type-tag and value (in this order).
+These two commands behave like their plain [cmd read] counterparts
+above, except that the data structure they return per element is a
+[term tagged] structure where each YAML construct is converted into a
+2-element list of type-tag and value (in this order). In other words,
+the type determined by rules of the [vset yaml/schema/core] is not
+discarded here.
 
-[para] While this type of structure is more difficult to access due to the
-additional nesting levels, in return it does not lose YAML's type information.
-This allows users to properly distinguish between lists and dictionaries, for
-example, if the input YAML allows different syntax for specific keys. Another
-example would be string versus list, for example in a key allowing one to many
-things of some kind, and a string is the same as a list of one element. In an
-untagged conversion these cases are difficult to impossible to distinguish.
+[para] While this type of structure is more difficult to access due to
+the additional nesting levels, in return it does not lose YAML's type
+information.  This allows users to properly distinguish between lists
+and dictionaries, for example, if the input YAML allows different
+syntax for specific keys. Another example would be string versus list,
+for example in a key allowing one to many things of some kind, and a
+string is the same as a list of one element. In an untagged conversion
+these cases are difficult to impossible to distinguish.
+
+[para] The tags able to appear in the result are:
+
+[list_begin definitions]
+
+[def bool] The value is a boolean.
+The only possible values are [const true] and [const false].
+
+[def float] The value is a floating point number.
+
+[def int] The value is an integer number
+
+[def mapping] The value is a mapping from keys to other values. Note
+that the keys are tagged structures as well, i.e. values.
+
+[def null] The value indicates a nothingness. The only possible value
+is the empty string.
+
+[def sequence] The value is a sequence of values.
+
+[def string] The value is a string, and not any of the other types.
+
+[list_end]
 
 [call [cmd {tclyaml parse channel}] [arg channel] [arg cmd]...]
 
@@ -165,107 +222,122 @@ The current mapping ends. No details.
 [call [cmd {tclyaml write file}]    [arg spec] [arg path] [arg value]]
 [call [cmd {tclyaml write string}]  [arg spec]            [arg value]]
 
-These three commands convert the Tcl data structure [arg value] into YAML, under
-the guidance of the type information in [arg spec], which describes the expected
-structure of the [arg value], i.e. essentially provides type annotation/tagging
-of the [arg value], but separate from the value itself.
+These three commands convert the Tcl data structure in [arg value]
+into YAML, under the guidance of the type information in [arg spec].
 
-[para] The resulting YAML is written to a channel ([arg chan], expected to be
-open for writing), a file ([arg path]), or returned as the result of the command.
-For files, an existing file is overwritten.
+[para] The [arg spec] describes the expected structure of the
+[arg value]. In essence it is the type/tag information which is
+missing from the [arg value] itself.
+
+[para] The resulting YAML is written to the channel [arg chan], or to
+the file referenced by [arg path], or returned as the result of the
+command.
+
+[para] For channels, [arg chan] is expected to be open for writing.
+For files, an existing file is overwritten with the generated YAML.
 
 [para] The syntax of structure [arg spec]'ification is:
 
 [list_begin enumerated]
+
 [enum] A list of one or more elements.
-[enum] The first element of the list is the name of the type.
-       This name has to be the name of a conversion command
-       declared via [cmd {tclyaml write deftype}], see below.
-[enum] The command name can be followed by additional arguments
-       and detail information.
+
+[enum] The first element of the list is the name of the type.  This
+       name has to be the name of a conversion command declared via
+       [cmd {tclyaml write deftype}], see below.
+
+[enum] The command name can be followed by additional arguments and
+       detail information.
+
 [enum] If the list contains only the command name then no additional
-       arguments are assumed, and the detail information defaults
-       to the empty string or list.
-[para] Otherwise the detail information is the last element of the list and
-       anything else between command name and details are the additional
-       arguments to use.
+       arguments are assumed, and the detail information defaults to
+       the empty string or list.
+
+[para] Otherwise the detail information is the last element of the
+       list and anything else between command name and details are the
+       additional arguments to use.
+
 [enum] The interpretation of the detail information depends on the
-       conversion command. For examples please see the descriptions
-       of the standard converters the package makes available in
-       section [sectref {Standard converters for YAML generation}].
+       conversion command. For examples please see the descriptions of
+       the standard converters the package makes available in section
+       [sectref {Standard converters for YAML generation}].
+
 [list_end]
 
-To convert the [arg value] the conversion command is run, with
-the additional arguments from the [arg spec], followed by the
-handle of the low-level writer object, the detail information
-from the [arg spec], and the [arg value] itself. The conversion
-command then uses the API of the writer object to add YAML
-structures to it, representing the value.
+To convert the [arg value] the conversion command is run, with the
+additional arguments from the [arg spec], followed by the handle of
+the low-level writer object, the detail information from the
+[arg spec], and the [arg value] itself. The conversion command then
+uses the API of the writer object to add YAML structures to it,
+representing the value.
 
 [call [cmd {tclyaml write deftype}] [arg name] [arg arguments] [arg body]]
 
-This command defines a new type conversion command [arg name] for use in the
-[cmd {tclyaml write ...}] commands above. This part of tclyaml is only
-relevant to users wishing to write their own type conversions.
+This command defines a new type conversion command [arg name] for use
+in the [cmd {tclyaml write ...}] commands above. This part of tclyaml
+is only relevant to users wishing to write their own type conversions.
 
 [para] The [arg arguments] are what has to be specified in a structure
-specification (see [arg spec] above). Beyond these the [arg body] will have
-access to three standard arguments, namely:
+specification (see [arg spec] above). Beyond these the [arg body] will
+have access to three standard arguments, namely:
 
 [list_begin args]
 [arg_def object writer]
 
-This is the low-level object instance holding the YAML structures we wish to generate.
-The conversion command has to use its API to add the structures it
-needs to represent the [arg value].
+This is the low-level object instance holding the YAML structures we
+wish to generate.  The conversion command has to use its API to add
+the structures it needs to represent the [arg value].
 
 [para] For more details about this object and its API please section
 [sectref {The Writer Object API}].
 
 [arg_def list structure]
 
-This is the detail information from the structure specification
-given to the [cmd {tclyaml write}] commands. The conversion command
-may interpret this as it sees fit.
+This is the detail information from the structure specification given
+to the [cmd {tclyaml write}] commands. The conversion command may
+interpret this as it sees fit.
 
-[para] For the use type information in this data, to be applied
-to parts of the [arg value] (see below) the body has access to
-the otherwise internal command
-[cmd ::tclyaml::write::type::__convert].
+[para] For the use type information in this data, to be applied to
+parts of the [arg value] (see below) the body has access to the
+otherwise internal command [cmd ::tclyaml::write::type::__convert].
 
 It has to be called with three arguments, the [arg writer], the
-relevant type structure (extracted from our current structure),
-and the value to apply it to (extracted from our current value).
+relevant type structure (extracted from our current structure), and
+the value to apply it to (extracted from our current value).
 
-[para] This allows new type converters to make use of all other
-types known to the system in their type specifications, be they
-builtin or custom.
+[para] This allows new type converters to make use of all other types
+known to the system in their type specifications, be they builtin or
+custom.
 
-[para] Note, when going this far for custom conversions it is
-strongly recommended to look at the implementations of the
-standard converters for sequences and mappings provided by the
-package.
+[para] Note, when going this far for custom conversions it is strongly
+recommended to look at the implementations of the standard converters
+for sequences and mappings provided by the package.
 
 [arg_def any value]
 This argument holds the Tcl structure to convert.
 
 [list_end][comment {-- arguments}]
 
-
-
 [call [cmd {tclyaml writeTags channel}] [arg chan] [arg value]]
 [call [cmd {tclyaml writeTags file}]    [arg path] [arg value]]
 [call [cmd {tclyaml writeTags string}]             [arg value]]
 
 These three commands convert the Tcl data structure [arg value] into YAML.
-Instead of taking a separate structure holding the necessary type information
-these commands expected a data structure where all elements are [term pairs]
-of type and a value proper for that type. In other words, the type tags are part
-of the incoming [arg value].
 
-[para] The resulting YAML is written to a channel ([arg chan], expected to be
-open for writing), a file ([arg path]), or returned as the result of the command.
-For files, an existing file is overwritten.
+Instead of taking a separate structure holding the necessary type
+information these commands expected a data structure where all
+elements are [term pairs] of type and a value proper for that type. In
+other words, the type tags are part of the incoming [arg value].
+
+[para][strong Note] that this is the same kind of data structure as is
+returned by the [cmd {tclyaml readTags}] command.
+
+[para] The resulting YAML is written to the channel [arg chan], or to
+the file referenced by [arg path], or returned as the result of the
+command.
+
+[para] For channels, [arg chan] is expected to be open for writing.
+For files, an existing file is overwritten with the generated YAML.
 
 [list_end]
 
@@ -285,8 +357,42 @@ This command/type is for the conversion of plain Tcl strings.
 
 [para] The detail information is ignored.
 
-[para] Adds a scalar entry to the writer, with the value as the value
-of the scalar.
+[para] Adds a scalar entry of type string to the writer, with the
+value as the value of the scalar.
+
+[call [cmd bool]]
+[call [cmd int]]
+[call [cmd float]]
+
+This command/type is for the conversion of plain Tcl strings whose
+value matches the particular type.
+
+[para] No additional arguments.
+
+[para] The detail information is ignored.
+
+[para] Adds a scalar entry of the given type to the writer, with the
+value as the value of the scalar.
+
+[para] [strong Note] that the value is normalized according to its
+type, and the capabilities of YAML, before being written.
+
+For example, Tcl is able to handle both positive and negative
+[const NaN]'s. YAML does not handle a signed NaN, thus both kinds are
+mapped to that.
+
+[call [cmd null]]
+
+This command/type forces the writing of a null value to the YAML,
+regardless of the value in the provided data.
+
+As such its use in a specification does not truly makes sense.  It
+exists mainly to have full symmetry here with the tags returned by
+[cmd readTags] and accepted by [cmd writeTags].
+
+[para] No additional arguments.
+
+[para] The detail information is ignored.
 
 [call [cmd list]]
 [call [cmd array]]
@@ -298,13 +404,14 @@ In JSON parlance, arrays.
 
 [para] No additional arguments.
 
-[para] The detail information is treated as a single structure specification
-as taken by the [cmd {tclyaml write}] commands. This specification
-describes the type with which to convert the elements of the Tcl list
-held in the [arg value].
+[para] The detail information is treated as a single structure
+specification as taken by the [cmd {tclyaml write}] commands. This
+specification describes the type with which to convert the elements of
+the Tcl list held in the [arg value].
 
-[para] The converter starts a sequence in the writer object, then converts
-all list elements, and at last ends the sequence in the writer.
+[para] The converter starts a sequence in the writer object, then
+converts all list elements as per the type, and at last ends the
+sequence in the writer.
 
 
 [call [cmd dict]]
@@ -326,15 +433,18 @@ All keys in [arg value] also found as key in the [arg structure] use
 the associated type specification for the conversion of their value.
 
 The values of all keys without an explicit conversion are converted
-with the type specification found under the key [const *]. If such
-a key does not exist their conversion is done with type "scalar".
+with the type specification found under the key [const *]. If such a
+key does not exist their conversion is done with type "string".
 
 [para] The keys of [arg value] themselves are always converted with
-type "scalar".
+type "string".
 
-[para] The converter starts a mapping in the writer object, then converts
-all dictionary elements (keys, and values), and at last ends the mapping
-in the writer.
+[para] The converter starts a mapping in the writer object, then
+converts all dictionary elements (keys, and values), and at last ends
+the mapping in the writer.
+
+[para][strong Note] that the mapping always writes the keys in
+dictionary order.
 
 [list_end]
 
@@ -408,20 +518,24 @@ in other sequences, mappings, etc). Calling it while not within
 an open mapping is an error.
 
 [call [arg writer] [method scalar] \
+     [arg type] \
      [arg value] \
      [opt [arg anchor]] \
-     [opt [arg tag]] \
-     [opt [arg plain]] \
-     [opt [arg quoted]]]
+     [opt [arg tag]]]
 
-This method adds a single scalar [arg value] to the yaml structure,
-i.e. a string, roughly.
+This method adds a single scalar [arg value] to the yaml structure, of
+the given [arg type]. The only acceptable types are the scalar types
+as returned by [cmd readTags].
+
+In other words, [const bool], [const float], [const int],
+[const null], and [const string].
+
+[para] The formatting of the value is decided automatically, based on
+the type, and, in case of strings, on the actual value.
 
 [list_begin arguments]
 [arg_def ??      anchor]   %%TODO%% description
 [arg_def ??      tag]      %%TODO%% description
-[arg_def boolean plain]    %%TODO%% description
-[arg_def boolean quoted]   %%TODO%% description
 [list_end]
 
 [call [arg writer] [method blockstyle] [arg style]]

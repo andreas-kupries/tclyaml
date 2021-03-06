@@ -5,6 +5,8 @@
 
   - [tclyaml](doc/files/tclyaml\.md) TclYAML \- API
 
+  - [tclyaml\_changes](doc/files/tclyaml\_changes\.md) TclYAML \- License
+
   - [tclyaml\_devguide](doc/files/tclyaml\_devguide\.md) TclYAML \- The Developer's Guide
 
   - [tclyaml\_install\_guide](doc/files/tclyaml\_installer\.md) TclYAML \- The Installer's Guide

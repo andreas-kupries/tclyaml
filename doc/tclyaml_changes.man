@@ -1,0 +1,17 @@
+[comment {-*- tcl -*- doctools manpage}]
+[include include/version.inc]
+[manpage_begin tclyaml_changes n [vset VERSION]]
+[include include/module.inc]
+[titledesc {TclYAML - License}]
+[description]
+[include include/welcome.inc]
+
+This document provides an overview of the changes [package [vset PROJECT]]
+underwent from version to version.
+
+[comment {--- Changes Begin ---}]
+[include include/changes.inc]
+[comment {--- Changes End -----}]
+
+[include include/feedback.inc]
+[manpage_end]

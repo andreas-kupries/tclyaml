@@ -1,0 +1,4 @@
+mapping {
+    foo string
+    bar {list int}
+}

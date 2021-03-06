@@ -278,6 +278,9 @@ YAML
 \fBfiles/tclyaml\&.n\fR
 tclyaml
 .TP
+\fBfiles/tclyaml_changes\&.n\fR
+tclyaml_changes
+.TP
 \fBfiles/tclyaml_devguide\&.n\fR
 tclyaml_devguide
 .TP
@@ -299,6 +302,9 @@ markup language
 \fBfiles/tclyaml\&.n\fR
 tclyaml
 .TP
+\fBfiles/tclyaml_changes\&.n\fR
+tclyaml_changes
+.TP
 \fBfiles/tclyaml_devguide\&.n\fR
 tclyaml_devguide
 .TP
@@ -319,6 +325,9 @@ serialization
 .TP
 \fBfiles/tclyaml\&.n\fR
 tclyaml
+.TP
+\fBfiles/tclyaml_changes\&.n\fR
+tclyaml_changes
 .TP
 \fBfiles/tclyaml_devguide\&.n\fR
 tclyaml_devguide

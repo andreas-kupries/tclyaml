@@ -3,7 +3,7 @@
 [//000000002]: # (Generated from file 'tclyaml\_intro\.man' by tcllib/doctools with format 'markdown')
 [//000000003]: # (Copyright &copy; 2012\-2014, 2021 Andreas Kupries)
 [//000000004]: # (Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries)
-[//000000005]: # (tclyaml\_introduction\(n\) 0\.4 doc "TclYAML")
+[//000000005]: # (tclyaml\_introduction\(n\) 0\.5 doc "TclYAML")
 
 <hr> [ <a href="../../../../../../home">Home</a> &#124; <a
 href="../../toc.md">Main Table Of Contents</a> &#124; <a
@@ -37,7 +37,7 @@ tclyaml\_introduction \- TclYAML \- Introduction to TclYAML
 # <a name='synopsis'></a>SYNOPSIS
 
 package require Tcl 8\.5  
-package require tclyaml ?0\.4?  
+package require tclyaml ?0\.5?  
 
 # <a name='description'></a>DESCRIPTION
 

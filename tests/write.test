@@ -1,0 +1,139 @@
+# -*- tcl -*- tcl.tk//DSL tcltest//EN//2.0 tcl.tk//DSL tcltest//EN//2.0
+## (c) 2021 Andreas Kupries
+# # ## ### ##### ######## ############# #####################
+## TclYAML testsuite
+## - API testing
+## - Assumes that the wrapped libyaml is passing its own testsuite.
+#
+## tclyaml write (channel file string deftype)
+
+kt check Tcl     8.5
+kt check tcltest 2
+
+kt source support/util.tcl
+
+kt local testing tclyaml
+
+# # ## ### ##### ######## ############# #####################
+
+tcltest::test tclyaml-write-1.0 {tclyaml write, wrong#args} -body {
+    tclyaml write
+} -returnCodes error -result {wrong # args: should be "tclyaml write subcommand ?arg ...?"}
+
+tcltest::test tclyaml-write-1.1 {tclyaml write, bogus method} -body {
+    tclyaml write bogus
+} -returnCodes error -result {unknown or ambiguous subcommand "bogus": must be channel, deftype, file, or string}
+
+tcltest::test tclyaml-write-1.2 {tclyaml write file, wrong#args} -body {
+    tclyaml write file
+} -returnCodes error -result {wrong # args: should be "tclyaml write file def path value"}
+
+tcltest::test tclyaml-write-1.3 {tclyaml write file, wrong#args} -body {
+    tclyaml write file DEF
+} -returnCodes error -result {wrong # args: should be "tclyaml write file def path value"}
+
+tcltest::test tclyaml-write-1.4 {tclyaml write file, wrong#args} -body {
+    tclyaml write file DEF FILE
+} -returnCodes error -result {wrong # args: should be "tclyaml write file def path value"}
+
+tcltest::test tclyaml-write-1.5 {tclyaml write file, wrong#args} -body {
+    tclyaml write file DEF FILE VALUE X
+} -returnCodes error -result {wrong # args: should be "tclyaml write file def path value"}
+
+tcltest::test tclyaml-write-1.6 {tclyaml write channel, wrong#args} -body {
+    tclyaml write channel
+} -returnCodes error -result {wrong # args: should be "tclyaml write channel def chan value"}
+
+tcltest::test tclyaml-write-1.7 {tclyaml write channel, wrong#args} -body {
+    tclyaml write channel DEF
+} -returnCodes error -result {wrong # args: should be "tclyaml write channel def chan value"}
+
+tcltest::test tclyaml-write-1.8 {tclyaml write channel, wrong#args} -body {
+    tclyaml write channel DEF CHAN
+} -returnCodes error -result {wrong # args: should be "tclyaml write channel def chan value"}
+
+tcltest::test tclyaml-write-1.9 {tclyaml write channel, wrong#args} -body {
+    tclyaml write channel DEF CHAN VALUE X
+} -returnCodes error -result {wrong # args: should be "tclyaml write channel def chan value"}
+
+tcltest::test tclyaml-write-1.10 {tclyaml write string, wrong#args} -body {
+    tclyaml write string
+} -returnCodes error -result {wrong # args: should be "tclyaml write string def value"}
+
+tcltest::test tclyaml-write-1.11 {tclyaml write string, wrong#args} -body {
+    tclyaml write string DEF
+} -returnCodes error -result {wrong # args: should be "tclyaml write string def value"}
+
+tcltest::test tclyaml-write-1.12 {tclyaml write string, wrong#args} -body {
+    tclyaml write string DEF VALUE X
+} -returnCodes error -result {wrong # args: should be "tclyaml write string def value"}
+
+tcltest::test tclyaml-write-1.13 {tclyaml write deftype, wrong#args} -body {
+    tclyaml write deftype
+} -returnCodes error -result {wrong # args: should be "tclyaml write deftype name arguments body"}
+
+tcltest::test tclyaml-write-1.14 {tclyaml write deftype, wrong#args} -body {
+    tclyaml write deftype NAME
+} -returnCodes error -result {wrong # args: should be "tclyaml write deftype name arguments body"}
+
+tcltest::test tclyaml-write-1.15 {tclyaml write deftype, wrong#args} -body {
+    tclyaml write deftype NAME ARGUMENTS
+} -returnCodes error -result {wrong # args: should be "tclyaml write deftype name arguments body"}
+
+tcltest::test tclyaml-write-1.16 {tclyaml write deftype, wrong#args} -body {
+    tclyaml write deftype NAME ARGUMENTS BODY X
+} -returnCodes error -result {wrong # args: should be "tclyaml write deftype name arguments body"}
+
+# - -- --- ----- -------- ------------- ---------------------
+
+foreach case [lsort -dict [glob -directory [file join [td] inputs write] *]] {
+    set name [file tail $case]
+
+    # $case/input
+    # $case/spec
+    #
+    # [td]/results/write/$name/result
+    # [td]/result/write/$name/code
+
+    set result [cat [file join [td] results write $name result]]
+    set rcode  [cat [file join [td] results write $name code]]
+
+    tcltest::test tclyaml-write-${name}-1.0 "tclyaml write file: $name" -setup {
+	set spec  [cat [file join $case spec]]
+	set input [cat [file join $case input]]
+	set tmp   [file join [td] scratch]
+    } -body {
+	tclyaml write file $spec $tmp $input
+	string trimright [cat $tmp]
+    } -cleanup {
+	file delete $tmp
+	unset spec input tmp
+    } -returnCodes $rcode -result $result
+
+    tcltest::test tclyaml-write-${name}-1.1 "tclyaml write channel: $name" -setup {
+	set spec  [cat [file join $case spec]]
+	set input [cat [file join $case input]]
+	set tmp   [file join [td] scratch]
+	set chan  [open $tmp w]
+    } -body {
+	tclyaml write channel $spec $chan $input
+	close $chan
+	string trimright [cat $tmp]
+    } -cleanup {
+	file delete $tmp
+	unset spec input chan tmp
+    } -returnCodes $rcode -result $result
+
+    tcltest::test tclyaml-write-${name}-1.2 "tclyaml write string: $name" -setup {
+	set spec  [cat [file join $case spec]]
+	set input [cat [file join $case input]]
+    } -body {
+	string trimright [tclyaml write string $spec $input]
+    } -cleanup {
+	unset spec input
+    } -returnCodes $rcode -result $result
+}
+
+# # ## ### ##### ######## ############# #####################
+cleanupTests
+return

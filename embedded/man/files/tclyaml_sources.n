@@ -3,7 +3,7 @@
 '\" Copyright (c) 2012-2014, 2021 Andreas Kupries
 '\" Copyright (c) 2012-2014, 2021 Documentation, Andreas Kupries
 '\"
-.TH "tclyaml_sources" n 0\&.4 doc "TclYAML"
+.TH "tclyaml_sources" n 0\&.5 doc "TclYAML"
 .\" The -*- nroff -*- definitions below are for supplemental macros used
 .\" in Tcl/Tk manual entries.
 .\"
@@ -277,7 +277,7 @@ tclyaml_sources \- TclYAML - How To Get The Sources
 .SH SYNOPSIS
 package require \fBTcl  8\&.5\fR
 .sp
-package require \fBtclyaml  ?0\&.4?\fR
+package require \fBtclyaml  ?0\&.5?\fR
 .sp
 .BE
 .SH DESCRIPTION

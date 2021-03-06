@@ -1,0 +1,29 @@
+# -*- tcl -*- tcl.tk//DSL tcltest//EN//2.0 tcl.tk//DSL tcltest//EN//2.0
+## (c) 2021 Andreas Kupries
+# # ## ### ##### ######## ############# #####################
+## TclYAML testsuite
+## - API testing
+## - Assumes that the wrapped libyaml is passing its own testsuite.
+#
+## tclyaml version
+
+kt check Tcl     8.5
+kt check tcltest 2
+
+kt local testing tclyaml
+
+# # ## ### ##### ######## ############# #####################
+
+tcltest::test tclyaml-version-1.0 {tclyaml version, wrong#args} -body {
+    tclyaml version X
+} -returnCodes error -result {wrong # args: should be "tclyaml version"}
+
+# - -- --- ----- -------- ------------- ---------------------
+
+tcltest::test tclyaml-version-2.0 {tclyaml version} -body {
+    tclyaml version
+} -result {0.2.5}
+
+# # ## ### ##### ######## ############# #####################
+cleanupTests
+return

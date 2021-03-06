@@ -104,7 +104,7 @@
 &#124; <a href="../../index.html">Keyword Index</a>
  ] <hr>
 <div class="doctools">
-<h1 class="doctools_title">tclyaml(n) 0.4 doc &quot;TclYAML&quot;</h1>
+<h1 class="doctools_title">tclyaml(n) 0.5 doc &quot;TclYAML&quot;</h1>
 <div id="name" class="doctools_section"><h2><a name="name">Name</a></h2>
 <p>tclyaml - TclYAML - API</p>
 </div>
@@ -128,38 +128,43 @@
 <div class="doctools_synopsis">
 <ul class="doctools_requirements">
 <li>package require <b class="pkgname">Tcl 8.5</b></li>
-<li>package require <b class="pkgname">tclyaml <span class="opt">?0.4?</span></b></li>
+<li>package require <b class="pkgname">tclyaml <span class="opt">?0.5?</span></b></li>
 </ul>
 <ul class="doctools_syntax">
-<li><a href="#1"><b class="cmd">tclyaml version</b></a></li>
-<li><a href="#2"><b class="cmd">tclyaml read channel</b> <i class="arg">chan</i></a></li>
-<li><a href="#3"><b class="cmd">tclyaml read file</b> <i class="arg">path</i></a></li>
-<li><a href="#4"><b class="cmd">tclyaml readTags channel</b> <i class="arg">chan</i></a></li>
-<li><a href="#5"><b class="cmd">tclyaml readTags file</b> <i class="arg">path</i></a></li>
-<li><a href="#6"><b class="cmd">tclyaml parse channel</b> <i class="arg">channel</i> <i class="arg">cmd</i>...</a></li>
-<li><a href="#7"><b class="cmd">tclyaml write channel</b> <i class="arg">spec</i> <i class="arg">chan</i> <i class="arg">value</i></a></li>
-<li><a href="#8"><b class="cmd">tclyaml write file</b> <i class="arg">spec</i> <i class="arg">path</i> <i class="arg">value</i></a></li>
-<li><a href="#9"><b class="cmd">tclyaml write string</b> <i class="arg">spec</i> <i class="arg">value</i></a></li>
-<li><a href="#10"><b class="cmd">tclyaml write deftype</b> <i class="arg">name</i> <i class="arg">arguments</i> <i class="arg">body</i></a></li>
-<li><a href="#11"><b class="cmd">tclyaml writeTags channel</b> <i class="arg">chan</i> <i class="arg">value</i></a></li>
-<li><a href="#12"><b class="cmd">tclyaml writeTags file</b> <i class="arg">path</i> <i class="arg">value</i></a></li>
-<li><a href="#13"><b class="cmd">tclyaml writeTags string</b> <i class="arg">value</i></a></li>
-<li><a href="#14"><b class="cmd">string</b></a></li>
-<li><a href="#15"><b class="cmd">scalar</b></a></li>
-<li><a href="#16"><b class="cmd">list</b></a></li>
-<li><a href="#17"><b class="cmd">array</b></a></li>
-<li><a href="#18"><b class="cmd">sequence</b></a></li>
-<li><a href="#19"><b class="cmd">dict</b></a></li>
-<li><a href="#20"><b class="cmd">object</b></a></li>
-<li><a href="#21"><b class="cmd">mapping</b></a></li>
-<li><a href="#22"><i class="arg">writer</i> <b class="method">alias</b> <i class="arg">anchor</i></a></li>
-<li><a href="#23"><i class="arg">writer</i> <b class="method">sequence-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></li>
-<li><a href="#24"><i class="arg">writer</i> <b class="method">sequence-end</b></a></li>
-<li><a href="#25"><i class="arg">writer</i> <b class="method">mapping-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></li>
-<li><a href="#26"><i class="arg">writer</i> <b class="method">mapping-end</b></a></li>
-<li><a href="#27"><i class="arg">writer</i> <b class="method">scalar</b> <i class="arg">value</i> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">plain</i>?</span> <span class="opt">?<i class="arg">quoted</i>?</span></a></li>
-<li><a href="#28"><i class="arg">writer</i> <b class="method">blockstyle</b> <i class="arg">style</i></a></li>
-<li><a href="#29"><i class="arg">writer</i> <b class="method">scalarstyle</b> <i class="arg">style</i></a></li>
+<li><a href="#1"><b class="cmd">tclyaml type</b> <i class="arg">value</i></a></li>
+<li><a href="#2"><b class="cmd">tclyaml version</b></a></li>
+<li><a href="#3"><b class="cmd">tclyaml read channel</b> <i class="arg">chan</i></a></li>
+<li><a href="#4"><b class="cmd">tclyaml read file</b> <i class="arg">path</i></a></li>
+<li><a href="#5"><b class="cmd">tclyaml readTags channel</b> <i class="arg">chan</i></a></li>
+<li><a href="#6"><b class="cmd">tclyaml readTags file</b> <i class="arg">path</i></a></li>
+<li><a href="#7"><b class="cmd">tclyaml parse channel</b> <i class="arg">channel</i> <i class="arg">cmd</i>...</a></li>
+<li><a href="#8"><b class="cmd">tclyaml write channel</b> <i class="arg">spec</i> <i class="arg">chan</i> <i class="arg">value</i></a></li>
+<li><a href="#9"><b class="cmd">tclyaml write file</b> <i class="arg">spec</i> <i class="arg">path</i> <i class="arg">value</i></a></li>
+<li><a href="#10"><b class="cmd">tclyaml write string</b> <i class="arg">spec</i> <i class="arg">value</i></a></li>
+<li><a href="#11"><b class="cmd">tclyaml write deftype</b> <i class="arg">name</i> <i class="arg">arguments</i> <i class="arg">body</i></a></li>
+<li><a href="#12"><b class="cmd">tclyaml writeTags channel</b> <i class="arg">chan</i> <i class="arg">value</i></a></li>
+<li><a href="#13"><b class="cmd">tclyaml writeTags file</b> <i class="arg">path</i> <i class="arg">value</i></a></li>
+<li><a href="#14"><b class="cmd">tclyaml writeTags string</b> <i class="arg">value</i></a></li>
+<li><a href="#15"><b class="cmd">string</b></a></li>
+<li><a href="#16"><b class="cmd">scalar</b></a></li>
+<li><a href="#17"><b class="cmd">bool</b></a></li>
+<li><a href="#18"><b class="cmd">int</b></a></li>
+<li><a href="#19"><b class="cmd">float</b></a></li>
+<li><a href="#20"><b class="cmd">null</b></a></li>
+<li><a href="#21"><b class="cmd">list</b></a></li>
+<li><a href="#22"><b class="cmd">array</b></a></li>
+<li><a href="#23"><b class="cmd">sequence</b></a></li>
+<li><a href="#24"><b class="cmd">dict</b></a></li>
+<li><a href="#25"><b class="cmd">object</b></a></li>
+<li><a href="#26"><b class="cmd">mapping</b></a></li>
+<li><a href="#27"><i class="arg">writer</i> <b class="method">alias</b> <i class="arg">anchor</i></a></li>
+<li><a href="#28"><i class="arg">writer</i> <b class="method">sequence-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></li>
+<li><a href="#29"><i class="arg">writer</i> <b class="method">sequence-end</b></a></li>
+<li><a href="#30"><i class="arg">writer</i> <b class="method">mapping-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></li>
+<li><a href="#31"><i class="arg">writer</i> <b class="method">mapping-end</b></a></li>
+<li><a href="#32"><i class="arg">writer</i> <b class="method">scalar</b> <i class="arg">type</i> <i class="arg">value</i> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span></a></li>
+<li><a href="#33"><i class="arg">writer</i> <b class="method">blockstyle</b> <i class="arg">style</i></a></li>
+<li><a href="#34"><i class="arg">writer</i> <b class="method">scalarstyle</b> <i class="arg">style</i></a></li>
 </ul>
 </div>
 </div>
@@ -174,36 +179,82 @@ the other.</p>
 </div>
 <div id="section2" class="doctools_section"><h2><a name="section2">Introspection</a></h2>
 <dl class="doctools_definitions">
-<dt><a name="1"><b class="cmd">tclyaml version</b></a></dt>
+<dt><a name="1"><b class="cmd">tclyaml type</b> <i class="arg">value</i></a></dt>
+<dd><p>This command applies the typing rules of the <a href="https://yaml.org/spec/1.2/spec.html#id2804923">YAML Core Schema</a>
+to the <i class="arg">value</i> and returns a 2-element list containing the type of
+the value, and the value normalized according to the type, in this
+order.</p>
+<p><em>Examples</em>:</p>
+<pre class="doctools_example">
+    % puts [type NULL]
+    null {}
+    % puts [type 0xff4f]
+    int 65359
+    % puts [type 0.1e3]
+    float 100.0
+    % puts [type .inf]
+    float Inf
+    % puts [type foo]
+    string foo
+</pre>
+</dd>
+<dt><a name="2"><b class="cmd">tclyaml version</b></a></dt>
 <dd><p>This command returns a string containing the version number of the
 libyaml library wrapped and provided by this Tcl package.</p></dd>
 </dl>
 </div>
 <div id="section3" class="doctools_section"><h2><a name="section3">Parsing YAML</a></h2>
 <dl class="doctools_definitions">
-<dt><a name="2"><b class="cmd">tclyaml read channel</b> <i class="arg">chan</i></a></dt>
+<dt><a name="3"><b class="cmd">tclyaml read channel</b> <i class="arg">chan</i></a></dt>
 <dd></dd>
-<dt><a name="3"><b class="cmd">tclyaml read file</b> <i class="arg">path</i></a></dt>
+<dt><a name="4"><b class="cmd">tclyaml read file</b> <i class="arg">path</i></a></dt>
 <dd><p>These two commands read the YAML documents found in the channel (<i class="arg">chan</i>),
 or file (<i class="arg">path</i>) and return a Tcl list where each element represents a
 single document found in the input.</p>
 <p>For each document YAML scalars are converted to Tcl strings, and YAML
-sequences and mappings to Tcl lists and dictionaries.</p></dd>
-<dt><a name="4"><b class="cmd">tclyaml readTags channel</b> <i class="arg">chan</i></a></dt>
+sequences and mappings to Tcl lists and dictionaries.</p>
+<p><em>Note</em> that the command applies the typing rules of the
+<a href="https://yaml.org/spec/1.2/spec.html#id2804923">YAML Core Schema</a> to the retrieved values. While the type
+information is not part of the returned structure the normalization
+implied by a type are applied to the values.</p></dd>
+<dt><a name="5"><b class="cmd">tclyaml readTags channel</b> <i class="arg">chan</i></a></dt>
 <dd></dd>
-<dt><a name="5"><b class="cmd">tclyaml readTags file</b> <i class="arg">path</i></a></dt>
-<dd><p>These two commands behave like their plain <b class="cmd">read</b> counterparts above,
-except that the data structure they return per element is a <i class="term">tagged</i>
-structure where each YAML construct is converted into a 2-element list of
-type-tag and value (in this order).</p>
-<p>While this type of structure is more difficult to access due to the
-additional nesting levels, in return it does not lose YAML's type information.
-This allows users to properly distinguish between lists and dictionaries, for
-example, if the input YAML allows different syntax for specific keys. Another
-example would be string versus list, for example in a key allowing one to many
-things of some kind, and a string is the same as a list of one element. In an
-untagged conversion these cases are difficult to impossible to distinguish.</p></dd>
-<dt><a name="6"><b class="cmd">tclyaml parse channel</b> <i class="arg">channel</i> <i class="arg">cmd</i>...</a></dt>
+<dt><a name="6"><b class="cmd">tclyaml readTags file</b> <i class="arg">path</i></a></dt>
+<dd><p>These two commands behave like their plain <b class="cmd">read</b> counterparts
+above, except that the data structure they return per element is a
+<i class="term">tagged</i> structure where each YAML construct is converted into a
+2-element list of type-tag and value (in this order). In other words,
+the type determined by rules of the <a href="https://yaml.org/spec/1.2/spec.html#id2804923">YAML Core Schema</a> is not
+discarded here.</p>
+<p>While this type of structure is more difficult to access due to
+the additional nesting levels, in return it does not lose YAML's type
+information.  This allows users to properly distinguish between lists
+and dictionaries, for example, if the input YAML allows different
+syntax for specific keys. Another example would be string versus list,
+for example in a key allowing one to many things of some kind, and a
+string is the same as a list of one element. In an untagged conversion
+these cases are difficult to impossible to distinguish.</p>
+<p>The tags able to appear in the result are:</p>
+<dl class="doctools_definitions">
+<dt>bool</dt>
+<dd><p>The value is a boolean.
+The only possible values are <b class="const">true</b> and <b class="const">false</b>.</p></dd>
+<dt>float</dt>
+<dd><p>The value is a floating point number.</p></dd>
+<dt>int</dt>
+<dd><p>The value is an integer number</p></dd>
+<dt>mapping</dt>
+<dd><p>The value is a mapping from keys to other values. Note
+that the keys are tagged structures as well, i.e. values.</p></dd>
+<dt>null</dt>
+<dd><p>The value indicates a nothingness. The only possible value
+is the empty string.</p></dd>
+<dt>sequence</dt>
+<dd><p>The value is a sequence of values.</p></dd>
+<dt>string</dt>
+<dd><p>The value is a string, and not any of the other types.</p></dd>
+</dl></dd>
+<dt><a name="7"><b class="cmd">tclyaml parse channel</b> <i class="arg">channel</i> <i class="arg">cmd</i>...</a></dt>
 <dd><p>This command provides the lowest level of access to the YAML parser. Reading
 YAML data from the specified <i class="arg">channel</i> each structural element encountered
 is reported through an invokation of the command prefix <i class="arg">cmd</i>...</p>
@@ -293,91 +344,96 @@ the details, the dictionary keys and their meanings are listed.</p>
 </div>
 <div id="section4" class="doctools_section"><h2><a name="section4">Generating YAML</a></h2>
 <dl class="doctools_definitions">
-<dt><a name="7"><b class="cmd">tclyaml write channel</b> <i class="arg">spec</i> <i class="arg">chan</i> <i class="arg">value</i></a></dt>
+<dt><a name="8"><b class="cmd">tclyaml write channel</b> <i class="arg">spec</i> <i class="arg">chan</i> <i class="arg">value</i></a></dt>
 <dd></dd>
-<dt><a name="8"><b class="cmd">tclyaml write file</b> <i class="arg">spec</i> <i class="arg">path</i> <i class="arg">value</i></a></dt>
+<dt><a name="9"><b class="cmd">tclyaml write file</b> <i class="arg">spec</i> <i class="arg">path</i> <i class="arg">value</i></a></dt>
 <dd></dd>
-<dt><a name="9"><b class="cmd">tclyaml write string</b> <i class="arg">spec</i> <i class="arg">value</i></a></dt>
-<dd><p>These three commands convert the Tcl data structure <i class="arg">value</i> into YAML, under
-the guidance of the type information in <i class="arg">spec</i>, which describes the expected
-structure of the <i class="arg">value</i>, i.e. essentially provides type annotation/tagging
-of the <i class="arg">value</i>, but separate from the value itself.</p>
-<p>The resulting YAML is written to a channel (<i class="arg">chan</i>, expected to be
-open for writing), a file (<i class="arg">path</i>), or returned as the result of the command.
-For files, an existing file is overwritten.</p>
+<dt><a name="10"><b class="cmd">tclyaml write string</b> <i class="arg">spec</i> <i class="arg">value</i></a></dt>
+<dd><p>These three commands convert the Tcl data structure in <i class="arg">value</i>
+into YAML, under the guidance of the type information in <i class="arg">spec</i>.</p>
+<p>The <i class="arg">spec</i> describes the expected structure of the
+<i class="arg">value</i>. In essence it is the type/tag information which is
+missing from the <i class="arg">value</i> itself.</p>
+<p>The resulting YAML is written to the channel <i class="arg">chan</i>, or to
+the file referenced by <i class="arg">path</i>, or returned as the result of the
+command.</p>
+<p>For channels, <i class="arg">chan</i> is expected to be open for writing.
+For files, an existing file is overwritten with the generated YAML.</p>
 <p>The syntax of structure <i class="arg">spec</i>'ification is:</p>
 <ol class="doctools_enumerated">
 <li><p>A list of one or more elements.</p></li>
-<li><p>The first element of the list is the name of the type.
-       This name has to be the name of a conversion command
-       declared via <b class="cmd">tclyaml write deftype</b>, see below.</p></li>
-<li><p>The command name can be followed by additional arguments
-       and detail information.</p></li>
+<li><p>The first element of the list is the name of the type.  This
+       name has to be the name of a conversion command declared via
+       <b class="cmd">tclyaml write deftype</b>, see below.</p></li>
+<li><p>The command name can be followed by additional arguments and
+       detail information.</p></li>
 <li><p>If the list contains only the command name then no additional
-       arguments are assumed, and the detail information defaults
-       to the empty string or list.</p>
-<p>Otherwise the detail information is the last element of the list and
-       anything else between command name and details are the additional
-       arguments to use.</p></li>
+       arguments are assumed, and the detail information defaults to
+       the empty string or list.</p>
+<p>Otherwise the detail information is the last element of the
+       list and anything else between command name and details are the
+       additional arguments to use.</p></li>
 <li><p>The interpretation of the detail information depends on the
-       conversion command. For examples please see the descriptions
-       of the standard converters the package makes available in
-       section <span class="sectref"><a href="#section5">Standard converters for YAML generation</a></span>.</p></li>
+       conversion command. For examples please see the descriptions of
+       the standard converters the package makes available in section
+       <span class="sectref"><a href="#section5">Standard converters for YAML generation</a></span>.</p></li>
 </ol>
-<p>To convert the <i class="arg">value</i> the conversion command is run, with
-the additional arguments from the <i class="arg">spec</i>, followed by the
-handle of the low-level writer object, the detail information
-from the <i class="arg">spec</i>, and the <i class="arg">value</i> itself. The conversion
-command then uses the API of the writer object to add YAML
-structures to it, representing the value.</p></dd>
-<dt><a name="10"><b class="cmd">tclyaml write deftype</b> <i class="arg">name</i> <i class="arg">arguments</i> <i class="arg">body</i></a></dt>
-<dd><p>This command defines a new type conversion command <i class="arg">name</i> for use in the
-<b class="cmd">tclyaml write ...</b> commands above. This part of tclyaml is only
-relevant to users wishing to write their own type conversions.</p>
+<p>To convert the <i class="arg">value</i> the conversion command is run, with the
+additional arguments from the <i class="arg">spec</i>, followed by the handle of
+the low-level writer object, the detail information from the
+<i class="arg">spec</i>, and the <i class="arg">value</i> itself. The conversion command then
+uses the API of the writer object to add YAML structures to it,
+representing the value.</p></dd>
+<dt><a name="11"><b class="cmd">tclyaml write deftype</b> <i class="arg">name</i> <i class="arg">arguments</i> <i class="arg">body</i></a></dt>
+<dd><p>This command defines a new type conversion command <i class="arg">name</i> for use
+in the <b class="cmd">tclyaml write ...</b> commands above. This part of tclyaml
+is only relevant to users wishing to write their own type conversions.</p>
 <p>The <i class="arg">arguments</i> are what has to be specified in a structure
-specification (see <i class="arg">spec</i> above). Beyond these the <i class="arg">body</i> will have
-access to three standard arguments, namely:</p>
+specification (see <i class="arg">spec</i> above). Beyond these the <i class="arg">body</i> will
+have access to three standard arguments, namely:</p>
 <dl class="doctools_arguments">
 <dt>object <i class="arg">writer</i></dt>
-<dd><p>This is the low-level object instance holding the YAML structures we wish to generate.
-The conversion command has to use its API to add the structures it
-needs to represent the <i class="arg">value</i>.</p>
+<dd><p>This is the low-level object instance holding the YAML structures we
+wish to generate.  The conversion command has to use its API to add
+the structures it needs to represent the <i class="arg">value</i>.</p>
 <p>For more details about this object and its API please section
 <span class="sectref"><a href="#section6">The Writer Object API</a></span>.</p></dd>
 <dt>list <i class="arg">structure</i></dt>
-<dd><p>This is the detail information from the structure specification
-given to the <b class="cmd">tclyaml write</b> commands. The conversion command
-may interpret this as it sees fit.</p>
-<p>For the use type information in this data, to be applied
-to parts of the <i class="arg">value</i> (see below) the body has access to
-the otherwise internal command
-<b class="cmd">::tclyaml::write::type::__convert</b>.
+<dd><p>This is the detail information from the structure specification given
+to the <b class="cmd">tclyaml write</b> commands. The conversion command may
+interpret this as it sees fit.</p>
+<p>For the use type information in this data, to be applied to
+parts of the <i class="arg">value</i> (see below) the body has access to the
+otherwise internal command <b class="cmd">::tclyaml::write::type::__convert</b>.
 It has to be called with three arguments, the <i class="arg">writer</i>, the
-relevant type structure (extracted from our current structure),
-and the value to apply it to (extracted from our current value).</p>
-<p>This allows new type converters to make use of all other
-types known to the system in their type specifications, be they
-builtin or custom.</p>
-<p>Note, when going this far for custom conversions it is
-strongly recommended to look at the implementations of the
-standard converters for sequences and mappings provided by the
-package.</p></dd>
+relevant type structure (extracted from our current structure), and
+the value to apply it to (extracted from our current value).</p>
+<p>This allows new type converters to make use of all other types
+known to the system in their type specifications, be they builtin or
+custom.</p>
+<p>Note, when going this far for custom conversions it is strongly
+recommended to look at the implementations of the standard converters
+for sequences and mappings provided by the package.</p></dd>
 <dt>any <i class="arg">value</i></dt>
 <dd><p>This argument holds the Tcl structure to convert.</p></dd>
 </dl></dd>
-<dt><a name="11"><b class="cmd">tclyaml writeTags channel</b> <i class="arg">chan</i> <i class="arg">value</i></a></dt>
+<dt><a name="12"><b class="cmd">tclyaml writeTags channel</b> <i class="arg">chan</i> <i class="arg">value</i></a></dt>
 <dd></dd>
-<dt><a name="12"><b class="cmd">tclyaml writeTags file</b> <i class="arg">path</i> <i class="arg">value</i></a></dt>
+<dt><a name="13"><b class="cmd">tclyaml writeTags file</b> <i class="arg">path</i> <i class="arg">value</i></a></dt>
 <dd></dd>
-<dt><a name="13"><b class="cmd">tclyaml writeTags string</b> <i class="arg">value</i></a></dt>
+<dt><a name="14"><b class="cmd">tclyaml writeTags string</b> <i class="arg">value</i></a></dt>
 <dd><p>These three commands convert the Tcl data structure <i class="arg">value</i> into YAML.
-Instead of taking a separate structure holding the necessary type information
-these commands expected a data structure where all elements are <i class="term">pairs</i>
-of type and a value proper for that type. In other words, the type tags are part
-of the incoming <i class="arg">value</i>.</p>
-<p>The resulting YAML is written to a channel (<i class="arg">chan</i>, expected to be
-open for writing), a file (<i class="arg">path</i>), or returned as the result of the command.
-For files, an existing file is overwritten.</p></dd>
+Instead of taking a separate structure holding the necessary type
+information these commands expected a data structure where all
+elements are <i class="term">pairs</i> of type and a value proper for that type. In
+other words, the type tags are part of the incoming <i class="arg">value</i>.</p>
+<p><em>Note</em> that this is the same kind of data structure as is
+returned by the <b class="cmd">tclyaml readTags</b> command.</p>
+<p>The resulting YAML is written to the channel <i class="arg">chan</i>, or to
+the file referenced by <i class="arg">path</i>, or returned as the result of the
+command.</p>
+<p>For channels, <i class="arg">chan</i> is expected to be open for writing.
+For files, an existing file is overwritten with the generated YAML.</p></dd>
 </dl>
 </div>
 <div id="section5" class="doctools_section"><h2><a name="section5">Standard converters for YAML generation</a></h2>
@@ -385,34 +441,59 @@ For files, an existing file is overwritten.</p></dd>
 for use in structure specifications taken by the
 <b class="cmd">tclyaml write</b> commands.</p>
 <dl class="doctools_definitions">
-<dt><a name="14"><b class="cmd">string</b></a></dt>
+<dt><a name="15"><b class="cmd">string</b></a></dt>
 <dd></dd>
-<dt><a name="15"><b class="cmd">scalar</b></a></dt>
+<dt><a name="16"><b class="cmd">scalar</b></a></dt>
 <dd><p>This command/type is for the conversion of plain Tcl strings.</p>
 <p>No additional arguments.</p>
 <p>The detail information is ignored.</p>
-<p>Adds a scalar entry to the writer, with the value as the value
-of the scalar.</p></dd>
-<dt><a name="16"><b class="cmd">list</b></a></dt>
+<p>Adds a scalar entry of type string to the writer, with the
+value as the value of the scalar.</p></dd>
+<dt><a name="17"><b class="cmd">bool</b></a></dt>
 <dd></dd>
-<dt><a name="17"><b class="cmd">array</b></a></dt>
+<dt><a name="18"><b class="cmd">int</b></a></dt>
 <dd></dd>
-<dt><a name="18"><b class="cmd">sequence</b></a></dt>
+<dt><a name="19"><b class="cmd">float</b></a></dt>
+<dd><p>This command/type is for the conversion of plain Tcl strings whose
+value matches the particular type.</p>
+<p>No additional arguments.</p>
+<p>The detail information is ignored.</p>
+<p>Adds a scalar entry of the given type to the writer, with the
+value as the value of the scalar.</p>
+<p><em>Note</em> that the value is normalized according to its
+type, and the capabilities of YAML, before being written.
+For example, Tcl is able to handle both positive and negative
+<b class="const">NaN</b>'s. YAML does not handle a signed NaN, thus both kinds are
+mapped to that.</p></dd>
+<dt><a name="20"><b class="cmd">null</b></a></dt>
+<dd><p>This command/type forces the writing of a null value to the YAML,
+regardless of the value in the provided data.
+As such its use in a specification does not truly makes sense.  It
+exists mainly to have full symmetry here with the tags returned by
+<b class="cmd">readTags</b> and accepted by <b class="cmd">writeTags</b>.</p>
+<p>No additional arguments.</p>
+<p>The detail information is ignored.</p></dd>
+<dt><a name="21"><b class="cmd">list</b></a></dt>
+<dd></dd>
+<dt><a name="22"><b class="cmd">array</b></a></dt>
+<dd></dd>
+<dt><a name="23"><b class="cmd">sequence</b></a></dt>
 <dd><p>This command/type is for the conversion of Tcl lists.
 In YAML parlance, sequences.
 In JSON parlance, arrays.</p>
 <p>No additional arguments.</p>
-<p>The detail information is treated as a single structure specification
-as taken by the <b class="cmd">tclyaml write</b> commands. This specification
-describes the type with which to convert the elements of the Tcl list
-held in the <i class="arg">value</i>.</p>
-<p>The converter starts a sequence in the writer object, then converts
-all list elements, and at last ends the sequence in the writer.</p></dd>
-<dt><a name="19"><b class="cmd">dict</b></a></dt>
+<p>The detail information is treated as a single structure
+specification as taken by the <b class="cmd">tclyaml write</b> commands. This
+specification describes the type with which to convert the elements of
+the Tcl list held in the <i class="arg">value</i>.</p>
+<p>The converter starts a sequence in the writer object, then
+converts all list elements as per the type, and at last ends the
+sequence in the writer.</p></dd>
+<dt><a name="24"><b class="cmd">dict</b></a></dt>
 <dd></dd>
-<dt><a name="20"><b class="cmd">object</b></a></dt>
+<dt><a name="25"><b class="cmd">object</b></a></dt>
 <dd></dd>
-<dt><a name="21"><b class="cmd">mapping</b></a></dt>
+<dt><a name="26"><b class="cmd">mapping</b></a></dt>
 <dd><p>This command/type is for the conversion of Tcl dictionaries.
 In YAML parlance, mappings.
 In JSON parlance, objects.</p>
@@ -424,13 +505,15 @@ Tcl dictionary held in the <i class="arg">value</i>.
 All keys in <i class="arg">value</i> also found as key in the <i class="arg">structure</i> use
 the associated type specification for the conversion of their value.
 The values of all keys without an explicit conversion are converted
-with the type specification found under the key <b class="const">*</b>. If such
-a key does not exist their conversion is done with type &quot;scalar&quot;.</p>
+with the type specification found under the key <b class="const">*</b>. If such a
+key does not exist their conversion is done with type &quot;string&quot;.</p>
 <p>The keys of <i class="arg">value</i> themselves are always converted with
-type &quot;scalar&quot;.</p>
-<p>The converter starts a mapping in the writer object, then converts
-all dictionary elements (keys, and values), and at last ends the mapping
-in the writer.</p></dd>
+type &quot;string&quot;.</p>
+<p>The converter starts a mapping in the writer object, then
+converts all dictionary elements (keys, and values), and at last ends
+the mapping in the writer.</p>
+<p><em>Note</em> that the mapping always writes the keys in
+dictionary order.</p></dd>
 </dl>
 </div>
 <div id="section6" class="doctools_section"><h2><a name="section6">The Writer Object API</a></h2>
@@ -442,13 +525,13 @@ destruction of these instances is done internally by the package as needed
 and the relevant APIs are not documented. Neither are the instance methods
 reserved for use by the package internals.</p>
 <dl class="doctools_definitions">
-<dt><a name="22"><i class="arg">writer</i> <b class="method">alias</b> <i class="arg">anchor</i></a></dt>
+<dt><a name="27"><i class="arg">writer</i> <b class="method">alias</b> <i class="arg">anchor</i></a></dt>
 <dd><p>%%TODO%% method - alias - description</p>
 <dl class="doctools_arguments">
 <dt>?? <i class="arg">anchor</i></dt>
 <dd><p>%%TODO%% description</p></dd>
 </dl></dd>
-<dt><a name="23"><i class="arg">writer</i> <b class="method">sequence-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></dt>
+<dt><a name="28"><i class="arg">writer</i> <b class="method">sequence-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></dt>
 <dd><p>This method starts a sequence (list) of yaml values.</p>
 <p>After this method the user has to issue calls for
 each value in the sequence, followed lastly by a call to
@@ -461,12 +544,12 @@ each value in the sequence, followed lastly by a call to
 <dt>boolean <i class="arg">implicit</i></dt>
 <dd><p>%%TODO%% description</p></dd>
 </dl></dd>
-<dt><a name="24"><i class="arg">writer</i> <b class="method">sequence-end</b></a></dt>
+<dt><a name="29"><i class="arg">writer</i> <b class="method">sequence-end</b></a></dt>
 <dd><p>This method is the complement to <b class="method">sequence-start</b>, above.
 Calling it closes the currently open sequence (which may be nested
 in other sequences, mappings, etc). Calling it while not within
 an open sequence is an error.</p></dd>
-<dt><a name="25"><i class="arg">writer</i> <b class="method">mapping-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></dt>
+<dt><a name="30"><i class="arg">writer</i> <b class="method">mapping-start</b> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">implicit</i>?</span></a></dt>
 <dd><p>The method starts a mapping (dictionary) of yaml values.</p>
 <p>After this method the user has to issue calls for
 each key and value in the mapping, followed lastly by a call to
@@ -479,25 +562,26 @@ each key and value in the mapping, followed lastly by a call to
 <dt>boolean <i class="arg">implicit</i></dt>
 <dd><p>%%TODO%% description</p></dd>
 </dl></dd>
-<dt><a name="26"><i class="arg">writer</i> <b class="method">mapping-end</b></a></dt>
+<dt><a name="31"><i class="arg">writer</i> <b class="method">mapping-end</b></a></dt>
 <dd><p>This method is the complement to <b class="method">mapping-start</b>, above.
 Calling it closes the currently open mapping (which may be nested
 in other sequences, mappings, etc). Calling it while not within
 an open mapping is an error.</p></dd>
-<dt><a name="27"><i class="arg">writer</i> <b class="method">scalar</b> <i class="arg">value</i> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span> <span class="opt">?<i class="arg">plain</i>?</span> <span class="opt">?<i class="arg">quoted</i>?</span></a></dt>
-<dd><p>This method adds a single scalar <i class="arg">value</i> to the yaml structure,
-i.e. a string, roughly.</p>
+<dt><a name="32"><i class="arg">writer</i> <b class="method">scalar</b> <i class="arg">type</i> <i class="arg">value</i> <span class="opt">?<i class="arg">anchor</i>?</span> <span class="opt">?<i class="arg">tag</i>?</span></a></dt>
+<dd><p>This method adds a single scalar <i class="arg">value</i> to the yaml structure, of
+the given <i class="arg">type</i>. The only acceptable types are the scalar types
+as returned by <b class="cmd">readTags</b>.
+In other words, <b class="const">bool</b>, <b class="const">float</b>, <b class="const">int</b>,
+<b class="const">null</b>, and <b class="const">string</b>.</p>
+<p>The formatting of the value is decided automatically, based on
+the type, and, in case of strings, on the actual value.</p>
 <dl class="doctools_arguments">
 <dt>?? <i class="arg">anchor</i></dt>
 <dd><p>%%TODO%% description</p></dd>
 <dt>?? <i class="arg">tag</i></dt>
 <dd><p>%%TODO%% description</p></dd>
-<dt>boolean <i class="arg">plain</i></dt>
-<dd><p>%%TODO%% description</p></dd>
-<dt>boolean <i class="arg">quoted</i></dt>
-<dd><p>%%TODO%% description</p></dd>
 </dl></dd>
-<dt><a name="28"><i class="arg">writer</i> <b class="method">blockstyle</b> <i class="arg">style</i></a></dt>
+<dt><a name="33"><i class="arg">writer</i> <b class="method">blockstyle</b> <i class="arg">style</i></a></dt>
 <dd><p>These methods set the currently active formatting style for blocks
 (sequences, mappings). The active style applies only to blocks
 started after it was set. A block opened, but not yet closed during
@@ -512,7 +596,7 @@ a style change is <em>not</em> affected by that change.</p>
 <dt>flow</dt>
 <dd><p>%%TODO%% description</p></dd>
 </dl></dd>
-<dt><a name="29"><i class="arg">writer</i> <b class="method">scalarstyle</b> <i class="arg">style</i></a></dt>
+<dt><a name="34"><i class="arg">writer</i> <b class="method">scalarstyle</b> <i class="arg">style</i></a></dt>
 <dd><p>These methods set the currently active formatting style for scalar
 values. The active style applies only to scalars added after it was
 set.</p>

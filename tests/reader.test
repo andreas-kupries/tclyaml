@@ -1,0 +1,73 @@
+# -*- tcl -*- tcl.tk//DSL tcltest//EN//2.0 tcl.tk//DSL tcltest//EN//2.0
+## (c) 2021 Andreas Kupries
+# # ## ### ##### ######## ############# #####################
+## TclYAML testsuite
+## - API testing
+## - Assumes that the wrapped libyaml is passing its own testsuite.
+#
+## tclyaml (read readTags) (channel file)
+
+kt check Tcl     8.5
+kt check tcltest 2
+
+kt source support/util.tcl
+
+kt local testing tclyaml
+
+# # ## ### ##### ######## ############# #####################
+
+foreach reader {
+    read
+    readTags
+} {
+    # - -- --- ----- -------- ------------- ---------------------
+
+    tcltest::test tclyaml-${reader}-1.0 "tclyaml $reader, wrong#args" -body {
+	tclyaml $reader
+    } -returnCodes error -result "wrong # args: should be \"tclyaml $reader subcommand ?arg ...?\""
+
+    tcltest::test tclyaml-${reader}-1.1 "tclyaml $reader, bogus method" -body {
+	tclyaml $reader bogus
+    } -returnCodes error -result {unknown or ambiguous subcommand "bogus": must be channel, or file}
+
+    tcltest::test tclyaml-${reader}-1.2 "tclyaml $reader file, wrong#args" -body {
+	tclyaml $reader file
+    } -returnCodes error -result "wrong # args: should be \"tclyaml $reader file path\""
+
+    tcltest::test tclyaml-${reader}-1.3 "tclyaml $reader file, wrong#args" -body {
+	tclyaml $reader file FILE X
+    } -returnCodes error -result "wrong # args: should be \"tclyaml $reader file path\""
+
+    tcltest::test tclyaml-${reader}-1.4 "tclyaml $reader channel, wrong#args" -body {
+	tclyaml $reader channel
+    } -returnCodes error -result "wrong # args: should be \"tclyaml $reader channel chan\""
+
+    tcltest::test tclyaml-${reader}-1.5 "tclyaml $reader channel, wrong#args" -body {
+	tclyaml $reader channel CHAN X
+    } -returnCodes error -result "wrong # args: should be \"tclyaml $reader channel chan\""
+
+    # - -- --- ----- -------- ------------- ---------------------
+
+    foreach case [lsort -dict [glob -directory [file join [td] inputs reader] *]] {
+	set name [file tail $case]
+
+	tcltest::test tclyaml-${reader}-${name}-1.0 "tclyaml $reader file: $name" -body {
+	    tclyaml $reader file $case
+	} -result [tcltest::viewFile [file join [td] results $reader $name]]
+
+	tcltest::test tclyaml-${reader}-${name}-1.1 "tclyaml $reader channel: $name" -setup {
+	    set chan [open $case r]
+	} -body {
+	    tclyaml $reader channel $chan
+	} -cleanup {
+	    close $chan
+	    unset  chan
+	} -result [tcltest::viewFile [file join [td] results $reader $name]]
+    }
+
+    # - -- --- ----- -------- ------------- ---------------------
+}
+
+# # ## ### ##### ######## ############# #####################
+cleanupTests
+return

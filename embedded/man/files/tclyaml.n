@@ -3,7 +3,7 @@
 '\" Copyright (c) 2012-2014, 2021 Andreas Kupries
 '\" Copyright (c) 2012-2014, 2021 Documentation, Andreas Kupries
 '\"
-.TH "tclyaml" n 0\&.4 doc "TclYAML"
+.TH "tclyaml" n 0\&.5 doc "TclYAML"
 .\" The -*- nroff -*- definitions below are for supplemental macros used
 .\" in Tcl/Tk manual entries.
 .\"
@@ -277,7 +277,9 @@ tclyaml \- TclYAML - API
 .SH SYNOPSIS
 package require \fBTcl  8\&.5\fR
 .sp
-package require \fBtclyaml  ?0\&.4?\fR
+package require \fBtclyaml  ?0\&.5?\fR
+.sp
+\fBtclyaml type\fR \fIvalue\fR
 .sp
 \fBtclyaml version\fR
 .sp
@@ -309,6 +311,14 @@ package require \fBtclyaml  ?0\&.4?\fR
 .sp
 \fBscalar\fR
 .sp
+\fBbool\fR
+.sp
+\fBint\fR
+.sp
+\fBfloat\fR
+.sp
+\fBnull\fR
+.sp
 \fBlist\fR
 .sp
 \fBarray\fR
@@ -331,7 +341,7 @@ package require \fBtclyaml  ?0\&.4?\fR
 .sp
 \fIwriter\fR \fBmapping-end\fR
 .sp
-\fIwriter\fR \fBscalar\fR \fIvalue\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIplain\fR? ?\fIquoted\fR?
+\fIwriter\fR \fBscalar\fR \fItype\fR \fIvalue\fR ?\fIanchor\fR? ?\fItag\fR?
 .sp
 \fIwriter\fR \fBblockstyle\fR \fIstyle\fR
 .sp
@@ -350,6 +360,33 @@ data structures on one side, and the parsing of YAML into Tcl structures on
 the other\&.
 .SH INTROSPECTION
 .TP
+\fBtclyaml type\fR \fIvalue\fR
+This command applies the typing rules of the \fIYAML Core Schema\fR [https://yaml\&.org/spec/1\&.2/spec\&.html#id2804923]
+to the \fIvalue\fR and returns a 2-element list containing the type of
+the value, and the value normalized according to the type, in this
+order\&.
+.sp
+\fIExamples\fR:
+.CS
+
+
+    % puts [type NULL]
+    null {}
+
+    % puts [type 0xff4f]
+    int 65359
+
+    % puts [type 0\&.1e3]
+    float 100\&.0
+
+    % puts [type \&.inf]
+    float Inf
+
+    % puts [type foo]
+    string foo
+
+.CE
+.TP
 \fBtclyaml version\fR
 This command returns a string containing the version number of the
 libyaml library wrapped and provided by this Tcl package\&.
@@ -365,22 +402,58 @@ single document found in the input\&.
 .sp
 For each document YAML scalars are converted to Tcl strings, and YAML
 sequences and mappings to Tcl lists and dictionaries\&.
+.sp
+\fINote\fR that the command applies the typing rules of the
+\fIYAML Core Schema\fR [https://yaml\&.org/spec/1\&.2/spec\&.html#id2804923] to the retrieved values\&. While the type
+information is not part of the returned structure the normalization
+implied by a type are applied to the values\&.
 .TP
 \fBtclyaml readTags channel\fR \fIchan\fR
 .TP
 \fBtclyaml readTags file\fR \fIpath\fR
-These two commands behave like their plain \fBread\fR counterparts above,
-except that the data structure they return per element is a \fItagged\fR
-structure where each YAML construct is converted into a 2-element list of
-type-tag and value (in this order)\&.
+These two commands behave like their plain \fBread\fR counterparts
+above, except that the data structure they return per element is a
+\fItagged\fR structure where each YAML construct is converted into a
+2-element list of type-tag and value (in this order)\&. In other words,
+the type determined by rules of the \fIYAML Core Schema\fR [https://yaml\&.org/spec/1\&.2/spec\&.html#id2804923] is not
+discarded here\&.
 .sp
-While this type of structure is more difficult to access due to the
-additional nesting levels, in return it does not lose YAML's type information\&.
-This allows users to properly distinguish between lists and dictionaries, for
-example, if the input YAML allows different syntax for specific keys\&. Another
-example would be string versus list, for example in a key allowing one to many
-things of some kind, and a string is the same as a list of one element\&. In an
-untagged conversion these cases are difficult to impossible to distinguish\&.
+While this type of structure is more difficult to access due to
+the additional nesting levels, in return it does not lose YAML's type
+information\&.  This allows users to properly distinguish between lists
+and dictionaries, for example, if the input YAML allows different
+syntax for specific keys\&. Another example would be string versus list,
+for example in a key allowing one to many things of some kind, and a
+string is the same as a list of one element\&. In an untagged conversion
+these cases are difficult to impossible to distinguish\&.
+.sp
+The tags able to appear in the result are:
+.RS
+.TP
+bool
+The value is a boolean\&.
+The only possible values are \fBtrue\fR and \fBfalse\fR\&.
+.TP
+float
+The value is a floating point number\&.
+.TP
+int
+The value is an integer number
+.TP
+mapping
+The value is a mapping from keys to other values\&. Note
+that the keys are tagged structures as well, i\&.e\&. values\&.
+.TP
+null
+The value indicates a nothingness\&. The only possible value
+is the empty string\&.
+.TP
+sequence
+The value is a sequence of values\&.
+.TP
+string
+The value is a string, and not any of the other types\&.
+.RE
 .TP
 \fBtclyaml parse channel\fR \fIchannel\fR \fIcmd\fR\&.\&.\&.
 This command provides the lowest level of access to the YAML parser\&. Reading
@@ -508,87 +581,90 @@ The current mapping ends\&. No details\&.
 \fBtclyaml write file\fR \fIspec\fR \fIpath\fR \fIvalue\fR
 .TP
 \fBtclyaml write string\fR \fIspec\fR \fIvalue\fR
-These three commands convert the Tcl data structure \fIvalue\fR into YAML, under
-the guidance of the type information in \fIspec\fR, which describes the expected
-structure of the \fIvalue\fR, i\&.e\&. essentially provides type annotation/tagging
-of the \fIvalue\fR, but separate from the value itself\&.
+These three commands convert the Tcl data structure in \fIvalue\fR
+into YAML, under the guidance of the type information in \fIspec\fR\&.
 .sp
-The resulting YAML is written to a channel (\fIchan\fR, expected to be
-open for writing), a file (\fIpath\fR), or returned as the result of the command\&.
-For files, an existing file is overwritten\&.
+The \fIspec\fR describes the expected structure of the
+\fIvalue\fR\&. In essence it is the type/tag information which is
+missing from the \fIvalue\fR itself\&.
+.sp
+The resulting YAML is written to the channel \fIchan\fR, or to
+the file referenced by \fIpath\fR, or returned as the result of the
+command\&.
+.sp
+For channels, \fIchan\fR is expected to be open for writing\&.
+For files, an existing file is overwritten with the generated YAML\&.
 .sp
 The syntax of structure \fIspec\fR'ification is:
 .RS
 .IP [1]
 A list of one or more elements\&.
 .IP [2]
-The first element of the list is the name of the type\&.
-This name has to be the name of a conversion command
-declared via \fBtclyaml write deftype\fR, see below\&.
+The first element of the list is the name of the type\&.  This
+name has to be the name of a conversion command declared via
+\fBtclyaml write deftype\fR, see below\&.
 .IP [3]
-The command name can be followed by additional arguments
-and detail information\&.
+The command name can be followed by additional arguments and
+detail information\&.
 .IP [4]
 If the list contains only the command name then no additional
-arguments are assumed, and the detail information defaults
-to the empty string or list\&.
+arguments are assumed, and the detail information defaults to
+the empty string or list\&.
 .sp
-Otherwise the detail information is the last element of the list and
-anything else between command name and details are the additional
-arguments to use\&.
+Otherwise the detail information is the last element of the
+list and anything else between command name and details are the
+additional arguments to use\&.
 .IP [5]
 The interpretation of the detail information depends on the
-conversion command\&. For examples please see the descriptions
-of the standard converters the package makes available in
-section \fBStandard converters for YAML generation\fR\&.
+conversion command\&. For examples please see the descriptions of
+the standard converters the package makes available in section
+\fBStandard converters for YAML generation\fR\&.
 .RE
 .IP
-To convert the \fIvalue\fR the conversion command is run, with
-the additional arguments from the \fIspec\fR, followed by the
-handle of the low-level writer object, the detail information
-from the \fIspec\fR, and the \fIvalue\fR itself\&. The conversion
-command then uses the API of the writer object to add YAML
-structures to it, representing the value\&.
+To convert the \fIvalue\fR the conversion command is run, with the
+additional arguments from the \fIspec\fR, followed by the handle of
+the low-level writer object, the detail information from the
+\fIspec\fR, and the \fIvalue\fR itself\&. The conversion command then
+uses the API of the writer object to add YAML structures to it,
+representing the value\&.
 .TP
 \fBtclyaml write deftype\fR \fIname\fR \fIarguments\fR \fIbody\fR
-This command defines a new type conversion command \fIname\fR for use in the
-\fBtclyaml write \&.\&.\&.\fR commands above\&. This part of tclyaml is only
-relevant to users wishing to write their own type conversions\&.
+This command defines a new type conversion command \fIname\fR for use
+in the \fBtclyaml write \&.\&.\&.\fR commands above\&. This part of tclyaml
+is only relevant to users wishing to write their own type conversions\&.
 .sp
 The \fIarguments\fR are what has to be specified in a structure
-specification (see \fIspec\fR above)\&. Beyond these the \fIbody\fR will have
-access to three standard arguments, namely:
+specification (see \fIspec\fR above)\&. Beyond these the \fIbody\fR will
+have access to three standard arguments, namely:
 .RS
 .TP
 object \fIwriter\fR
-This is the low-level object instance holding the YAML structures we wish to generate\&.
-The conversion command has to use its API to add the structures it
-needs to represent the \fIvalue\fR\&.
+This is the low-level object instance holding the YAML structures we
+wish to generate\&.  The conversion command has to use its API to add
+the structures it needs to represent the \fIvalue\fR\&.
 .sp
 For more details about this object and its API please section
 \fBThe Writer Object API\fR\&.
 .TP
 list \fIstructure\fR
-This is the detail information from the structure specification
-given to the \fBtclyaml write\fR commands\&. The conversion command
-may interpret this as it sees fit\&.
+This is the detail information from the structure specification given
+to the \fBtclyaml write\fR commands\&. The conversion command may
+interpret this as it sees fit\&.
 .sp
-For the use type information in this data, to be applied
-to parts of the \fIvalue\fR (see below) the body has access to
-the otherwise internal command
-\fB::tclyaml::write::type::__convert\fR\&.
+For the use type information in this data, to be applied to
+parts of the \fIvalue\fR (see below) the body has access to the
+otherwise internal command \fB::tclyaml::write::type::__convert\fR\&.
 It has to be called with three arguments, the \fIwriter\fR, the
-relevant type structure (extracted from our current structure),
-and the value to apply it to (extracted from our current value)\&.
+relevant type structure (extracted from our current structure), and
+the value to apply it to (extracted from our current value)\&.
 .sp
-This allows new type converters to make use of all other
-types known to the system in their type specifications, be they
-builtin or custom\&.
+This allows new type converters to make use of all other types
+known to the system in their type specifications, be they builtin or
+custom\&.
 .sp
-Note, when going this far for custom conversions it is
-strongly recommended to look at the implementations of the
-standard converters for sequences and mappings provided by the
-package\&.
+Note, when going this far for custom conversions it is strongly
+recommended to look at the implementations of the standard converters
+for sequences and mappings provided by the package\&.
 .TP
 any \fIvalue\fR
 This argument holds the Tcl structure to convert\&.
@@ -600,14 +676,20 @@ This argument holds the Tcl structure to convert\&.
 .TP
 \fBtclyaml writeTags string\fR \fIvalue\fR
 These three commands convert the Tcl data structure \fIvalue\fR into YAML\&.
-Instead of taking a separate structure holding the necessary type information
-these commands expected a data structure where all elements are \fIpairs\fR
-of type and a value proper for that type\&. In other words, the type tags are part
-of the incoming \fIvalue\fR\&.
+Instead of taking a separate structure holding the necessary type
+information these commands expected a data structure where all
+elements are \fIpairs\fR of type and a value proper for that type\&. In
+other words, the type tags are part of the incoming \fIvalue\fR\&.
 .sp
-The resulting YAML is written to a channel (\fIchan\fR, expected to be
-open for writing), a file (\fIpath\fR), or returned as the result of the command\&.
-For files, an existing file is overwritten\&.
+\fINote\fR that this is the same kind of data structure as is
+returned by the \fBtclyaml readTags\fR command\&.
+.sp
+The resulting YAML is written to the channel \fIchan\fR, or to
+the file referenced by \fIpath\fR, or returned as the result of the
+command\&.
+.sp
+For channels, \fIchan\fR is expected to be open for writing\&.
+For files, an existing file is overwritten with the generated YAML\&.
 .PP
 .SH "STANDARD CONVERTERS FOR YAML GENERATION"
 The package provides the following pre-defined conversion commands
@@ -623,8 +705,40 @@ No additional arguments\&.
 .sp
 The detail information is ignored\&.
 .sp
-Adds a scalar entry to the writer, with the value as the value
-of the scalar\&.
+Adds a scalar entry of type string to the writer, with the
+value as the value of the scalar\&.
+.TP
+\fBbool\fR
+.TP
+\fBint\fR
+.TP
+\fBfloat\fR
+This command/type is for the conversion of plain Tcl strings whose
+value matches the particular type\&.
+.sp
+No additional arguments\&.
+.sp
+The detail information is ignored\&.
+.sp
+Adds a scalar entry of the given type to the writer, with the
+value as the value of the scalar\&.
+.sp
+\fINote\fR that the value is normalized according to its
+type, and the capabilities of YAML, before being written\&.
+For example, Tcl is able to handle both positive and negative
+\fBNaN\fR's\&. YAML does not handle a signed NaN, thus both kinds are
+mapped to that\&.
+.TP
+\fBnull\fR
+This command/type forces the writing of a null value to the YAML,
+regardless of the value in the provided data\&.
+As such its use in a specification does not truly makes sense\&.  It
+exists mainly to have full symmetry here with the tags returned by
+\fBreadTags\fR and accepted by \fBwriteTags\fR\&.
+.sp
+No additional arguments\&.
+.sp
+The detail information is ignored\&.
 .TP
 \fBlist\fR
 .TP
@@ -637,13 +751,14 @@ In JSON parlance, arrays\&.
 .sp
 No additional arguments\&.
 .sp
-The detail information is treated as a single structure specification
-as taken by the \fBtclyaml write\fR commands\&. This specification
-describes the type with which to convert the elements of the Tcl list
-held in the \fIvalue\fR\&.
+The detail information is treated as a single structure
+specification as taken by the \fBtclyaml write\fR commands\&. This
+specification describes the type with which to convert the elements of
+the Tcl list held in the \fIvalue\fR\&.
 .sp
-The converter starts a sequence in the writer object, then converts
-all list elements, and at last ends the sequence in the writer\&.
+The converter starts a sequence in the writer object, then
+converts all list elements as per the type, and at last ends the
+sequence in the writer\&.
 .TP
 \fBdict\fR
 .TP
@@ -663,15 +778,18 @@ Tcl dictionary held in the \fIvalue\fR\&.
 All keys in \fIvalue\fR also found as key in the \fIstructure\fR use
 the associated type specification for the conversion of their value\&.
 The values of all keys without an explicit conversion are converted
-with the type specification found under the key \fB*\fR\&. If such
-a key does not exist their conversion is done with type "scalar"\&.
+with the type specification found under the key \fB*\fR\&. If such a
+key does not exist their conversion is done with type "string"\&.
 .sp
 The keys of \fIvalue\fR themselves are always converted with
-type "scalar"\&.
+type "string"\&.
 .sp
-The converter starts a mapping in the writer object, then converts
-all dictionary elements (keys, and values), and at last ends the mapping
-in the writer\&.
+The converter starts a mapping in the writer object, then
+converts all dictionary elements (keys, and values), and at last ends
+the mapping in the writer\&.
+.sp
+\fINote\fR that the mapping always writes the keys in
+dictionary order\&.
 .PP
 .SH "THE WRITER OBJECT API"
 This section is only relevant to users wishing to write their own type
@@ -739,21 +857,21 @@ Calling it closes the currently open mapping (which may be nested
 in other sequences, mappings, etc)\&. Calling it while not within
 an open mapping is an error\&.
 .TP
-\fIwriter\fR \fBscalar\fR \fIvalue\fR ?\fIanchor\fR? ?\fItag\fR? ?\fIplain\fR? ?\fIquoted\fR?
-This method adds a single scalar \fIvalue\fR to the yaml structure,
-i\&.e\&. a string, roughly\&.
+\fIwriter\fR \fBscalar\fR \fItype\fR \fIvalue\fR ?\fIanchor\fR? ?\fItag\fR?
+This method adds a single scalar \fIvalue\fR to the yaml structure, of
+the given \fItype\fR\&. The only acceptable types are the scalar types
+as returned by \fBreadTags\fR\&.
+In other words, \fBbool\fR, \fBfloat\fR, \fBint\fR,
+\fBnull\fR, and \fBstring\fR\&.
+.sp
+The formatting of the value is decided automatically, based on
+the type, and, in case of strings, on the actual value\&.
 .RS
 .TP
 ?? \fIanchor\fR
 %%TODO%% description
 .TP
 ?? \fItag\fR
-%%TODO%% description
-.TP
-boolean \fIplain\fR
-%%TODO%% description
-.TP
-boolean \fIquoted\fR
 %%TODO%% description
 .RE
 .TP

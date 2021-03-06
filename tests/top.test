@@ -1,0 +1,27 @@
+# -*- tcl -*- tcl.tk//DSL tcltest//EN//2.0 tcl.tk//DSL tcltest//EN//2.0
+## (c) 2021 Andreas Kupries
+# # ## ### ##### ######## ############# #####################
+## TclYAML testsuite
+## - API testing
+## - Assumes that the wrapped libyaml is passing its own testsuite.
+#
+## tclyaml (read readTags write writeTags version)
+
+kt check Tcl     8.5
+kt check tcltest 2
+
+kt local testing tclyaml
+
+# # ## ### ##### ######## ############# #####################
+
+tcltest::test tclyaml-top-1.0 {tclyaml, wrong#args} -body {
+    tclyaml
+} -returnCodes error -result {wrong # args: should be "tclyaml subcommand ?arg ...?"}
+
+tcltest::test tclyaml-top-1.1 {tclyaml, bogus method} -body {
+    tclyaml bogus
+} -returnCodes error -result {unknown or ambiguous subcommand "bogus": must be read, readTags, type, version, write, or writeTags}
+
+# # ## ### ##### ######## ############# #####################
+cleanupTests
+return

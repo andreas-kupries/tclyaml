@@ -1,0 +1,5 @@
+{{sequence {{mapping {{string foo} {string bar} {string or} {string else}}} {mapping {{string box} {mapping {{string fill} {float 25.0} {string order} {int 1} {string label} {string 23} {string volume} {null {}} {string visible} {bool false} {string colored} {bool true} {string area} {null {}} {string grid} {null {}} {string stop} {string false}}}}} {mapping {{string header} {string {the quick brown fox
+jumps over the lazy
+dog
+}} {string footer} {string {ring a rosie
+}} {string map} {float Inf} {string glue} {float NaN}}}}}}

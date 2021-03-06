@@ -139,7 +139,7 @@ if {![critcl::load]} {
 
 # # ## ### ##### ######## #############
 
-package provide tclyaml 0.4
+package provide tclyaml 0.5
 return
 
 # vim: set sts=4 sw=4 tw=80 et ft=tcl:

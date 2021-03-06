@@ -1,0 +1,190 @@
+<!DOCTYPE html><html><head>
+<title>tclyaml_changes - TclYAML</title>
+<style type="text/css"><!--
+    HTML {
+	background: 	#FFFFFF;
+	color: 		black;
+    }
+    BODY {
+	background: 	#FFFFFF;
+	color:	 	black;
+    }
+    DIV.doctools {
+	margin-left:	10%;
+	margin-right:	10%;
+    }
+    DIV.doctools H1,DIV.doctools H2 {
+	margin-left:	-5%;
+    }
+    H1, H2, H3, H4 {
+	margin-top: 	1em;
+	font-family:	sans-serif;
+	font-size:	large;
+	color:		#005A9C;
+	background: 	transparent;
+	text-align:		left;
+    }
+    H1.doctools_title {
+	text-align: center;
+    }
+    UL,OL {
+	margin-right: 0em;
+	margin-top: 3pt;
+	margin-bottom: 3pt;
+    }
+    UL LI {
+	list-style: disc;
+    }
+    OL LI {
+	list-style: decimal;
+    }
+    DT {
+	padding-top: 	1ex;
+    }
+    UL.doctools_toc,UL.doctools_toc UL, UL.doctools_toc UL UL {
+	font:		normal 12pt/14pt sans-serif;
+	list-style:	none;
+    }
+    LI.doctools_section, LI.doctools_subsection {
+	list-style: 	none;
+	margin-left: 	0em;
+	text-indent:	0em;
+	padding: 	0em;
+    }
+    PRE {
+	display: 	block;
+	font-family:	monospace;
+	white-space:	pre;
+	margin:		0%;
+	padding-top:	0.5ex;
+	padding-bottom:	0.5ex;
+	padding-left:	1ex;
+	padding-right:	1ex;
+	width:		100%;
+    }
+    PRE.doctools_example {
+	color: 		black;
+	background: 	#f5dcb3;
+	border:		1px solid black;
+    }
+    UL.doctools_requirements LI, UL.doctools_syntax LI {
+	list-style: 	none;
+	margin-left: 	0em;
+	text-indent:	0em;
+	padding:	0em;
+    }
+    DIV.doctools_synopsis {
+	color: 		black;
+	background: 	#80ffff;
+	border:		1px solid black;
+	font-family:	serif;
+	margin-top: 	1em;
+	margin-bottom: 	1em;
+    }
+    UL.doctools_syntax {
+	margin-top: 	1em;
+	border-top:	1px solid black;
+    }
+    UL.doctools_requirements {
+	margin-bottom: 	1em;
+	border-bottom:	1px solid black;
+    }
+--></style>
+</head>
+<!-- Generated from file 'tclyaml_changes.man' by tcllib/doctools with format 'html'
+   -->
+<!-- Copyright &amp;copy; 2012-2014, 2021 Andreas Kupries   -- Copyright &amp;copy; 2012-2014, 2021 Documentation, Andreas Kupries
+   -->
+<!-- tclyaml_changes.n
+   -->
+<body><hr> [
+   <a href="../../../../../../home">Home</a>
+&#124; <a href="../../toc.html">Main Table Of Contents</a>
+&#124; <a href="../toc.html">Table Of Contents</a>
+&#124; <a href="../../index.html">Keyword Index</a>
+ ] <hr>
+<div class="doctools">
+<h1 class="doctools_title">tclyaml_changes(n) 0.5 doc &quot;TclYAML&quot;</h1>
+<div id="name" class="doctools_section"><h2><a name="name">Name</a></h2>
+<p>tclyaml_changes - TclYAML - License</p>
+</div>
+<div id="toc" class="doctools_section"><h2><a name="toc">Table Of Contents</a></h2>
+<ul class="doctools_toc">
+<li class="doctools_section"><a href="#toc">Table Of Contents</a></li>
+<li class="doctools_section"><a href="#synopsis">Synopsis</a></li>
+<li class="doctools_section"><a href="#section1">Description</a></li>
+<li class="doctools_section"><a href="#section2">Changes</a>
+<ul>
+<li class="doctools_subsection"><a href="#subsection1">Changes for version 0.5</a></li>
+</ul>
+</li>
+<li class="doctools_section"><a href="#section3">Bugs, Ideas, Feedback</a></li>
+<li class="doctools_section"><a href="#keywords">Keywords</a></li>
+<li class="doctools_section"><a href="#category">Category</a></li>
+<li class="doctools_section"><a href="#copyright">Copyright</a></li>
+</ul>
+</div>
+<div id="synopsis" class="doctools_section"><h2><a name="synopsis">Synopsis</a></h2>
+<div class="doctools_synopsis">
+<ul class="doctools_requirements">
+<li>package require <b class="pkgname">Tcl 8.5</b></li>
+<li>package require <b class="pkgname">tclyaml <span class="opt">?0.5?</span></b></li>
+</ul>
+</div>
+</div>
+<div id="section1" class="doctools_section"><h2><a name="section1">Description</a></h2>
+<p>Welcome to TclYAML, a binding to the C-based libyaml parser
+library for <a href="http://yaml.org">YAML Ain't Markup Language</a>.
+This document provides an overview of the changes <b class="package"><a href="tclyaml.html">TclYAML</a></b>
+underwent from version to version.</p>
+</div>
+<div id="section2" class="doctools_section"><h2><a name="section2">Changes</a></h2>
+<div id="subsection1" class="doctools_subsection"><h3><a name="subsection1">Changes for version 0.5</a></h3>
+<p>In detail:</p>
+<ol class="doctools_enumerated">
+<li><p>As a non-breaking change, a test suite was added.</p>
+<p>All following changes are breaking, versus version <b class="const">0.4</b>.</p></li>
+<li><p>Removed the untyped structure tag <b class="const">scalar</b>.  Replaced it
+       with five new tags providing type information:</p>
+<ol class="doctools_enumerated">
+<li><p><b class="const">bool</b></p></li>
+<li><p><b class="const">float</b></p></li>
+<li><p><b class="const">int</b></p></li>
+<li><p><b class="const">null</b></p></li>
+<li><p><b class="const">string</b></p></li>
+</ol>
+</li>
+<li><p>When reading YAML data types are now determined as per the
+       <a href="https://yaml.org/spec/1.2/spec.html#id2804923">YAML Core Schema</a> rules. And the assumption that quoted
+       values are always strings, and none of the other types.</p></li>
+<li><p>Read values are now normalized, as per their type. For example,
+       the internally seen value of an integer is always in decimal
+       form, regardless of if it was octal or hex in the input.</p></li>
+<li><p>On the writing side the new structural tags now exist as
+       pre-defined type converters. The <b class="const">scalar</b> converter is
+       still present, and aliases now to <b class="const">string</b>. In the
+       previous version <b class="const">string</b> aliased to <b class="const">scalar</b> as
+       the only scalar type.</p></li>
+<li><p>Most styling of scalar values is now automatically determined
+       by their type, and, in case of strings, by the value as well.</p></li>
+</ol>
+</div>
+</div>
+<div id="section3" class="doctools_section"><h2><a name="section3">Bugs, Ideas, Feedback</a></h2>
+<p>This document, and the package it describes, will undoubtedly contain
+bugs and other problems.
+Please report such at the <a href="https://core.tcl-lang.org/akupries/tclyaml">TclYAML Tracker</a>.
+Please also report any ideas for enhancements you may have for either
+package and/or documentation.</p>
+</div>
+<div id="keywords" class="doctools_section"><h2><a name="keywords">Keywords</a></h2>
+<p><a href="../../index.html#yaml">YAML</a>, <a href="../../index.html#markup_language">markup language</a>, <a href="../../index.html#serialization">serialization</a></p>
+</div>
+<div id="category" class="doctools_section"><h2><a name="category">Category</a></h2>
+<p>3rd party library binding</p>
+</div>
+<div id="copyright" class="doctools_section"><h2><a name="copyright">Copyright</a></h2>
+<p>Copyright &copy; 2012-2014, 2021 Andreas Kupries<br>
+Copyright &copy; 2012-2014, 2021 Documentation, Andreas Kupries</p>
+</div>
+</div></body></html>

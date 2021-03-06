@@ -1,0 +1,99 @@
+# -*- tcl -*- tcl.tk//DSL tcltest//EN//2.0 tcl.tk//DSL tcltest//EN//2.0
+## (c) 2021 Andreas Kupries
+# # ## ### ##### ######## ############# #####################
+## TclYAML testsuite
+## - API testing
+## - Assumes that the wrapped libyaml is passing its own testsuite.
+#
+## tclyaml writeTags (channel file string)
+
+kt check Tcl     8.5
+kt check tcltest 2
+
+kt source support/util.tcl
+
+kt local testing tclyaml
+
+# # ## ### ##### ######## ############# #####################
+
+tcltest::test tclyaml-writeTags-1.0 {tclyaml writeTags, wrong#args} -body {
+    tclyaml writeTags
+} -returnCodes error -result {wrong # args: should be "tclyaml writeTags subcommand ?arg ...?"}
+
+tcltest::test tclyaml-writeTags-1.1 {tclyaml writeTags, bogus method} -body {
+    tclyaml writeTags bogus
+} -returnCodes error -result {unknown or ambiguous subcommand "bogus": must be channel, file, or string}
+
+tcltest::test tclyaml-writeTags-1.2 {tclyaml writeTags file, wrong#args} -body {
+    tclyaml writeTags file
+} -returnCodes error -result {wrong # args: should be "tclyaml writeTags file path value"}
+
+tcltest::test tclyaml-writeTags-1.3 {tclyaml writeTags file, wrong#args} -body {
+    tclyaml writeTags file FILE
+} -returnCodes error -result {wrong # args: should be "tclyaml writeTags file path value"}
+
+tcltest::test tclyaml-writeTags-1.4 {tclyaml writeTags file, wrong#args} -body {
+    tclyaml writeTags file FILE VALUE X
+} -returnCodes error -result {wrong # args: should be "tclyaml writeTags file path value"}
+
+tcltest::test tclyaml-writeTags-1.5 {tclyaml writeTags channel, wrong#args} -body {
+    tclyaml writeTags channel
+} -returnCodes error -result {wrong # args: should be "tclyaml writeTags channel chan value"}
+
+tcltest::test tclyaml-writeTags-1.6 {tclyaml writeTags channel, wrong#args} -body {
+    tclyaml writeTags channel CHAN
+} -returnCodes error -result {wrong # args: should be "tclyaml writeTags channel chan value"}
+
+tcltest::test tclyaml-writeTags-1.7 {tclyaml writeTags channel, wrong#args} -body {
+    tclyaml writeTags channel CHAN VALUE X
+} -returnCodes error -result {wrong # args: should be "tclyaml writeTags channel chan value"}
+
+tcltest::test tclyaml-writeTags-1.8 {tclyaml writeTags string, wrong#args} -body {
+    tclyaml writeTags string
+} -returnCodes error -result {wrong # args: should be "tclyaml writeTags string value"}
+
+tcltest::test tclyaml-writeTags-1.9 {tclyaml writeTags string, wrong#args} -body {
+    tclyaml writeTags string VALUE X
+} -returnCodes error -result {wrong # args: should be "tclyaml writeTags string value"}
+
+# - -- --- ----- -------- ------------- ---------------------
+
+foreach case [lsort -dict [glob -directory [file join [td] results readTags] *]] {
+    set name [file tail $case]
+
+    tcltest::test tclyaml-writeTags-${name}-1.0 "tclyaml writeTags file: $name" -setup {
+	set value [lindex [cat $case] 0 0] ;# extract value from document from the list of such.
+	set tmp   [file join [td] scratch]
+    } -body {
+	tclyaml writeTags file $tmp $value
+	string trimright [cat $tmp]
+    } -cleanup {
+	file delete $tmp
+	unset tmp value
+    } -result [tcltest::viewFile [file join [td] results writeTags $name]]
+
+    tcltest::test tclyaml-writeTags-${name}-1.1 "tclyaml writeTags channel: $name" -setup {
+	set value [lindex [cat $case] 0 0] ;# extract value from document from the list of such.
+	set tmp   [file join [td] scratch]
+	set chan  [open $tmp w]
+    } -body {
+	tclyaml writeTags channel $chan $value
+	close $chan
+	string trimright [cat $tmp]
+    } -cleanup {
+	file delete $tmp
+	unset chan tmp value
+    } -result [tcltest::viewFile [file join [td] results writeTags $name]]
+
+    tcltest::test tclyaml-writeTags-${name}-1.2 "tclyaml writeTags string: $name" -setup {
+	set value [lindex [cat $case] 0 0] ;# extract value from document from the list of such.
+    } -body {
+	string trimright [tclyaml writeTags string $value]
+    } -cleanup {
+	unset value
+    } -result [tcltest::viewFile [file join [td] results writeTags $name]]
+}
+
+# # ## ### ##### ######## ############# #####################
+cleanupTests
+return

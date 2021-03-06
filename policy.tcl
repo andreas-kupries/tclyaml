@@ -8,28 +8,57 @@ package require TclOO
 ## Parser wrapping, and conveniences.
 
 namespace eval ::tclyaml {
-    namespace eval read {
-	namespace export channel file
-	namespace ensemble create
-    }
-
-    namespace eval readTags {
-	namespace export channel file
-	namespace ensemble create
-    }
-
-    namespace eval write {
-	namespace export channel file string deftype
-	namespace ensemble create
-    }
-
-    namespace eval writeTags {
-	namespace export channel file string
-	namespace ensemble create
-    }
-
-    namespace export read readTags write writeTags version
+    namespace export read readTags write writeTags version type
     namespace ensemble create
+}
+namespace eval ::tclyaml::read {
+    namespace export channel file
+    namespace ensemble create
+}
+namespace eval ::tclyaml::readTags {
+    namespace export channel file
+    namespace ensemble create
+}
+namespace eval ::tclyaml::write {
+    namespace export channel file string deftype
+    namespace ensemble create
+}
+namespace eval ::tclyaml::write::type {
+}
+namespace eval ::tclyaml::writeTags {
+    namespace export channel file string
+    namespace ensemble create
+}
+
+# # ## ### ##### ######## #############
+
+proc ::tclyaml::type {value} {
+    set type string
+    if {$value in {{} null NULL Null ~}} {
+	set type null
+	set value {}
+    } elseif {$value in {true True TRUE false False FALSE}} {
+	set type bool
+	set value [expr {$value ? "true" : "false"}]
+    } elseif {[regexp -- {^[+-]?[0-9]+$} $value]} {
+	set type int
+    } elseif {[regexp -- {^0o[0-7]+$} $value]} {
+	set type int
+	set value [expr $value]
+    } elseif {[regexp -- {^0x[0-9a-fA-F]+$} $value]} {
+	set type int
+	set value [expr $value]
+    } elseif {[regexp -- {^[-+]?(\.[0-9]+|[0-9]+(\.[0-9]*)?)([eE][-+]?[0-9]+)?$} $value]} {
+	set type float
+	set value [expr $value]
+    } elseif {[regexp -- {^([+-]?)(\.inf|\.Inf|\.INF)$} $value _ sign]} {
+	set type float
+	set value ${sign}Inf
+    } elseif {$value in {.nan .NaN .NAN}} {
+	set type float
+	set value NaN
+    }
+    return [list $type $value]
 }
 
 # # ## ### ##### ######## #############
@@ -43,10 +72,10 @@ proc ::tclyaml::read::file {path} {
     return {*}$o $e
 }
 
-proc ::tclyaml::read::channel {c} {
+proc ::tclyaml::read::channel {chan} {
     set reader [::tclyaml::reader new]
     catch {
-	$reader channel $c
+	$reader channel $chan
     } e o
     $reader destroy
     return {*}$o $e
@@ -63,10 +92,10 @@ proc ::tclyaml::readTags::file {path} {
     return {*}$o $e
 }
 
-proc ::tclyaml::readTags::channel {c} {
+proc ::tclyaml::readTags::channel {chan} {
     set reader [::tclyaml::taggedreader new]
     catch {
-	$reader channel $c
+	$reader channel $chan
     } e o
     $reader destroy
     return {*}$o $e
@@ -113,7 +142,8 @@ oo::class create ::tclyaml::reader {
 
     method alias {details} {
 	# details = (anchor -> string)
-	return -code error "Currently not able to handle aliases"
+	return -code error -errorcode {YAML READ ALIAS NOT IMPLEMENTED} \
+	    "Currently not able to handle aliases"
     }
 
     method scalar {details} {
@@ -125,7 +155,19 @@ oo::class create ::tclyaml::reader {
 	#   quoted-implicit -> bool
 	#   style           -> enum (any, plain, single, double, literal, folded)
 	# )
-	lappend mybuffer [dict get $details scalar]
+
+	# We use type detection here only to perform normalization of
+	# the value.
+
+	dict with details {}
+	if { ${quoted-implicit} } {
+	    # Attention! Quoting prevents the application of the
+	    # implicit typing rules.
+	} else {
+	    lassign [::tclyaml type $scalar] _ scalar
+	}
+
+	lappend mybuffer $scalar
 	return
     }
 
@@ -211,7 +253,8 @@ oo::class create ::tclyaml::taggedreader {
 
     method alias {details} {
 	# details = (anchor -> string)
-	return -code error "Currently not able to handle aliases"
+	return -code error -errorcode {YAML READ ALIAS NOT IMPLEMENTED} \
+	    "Currently not able to handle aliases"
     }
 
     method scalar {details} {
@@ -223,7 +266,16 @@ oo::class create ::tclyaml::taggedreader {
 	#   quoted-implicit -> bool
 	#   style           -> enum (any, plain, single, double, literal, folded)
 	# )
-	lappend mybuffer [list scalar [dict get $details scalar]]
+	dict with details {}
+	set type string
+	if { ${quoted-implicit} } {
+	    # Attention! Quoting prevents the application of the
+	    # implicit typing rules.
+	} else {
+	    lassign [::tclyaml type $scalar] type scalar
+	}
+
+	lappend mybuffer [list $type $scalar]
 	return
     }
 
@@ -308,8 +360,45 @@ oo::class create ::tclyaml::writer {
 	return
     }
 
-    method scalar {value {anchor {}} {tag {}} {plain 1} {quoted 1}} {
-	E scalar $anchor $tag $value $plain $quoted $myscalarstyle
+    method scalar {type value {anchor {}} {tag {}}} {
+	# Determine styling based on type and, in case of string,
+	# actual value as well.
+	set plain  1
+	set quoted 0
+	set style  $myscalarstyle
+	switch -exact -- $type {
+	    int    {
+		set value [expr $value]
+	    }
+	    float  {
+		if {$value eq "Inf"} {
+		    set value .inf
+		} elseif {$value eq "-Inf"} {
+		    set value -.inf
+		} elseif {$value in {NaN -NaN}} {
+		    set value .nan
+		} else {
+		    set value [expr $value]
+		}
+	    }
+	    bool   { set value [expr {$value ? "true" : "false"}] }
+	    null   { set value null }
+	    string {
+		# Quote only strings which would be mistaken for a
+		# different type of value without them.
+		lassign [::tclyaml type $value] itype _
+		if {$itype ne $type} {
+		    set quoted 1
+		}
+		# Further, restyle multi-line strings.
+		if {[string match *\n* $value]} {
+		    set style literal
+		    set quoted 1
+		}
+	    }
+	}
+	if {$quoted} { set plain 0 }
+	E scalar $anchor $tag $value $plain $quoted $style
 	return
     }
 
@@ -353,8 +442,11 @@ proc ::tclyaml::writeTags::string {value} {
 }
 
 proc ::tclyaml::writeTags::Core {value} {
+    if {$value eq {}} {
+	# Fast return for nothing
+	return
+    }
     set writer [::tclyaml::writer new]
-
     catch {
 	$writer stream-start
 	$writer document-start
@@ -370,28 +462,31 @@ proc ::tclyaml::writeTags::Core {value} {
 }
 
 proc ::tclyaml::writeTags::Convert {writer value} {
-    lassign $value tag value
+    lassign $value tag spec
     switch -exact -- $tag {
-	scalar {
-	    $writer scalar $value
+	int - float - bool - null - string {
+	    $writer scalar $tag $spec
 	}
 	sequence {
 	    $writer sequence-start
-	    foreach element $value {
+	    foreach element $spec {
 		Convert $writer $element
 	    }
 	    $writer sequence-end
 	}
 	mapping {
 	    $writer mapping-start
-	    foreach {k v} $value {
+	    # Attention! The writer normalizes the key order
+	    # (dictionary sorting), pre-quoting.
+	    foreach k [lsort -dict -index 1 [dict keys $spec]] {
 		Convert $writer $k
-		Convert $writer $v
+		Convert $writer [dict get $spec $k]
 	    }
 	    $writer mapping-end
 	}
 	default {
-	    return -code error "Bad tag $tag"
+	    return -code error -errorcode {YAML WRITE-TAGS BAD TAG} \
+		"Bad tag $tag"
 	}
     }
 }
@@ -434,7 +529,7 @@ proc ::tclyaml::write::Core {structure value} {
 	$writer stream-start
 	$writer document-start
 
-	__convert $writer $structure $value
+	type::__convert $writer $structure $value
 
 	$writer document-end
 	$writer stream-end
@@ -442,10 +537,6 @@ proc ::tclyaml::write::Core {structure value} {
     } e o
     $writer destroy
     return {*}$o $e
-}
-
-namespace eval ::tclyaml::write::type {
-    namespace export __convert
 }
 
 proc ::tclyaml::write::type::__convert {writer structure value} {
@@ -456,13 +547,40 @@ proc ::tclyaml::write::type::__convert {writer structure value} {
 	set cmd    [lrange $structure 0 end-1]
 	set detail [lindex $structure end]
     }
-
     {*}$cmd $writer $detail $value
     return
 }
 
-proc ::tclyaml::write::type::scalar {writer structure value} {
-    $writer scalar $value
+proc ::tclyaml::write::type::int {writer structure value} {
+    if {![::string is int -strict $value]} {
+	return -code error -errorcode {YAML WRITE BAD INT} \
+	    "Expected an integer, got \"$value\""
+    }
+    $writer scalar int $value
+    return
+}
+
+proc ::tclyaml::write::type::float {writer structure value} {
+    if {![::string is double -strict $value]} {
+	return -code error -errorcode {YAML WRITE BAD INT} \
+	    "Expected a double, got \"$value\""
+    }
+    $writer scalar float $value
+    return
+}
+
+proc ::tclyaml::write::type::bool {writer structure value} {
+    $writer scalar bool [expr {$value ? "true" : "false"}]
+    return
+}
+
+proc ::tclyaml::write::type::null {writer structure value} {
+    $writer scalar null null
+    return
+}
+
+proc ::tclyaml::write::type::string {writer structure value} {
+    $writer scalar string $value
     return
 }
 
@@ -486,8 +604,7 @@ proc ::tclyaml::write::type::mapping {writer structure value} {
 	set defaulttype scalar
     }
 
-    set keys [lsort -dict [::dict keys $value]]
-    foreach k $keys {
+    foreach k [lsort -dict [::dict keys $value]] {
 	if {[::dict exists $structure $k]} {
 	    set valuetype [::dict get $structure $k]
 	} else {
@@ -502,16 +619,11 @@ proc ::tclyaml::write::type::mapping {writer structure value} {
     return
 }
 
-interp alias {} ::tclyaml::write::type::string {} ::tclyaml::write::type::scalar
+interp alias {} ::tclyaml::write::type::scalar {} ::tclyaml::write::type::string
 interp alias {} ::tclyaml::write::type::list   {} ::tclyaml::write::type::sequence
 interp alias {} ::tclyaml::write::type::array  {} ::tclyaml::write::type::sequence
 interp alias {} ::tclyaml::write::type::dict   {} ::tclyaml::write::type::mapping
 interp alias {} ::tclyaml::write::type::object {} ::tclyaml::write::type::mapping
 
 # # ## ### ##### ######## #############
-
-namespace eval ::tclyaml::write {
-    namespace import ::tclyaml::write::type::__convert
-}
-
-# # ## ### ##### ######## #############
+return

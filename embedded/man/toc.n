@@ -276,6 +276,9 @@ doc
 \fBtclyaml\fR
 \fIfiles/tclyaml\&.n\fR: TclYAML - API
 .TP
+\fBtclyaml_changes\fR
+\fIfiles/tclyaml_changes\&.n\fR: TclYAML - License
+.TP
 \fBtclyaml_devguide\fR
 \fIfiles/tclyaml_devguide\&.n\fR: TclYAML - The Developer's Guide
 .TP
