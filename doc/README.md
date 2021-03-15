@@ -3,22 +3,23 @@
 Welcome to TclYAML, a binding to the C-based libyaml parser library
 for [YAML Ain't Markup Language](http://yaml.org).
 
-# Attention Please
+# Ticket tracking
 
-You are reading this document on the github mirror of the
-[official sources](http://core.tcl-lang.org/akupries/tclyaml).
-
-Please be aware that tickets added here are ignored, or, at best,
-simply closed with link to the
-[official ticket tracker](https://core.tcl-lang.org/akupries/tclyaml/reportlist).
-
-# Sources
-
-See
+You are reading this document from either of the two fossil
+repositories for the project, i.e.
 
   - [Primary repository](http://core.tcl-lang.org/akupries/tclyaml)
   - [ChiselApp Mirror](https://chiselapp.com/user/andreas_kupries/repository/tclyaml/index)
-  - Here.
+
+A git mirror of the same is available at
+[github](https://github.com/andreas-kupries/tclyaml).
+
+__Please__ use only the
+[official ticket tracker](https://core.tcl-lang.org/akupries/tclyaml/reportlist)
+for tickets.
+
+Tickets at github will be ignored, or simply closed with a reference
+to the primary site.
 
 # Guides and other Documentation
 
