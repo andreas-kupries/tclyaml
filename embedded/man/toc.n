@@ -277,7 +277,7 @@ doc
 \fIfiles/tclyaml\&.n\fR: TclYAML - API
 .TP
 \fBtclyaml_changes\fR
-\fIfiles/tclyaml_changes\&.n\fR: TclYAML - License
+\fIfiles/tclyaml_changes\&.n\fR: TclYAML - Changes
 .TP
 \fBtclyaml_devguide\fR
 \fIfiles/tclyaml_devguide\&.n\fR: TclYAML - The Developer's Guide
@@ -286,7 +286,7 @@ doc
 \fIfiles/tclyaml_installer\&.n\fR: TclYAML - The Installer's Guide
 .TP
 \fBtclyaml_introduction\fR
-\fIfiles/tclyaml_intro\&.n\fR: TclYAML - Introduction to TclYAML
+\fIfiles/tclyaml_intro\&.n\fR: TclYAML - Introduction
 .TP
 \fBtclyaml_license\fR
 \fIfiles/tclyaml_license\&.n\fR: TclYAML - License

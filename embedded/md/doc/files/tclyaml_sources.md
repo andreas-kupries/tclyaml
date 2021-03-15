@@ -72,19 +72,48 @@ in case of trouble with the main location\.
 # <a name='section3'></a>Retrieval
 
 Assuming that you simply wish to look at the sources, or build a specific
-revision, the easiest way of retrieving it is to:
+revision, the easiest way of retrieving it is to use on of the following links:
 
-  1. Log into this site, as "anonymous", using the semi\-random password in the
-     captcha\.
+  1. [Core
+     Tarball](https://core\.tcl\-lang\.org/akupries/tclyaml/tarball/trunk/TclYAML\.tar\.gz)
 
-  1. Go to the "Timeline"\.
+  1. [Core Zip
+     Archive](https://core\.tcl\-lang\.org/akupries/tclyaml/zip/trunk/TclYAML\.zip)
 
-  1. Choose the revision you wish to have and
+  1. [ChiselApp
+     Tarball](https://chiselapp\.com/user/andreas\_kupries/repository/tclyaml/tarball/trunk/TclYAML\.tar\.gz)
 
-  1. follow its link to its detailed information page\.
+  1. [ChiselApp Zip
+     Archive](https://chiselapp\.com/user/andreas\_kupries/repository/tclyaml/zip/trunk/TclYAML\.zip)
 
-  1. On that page, choose either the "ZIP" or "Tarball" link to get a copy of
-     this revision in the format of your choice\.
+  1. [Github Zip
+     Archive](https://github\.com/andreas\-kupries/tclyaml/archive/master\.zip)
+
+To generalize the above, replace __trunk__ in the links above with any
+commit id, tag or branch name to retrieve an archive for that commit, the last
+commit having the tag, or the last commit on the named branch\.
+
+As an example, use the links below to retrieve the last commit for tag
+__v0\.5__:
+
+  1. [Core v0\.5
+     Tarball](https://core\.tcl\-lang\.org/akupries/tclyaml/tarball/v0\.5/TclYAML\.tar\.gz)
+
+  1. [Core v0\.5 Zip
+     Archive](https://core\.tcl\-lang\.org/akupries/tclyaml/zip/v0\.5/TclYAML\.zip)
+
+  1. [ChiselApp v0\.5
+     Tarball](https://chiselapp\.com/user/andreas\_kupries/repository/tclyaml/tarball/v0\.5/TclYAML\.tar\.gz)
+
+  1. [ChiselApp v0\.5 Zip
+     Archive](https://chiselapp\.com/user/andreas\_kupries/repository/tclyaml/zip/v0\.5/TclYAML\.zip)
+
+  1. [Github v0\.5 Zip
+     Archive](https://github\.com/andreas\-kupries/tclyaml/archive/v0\.5\.zip)
+
+*Beware however* that fossil's __trunk__ branch is called __master__
+in github, and that github commit ids do not match fossil commit ids, at all\.
+Only tags and the other branch names match\.
 
 # <a name='section4'></a>Source Code Management
 
@@ -94,7 +123,7 @@ directly at its [download page](https://www\.fossil\-scm\.org/download\.html)\.
 
 With that tool available the full history can be retrieved via:
 
-    fossil clone  https://core.tcl-lang.org/akupries/tclyaml  tclyaml.fossil
+> fossil clone [https://core\.tcl\-lang\.org/akupries/tclyaml](https://core\.tcl\-lang\.org/akupries/tclyaml) tclyaml\.fossil
 
 followed by
 

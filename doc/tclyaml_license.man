@@ -1,8 +1,8 @@
 [comment {-*- tcl -*- doctools manpage}]
 [include include/version.inc]
-[manpage_begin tclyaml_license n [vset VERSION]]
+[manpage_begin [vset PROJECT_lc]_license n [vset VERSION]]
 [include include/module.inc]
-[titledesc {TclYAML - License}]
+[titledesc "[vset PROJECT] - License"]
 [description]
 [include include/welcome.inc]
 

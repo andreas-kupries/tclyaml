@@ -29,14 +29,14 @@ directed by ActiveState.
     teacup update
 }]
 
-to install all packages ActiveState provides, and the kitchensink, as
-the distribution itself usually contains only the most important set
-of packages. This ensures that the dependencies for [sectref CriTcl],
-and TclYAML are all present, and more.
+to install all packages [vset activestate] provides, and the
+kitchensink, as the distribution itself usually contains only the most
+important set of packages. This ensures that the dependencies for
+[sectref CriTcl], and [vset PROJECT] are all present, and more.
 
 [para] If that is not to your liking you have to read the sections for
-[sectref CriTcl], and TclYAML to determine the exact set of packages
-required, and install only these using
+[sectref CriTcl], and [vset PROJECT] to determine the exact set of
+packages required, and install only these using
 
 [example {
     teacup install $packagename

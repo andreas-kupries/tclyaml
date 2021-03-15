@@ -282,12 +282,12 @@ package require \fBtclyaml  ?0\&.5?\fR
 .BE
 .SH DESCRIPTION
 .PP
-Welcome to TclYAML, a binding to the C-based libyaml parser
-library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
+Welcome to TclYAML, a binding to the C-based libyaml
+parser library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
 .PP
-This document is a guide for developers working on TclYAML,
-i\&.e\&. maintainers fixing bugs, extending the package's functionality,
-etc\&.
+This document is a guide for developers working on
+TclYAML, i\&.e\&. maintainers fixing bugs, extending the package's
+functionality, etc\&.
 .PP
 Please read
 .IP [1]
@@ -318,12 +318,12 @@ in \fIdoctools\fR format\&.
 .TP
 "\fIembedded/\fR"
 This directory contains the documentation converted to regular manpages
-(nroff) and HTML\&.
+(nroff), Markdown, and HTML\&.
 It is called embedded because these files, while derived, are part of the
 fossil repository, i\&.e\&. embedded into it\&. This enables fossil to access
 and display these files when serving the repositories' web interface\&.
 The "Command Reference" link at \fIhttps://core\&.tcl-lang\&.org/akupries/tclyaml\fR is, for example,
-accessing the generated HTML\&.
+accessing the generated Markdown\&.
 .RE
 .TP
 Package Code, General structure
@@ -357,7 +357,7 @@ The low-level commands for parsing YAML, returning it in the form
 of various Tcl data structures\&. Plain commands, not object-based\&.
 .TP
 "\fIlibyaml/\fR"
-A copy of the libyaml 0\&.4\&.1 sources\&.
+A copy of the libyaml 0\&.2\&.5 sources\&.
 Built as part of TclYAML\&.
 .RE
 .TP

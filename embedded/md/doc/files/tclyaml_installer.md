@@ -109,10 +109,10 @@ Assuming that ActiveTcl got installed I usually run the command
 
     teacup update
 
-to install all packages ActiveState provides, and the kitchensink, as the
-distribution itself usually contains only the most important set of packages\.
-This ensures that the dependencies for [CriTcl](#subsection2), and TclYAML
-are all present, and more\.
+to install all packages [ActiveState](https://www\.activestate\.com) provides,
+and the kitchensink, as the distribution itself usually contains only the most
+important set of packages\. This ensures that the dependencies for
+[CriTcl](#subsection2), and TclYAML are all present, and more\.
 
 If that is not to your liking you have to read the sections for
 [CriTcl](#subsection2), and TclYAML to determine the exact set of packages
@@ -205,7 +205,7 @@ On unix the same GUI is acessible by invoking "build\.tcl" without any arguments
 To get help about the methods of "build\.tcl", and their complete syntax, invoke
 "build\.tcl" with argument __help__, i\.e\., like
 
-    /path/to/tclsh8.5 /path/to/tclyaml/build.tcl help
+    /path/to/tclsh[vset TCL_version] /path/to/[vset PROJECT_lc]/build.tcl help
 
 # <a name='section4'></a>Bugs, Ideas, Feedback
 

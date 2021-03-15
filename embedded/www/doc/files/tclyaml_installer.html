@@ -136,8 +136,8 @@
 </div>
 </div>
 <div id="section1" class="doctools_section"><h2><a name="section1">Description</a></h2>
-<p>Welcome to TclYAML, a binding to the C-based libyaml parser
-library for <a href="http://yaml.org">YAML Ain't Markup Language</a>.</p>
+<p>Welcome to TclYAML, a binding to the C-based libyaml
+parser library for <a href="http://yaml.org">YAML Ain't Markup Language</a>.</p>
 <p>The audience of this document is anyone wishing to build the
 packages, for either themselves, or others.</p>
 <p>For a developer intending to extend or modify the packages we
@@ -146,12 +146,13 @@ additionally provide</p>
 <li><p><i class="term"><a href="tclyaml_license.html">TclYAML - License</a></i>.</p></li>
 <li><p><i class="term"><a href="tclyaml_devguide.html">TclYAML - The Developer's Guide</a></i>.</p></li>
 </ol>
-<p>Please read <i class="term"><a href="tclyaml_sources.html">TclYAML - How To Get The Sources</a></i> first, if that was
-not done already. Here we assume that the sources are already
+<p>Please read <i class="term"><a href="tclyaml_sources.html">TclYAML - How To Get The Sources</a></i> first, if
+that was not done already. Here we assume that the sources are already
 available in a directory of your choice.</p>
 </div>
 <div id="section2" class="doctools_section"><h2><a name="section2">Requisites</a></h2>
-<p>Before TclYAML can be build and used a number of requisites must be installed. These are:</p>
+<p>Before TclYAML can be build and used a number of requisites
+must be installed. These are:</p>
 <ol class="doctools_enumerated">
 <li><p>The scripting language Tcl.
        For details see <span class="sectref"><a href="#subsection1">Tcl</a></span>.</p></li>
@@ -160,11 +161,12 @@ available in a directory of your choice.</p>
 <li><p>The <b class="package">kettle</b> package (build support) for <b class="syscmd">Tcl</b>.
        For details see <span class="sectref"><a href="#subsection3">Kettle</a></span>.</p></li>
 </ol>
-<p>This list assumes that the machine where TclYAML is to be installed is
-essentially clean. Of course, if parts of the dependencies listed
-below are already installed the associated steps can be skipped. It is
-still recommended to read their sections though, to validate that the
-dependencies they talk about are indeed installed.</p>
+<p>This list assumes that the machine where TclYAML is to be
+installed is essentially clean.
+Of course, if parts of the dependencies listed below are already
+installed the associated steps can be skipped.
+It is still recommended to read their sections though, to validate
+that the dependencies they talk about are indeed installed.</p>
 <div id="subsection1" class="doctools_subsection"><h3><a name="subsection1">Tcl</a></h3>
 <p>As we are building a Tcl package that should be pretty much obvious
 that a working Tcl installation is needed, and I will not belabor the
@@ -186,13 +188,13 @@ directed by ActiveState.</p>
 <pre class="doctools_example">
     teacup update
 </pre>
-<p>to install all packages ActiveState provides, and the kitchensink, as
-the distribution itself usually contains only the most important set
-of packages. This ensures that the dependencies for <span class="sectref"><a href="#subsection2">CriTcl</a></span>,
-and TclYAML are all present, and more.</p>
+<p>to install all packages <a href="https://www.activestate.com">ActiveState</a> provides, and the
+kitchensink, as the distribution itself usually contains only the most
+important set of packages. This ensures that the dependencies for
+<span class="sectref"><a href="#subsection2">CriTcl</a></span>, and TclYAML are all present, and more.</p>
 <p>If that is not to your liking you have to read the sections for
-<span class="sectref"><a href="#subsection2">CriTcl</a></span>, and TclYAML to determine the exact set of packages
-required, and install only these using</p>
+<span class="sectref"><a href="#subsection2">CriTcl</a></span>, and TclYAML to determine the exact set of
+packages required, and install only these using</p>
 <pre class="doctools_example">
     teacup install $packagename
 </pre>
@@ -213,11 +215,11 @@ found at</p>
 </div>
 <div id="subsection2" class="doctools_subsection"><h3><a name="subsection2">CriTcl</a></h3>
 <p>To build TclYAML the tool <b class="syscmd">critcl</b> is required.</p>
-<p>TclYAML's build systems accepts it either as an application
-found in the PATH, or as a Tcl package available to the <b class="syscmd">tclsh</b>
-used to run their build &amp; installation processes.</p>
-<p>TclYAML <em>must</em> have at least version 3.1 of critcl itself,
-and at least version 1.0.3 of <b class="package">critcl::class</b>.</p>
+<p>TclYAML's build systems accepts it either as an
+application found in the PATH, or as a Tcl package available to the
+<b class="syscmd">tclsh</b> used to run their build &amp; installation processes.</p>
+<p>TclYAML <em>must</em> have at least version 3.1 of critcl
+itself, and at least version 1.0.3 of <b class="package">critcl::class</b>.</p>
 <p>The relevant github repository can be found at <a href="https://github.com/andreas-kupries/critcl">Critcl</a>.</p>
 <p>The relevant repository branch is <em>master</em>.</p>
 <p>At the above url is also an explanation on how to build and
@@ -236,9 +238,10 @@ run TclYAML's build &amp; installation process.</p>
 <a href="https://github.com/andreas-kupries/kettle">https://github.com/andreas-kupries/kettle</a>.</p>
 <p>The relevant repository branch is <em>trunk</em>.</p>
 <p>Kettle has a build and installation guide much like this one
-for TclYAML, which can be found at the above site and explains how to
-retrieve its sources and build the package, which dependencies are
-required, etc. The direct link to this guide is <a href="https://core.tcl-lang.org/akupries/kettle/doc/trunk/embedded/md/doc/files/kettle_installer.md">https://core.tcl-lang.org/akupries/kettle/doc/trunk/embedded/md/doc/files/kettle_installer.md</a>.</p>
+for TclYAML, which can be found at the above site and explains
+how to retrieve its sources and build the package, which dependencies
+are required, etc.
+The direct link to this guide is <a href="https://core.tcl-lang.org/akupries/kettle/doc/trunk/embedded/md/doc/files/kettle_installer.md">https://core.tcl-lang.org/akupries/kettle/doc/trunk/embedded/md/doc/files/kettle_installer.md</a>.</p>
 <p>Its instructions will not be repeated here. If there are
 problems with their directions please file a bug against the Kettle
 project, and not TclYAML.</p>
@@ -247,10 +250,11 @@ project, and not TclYAML.</p>
 <div id="section3" class="doctools_section"><h2><a name="section3">Build &amp; Installation</a></h2>
 <p>To install TclYAML simply run</p>
 <pre class="doctools_example">
-    /path/to/tclsh8.5 /path/to/tclyaml/build.tcl install
+/path/to/tclsh8.5 /path/to/tclyaml/build.tcl install
 </pre>
-<p>where &quot;<b class="file">/path/to/tclsh8.5</b>&quot; is the tclsh of your Tcl installation, and
-&quot;<b class="file">/path/to/tclyaml</b>&quot; the location of the TclYAML sources on your system.</p>
+<p>where &quot;<b class="file">/path/to/tclsh8.5</b>&quot; is the tclsh of your Tcl
+installation, and &quot;<b class="file">/path/to/tclyaml</b>&quot; the location of
+the TclYAML sources on your system.</p>
 <p>This builds all packages and then places them in a directory where the
 <b class="cmd">tclsh8.5</b> will find them.</p>
 <p>On Windows you can invoke the file &quot;<b class="file">build.tcl</b>&quot; with a
@@ -262,7 +266,7 @@ any arguments.</p>
 <p>To get help about the methods of &quot;<b class="file">build.tcl</b>&quot;, and their complete
 syntax, invoke  &quot;<b class="file">build.tcl</b>&quot; with argument <b class="method">help</b>, i.e., like</p>
 <pre class="doctools_example">
-    /path/to/tclsh8.5 /path/to/tclyaml/build.tcl help
+    /path/to/tclsh[vset TCL_version] /path/to/[vset PROJECT_lc]/build.tcl help
 </pre>
 </div>
 <div id="section4" class="doctools_section"><h2><a name="section4">Bugs, Ideas, Feedback</a></h2>

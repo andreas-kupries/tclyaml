@@ -12,7 +12,7 @@ href="../../index.md">Keyword Index</a> ] <hr>
 
 # NAME
 
-tclyaml\_introduction \- TclYAML \- Introduction to TclYAML
+tclyaml\_introduction \- TclYAML \- Introduction
 
 # <a name='toc'></a>Table Of Contents
 
@@ -46,15 +46,15 @@ Ain't Markup Language](http://yaml\.org)\.
 
 # <a name='section2'></a>Related Documents
 
-  1. *[TclYAML \- License](tclyaml\_license\.md)*\.
+  1. *[TclYAML \- License](tclyaml\_license\.md)*,
 
-  1. *[TclYAML \- How To Get The Sources](tclyaml\_sources\.md)*\.
+  1. *[TclYAML \- How To Get The Sources](tclyaml\_sources\.md)*, and
 
-  1. *[TclYAML \- The Installer's Guide](tclyaml\_installer\.md)*\.
+  1. *[TclYAML \- The Installer's Guide](tclyaml\_installer\.md)*
 
   1. *[TclYAML \- The Developer's Guide](tclyaml\_devguide\.md)*\.
 
-  1. *[TclYAML \- API](tclyaml\.md)*
+  1. *[TclYAML \- API](tclyaml\.md)*\.
 
 # <a name='section3'></a>System Architecture
 

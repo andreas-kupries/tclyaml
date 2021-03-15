@@ -12,7 +12,7 @@ href="../../index.md">Keyword Index</a> ] <hr>
 
 # NAME
 
-tclyaml\_changes \- TclYAML \- License
+tclyaml\_changes \- TclYAML \- Changes
 
 # <a name='toc'></a>Table Of Contents
 

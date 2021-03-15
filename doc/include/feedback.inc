@@ -4,7 +4,7 @@
 This document, and the package it describes, will undoubtedly contain
 bugs and other problems.
 
-Please report such at the [vset tclyaml/track].
+Please report such at the [vset project/track].
 
 Please also report any ideas for enhancements you may have for either
 package and/or documentation.

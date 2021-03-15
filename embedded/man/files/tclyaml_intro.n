@@ -273,7 +273,7 @@ Database Class:	\\fB\\$3\\fR
 ..
 .BS
 .SH NAME
-tclyaml_introduction \- TclYAML - Introduction to TclYAML
+tclyaml_introduction \- TclYAML - Introduction
 .SH SYNOPSIS
 package require \fBTcl  8\&.5\fR
 .sp
@@ -282,30 +282,28 @@ package require \fBtclyaml  ?0\&.5?\fR
 .BE
 .SH DESCRIPTION
 .PP
-Welcome to TclYAML, a binding to the C-based libyaml parser
-library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
+Welcome to TclYAML, a binding to the C-based libyaml
+parser library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
 .SH "RELATED DOCUMENTS"
 .IP [1]
-\fITclYAML - License\fR\&.
+\fITclYAML - License\fR,
 .IP [2]
-\fITclYAML - How To Get The Sources\fR\&.
+\fITclYAML - How To Get The Sources\fR, and
 .IP [3]
-\fITclYAML - The Installer's Guide\fR\&.
+\fITclYAML - The Installer's Guide\fR
 .IP [4]
 \fITclYAML - The Developer's Guide\fR\&.
 .IP [5]
-\fITclYAML - API\fR
+\fITclYAML - API\fR\&.
 .PP
 .SH "SYSTEM ARCHITECTURE"
 The system's structure is not very complicated\&.
 .PP
-At the bottom is the libyaml library doing
-the heavy lifting for both parsing and generation
-of YAML\&.
+At the bottom is the libyaml library doing the heavy lifting
+for both parsing and generation of YAML\&.
 .PP
-TclYAML sits on top of that, with two
-distinguishable parts, binding to the parsing and
-generation sides of libyaml\&.
+TclYAML sits on top of that, with two distinguishable
+parts, binding to the parsing and generation sides of libyaml\&.
 .SH "BUGS, IDEAS, FEEDBACK"
 This document, and the package it describes, will undoubtedly contain
 bugs and other problems\&.

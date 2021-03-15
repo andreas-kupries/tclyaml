@@ -1,23 +1,23 @@
 [comment {-*- tcl -*- doctools manpage}]
 [include include/version.inc]
-[manpage_begin tclyaml_devguide n [vset VERSION]]
+[manpage_begin [vset PROJECT_lc]_devguide n [vset VERSION]]
 [include include/module.inc]
-[titledesc {TclYAML - The Developer's Guide}]
+[titledesc "[vset PROJECT] - The Developer's Guide"]
 [description]
 [include include/welcome.inc]
 
-[para] This document is a guide for developers working on TclYAML,
-i.e. maintainers fixing bugs, extending the package's functionality,
-etc.
+[para] This document is a guide for developers working on
+[vset PROJECT], i.e. maintainers fixing bugs, extending the package's
+functionality, etc.
 
 [para]
 
 Please read
 
 [list_begin enum]
-[enum] [term {TclYAML - License}],
-[enum] [term {TclYAML - How To Get The Sources}], and
-[enum] [term {TclYAML - The Installer's Guide}]
+[enum] [term "[vset PROJECT] - License"],
+[enum] [term "[vset PROJECT] - How To Get The Sources"], and
+[enum] [term "[vset PROJECT] - The Installer's Guide"]
 [list_end]
 
 first, if that was not done already.
@@ -29,7 +29,7 @@ so. The guide to the sources in particular also explains which source
 code management system is used, where to find it, how to set it up,
 etc.
 
-[section {Developing for TclYAML}]
+[section "Developing for [vset PROJECT]"]
 
 [comment @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@]
 [subsection {Directory structure}]
@@ -51,14 +51,14 @@ in [term doctools] format.
 [def [file embedded/]]
 
 This directory contains the documentation converted to regular manpages
-(nroff) and HTML.
+(nroff), Markdown, and HTML.
 
 It is called embedded because these files, while derived, are part of the
 fossil repository, i.e. embedded into it. This enables fossil to access
 and display these files when serving the repositories' web interface.
 
-The "Command Reference" link at [vset tclyaml/core] is, for example,
-accessing the generated HTML.
+The "Command Reference" link at [vset project/core] is, for example,
+accessing the generated Markdown.
 
 [list_end]
 
@@ -103,8 +103,8 @@ of various Tcl data structures. Plain commands, not object-based.
 
 [def [file libyaml/]]
 
-A copy of the libyaml 0.4.1 sources.
-Built as part of TclYAML.
+A copy of the libyaml [vset libyaml_version] sources.
+Built as part of [vset PROJECT].
 
 [list_end]
 

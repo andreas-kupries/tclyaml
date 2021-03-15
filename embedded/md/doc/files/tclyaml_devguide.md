@@ -77,12 +77,12 @@ management system is used, where to find it, how to set it up, etc\.
       * "embedded/"
 
         This directory contains the documentation converted to regular manpages
-        \(nroff\) and HTML\. It is called embedded because these files, while
-        derived, are part of the fossil repository, i\.e\. embedded into it\. This
-        enables fossil to access and display these files when serving the
+        \(nroff\), Markdown, and HTML\. It is called embedded because these files,
+        while derived, are part of the fossil repository, i\.e\. embedded into it\.
+        This enables fossil to access and display these files when serving the
         repositories' web interface\. The "Command Reference" link at
         [https://core\.tcl\-lang\.org/akupries/tclyaml](https://core\.tcl\-lang\.org/akupries/tclyaml)
-        is, for example, accessing the generated HTML\.
+        is, for example, accessing the generated Markdown\.
 
   - Package Code, General structure
 
@@ -120,7 +120,7 @@ management system is used, where to find it, how to set it up, etc\.
 
       * "libyaml/"
 
-        A copy of the libyaml 0\.4\.1 sources\. Built as part of TclYAML\.
+        A copy of the libyaml 0\.2\.5 sources\. Built as part of TclYAML\.
 
   - Package Code, Per Package
 

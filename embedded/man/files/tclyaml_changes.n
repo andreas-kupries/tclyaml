@@ -273,7 +273,7 @@ Database Class:	\\fB\\$3\\fR
 ..
 .BS
 .SH NAME
-tclyaml_changes \- TclYAML - License
+tclyaml_changes \- TclYAML - Changes
 .SH SYNOPSIS
 package require \fBTcl  8\&.5\fR
 .sp
@@ -282,8 +282,8 @@ package require \fBtclyaml  ?0\&.5?\fR
 .BE
 .SH DESCRIPTION
 .PP
-Welcome to TclYAML, a binding to the C-based libyaml parser
-library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
+Welcome to TclYAML, a binding to the C-based libyaml
+parser library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
 This document provides an overview of the changes \fBTclYAML\fR
 underwent from version to version\&.
 .SH CHANGES

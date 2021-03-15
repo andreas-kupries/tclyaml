@@ -350,8 +350,8 @@ package require \fBtclyaml  ?0\&.5?\fR
 .BE
 .SH DESCRIPTION
 .PP
-Welcome to TclYAML, a binding to the C-based libyaml parser
-library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
+Welcome to TclYAML, a binding to the C-based libyaml
+parser library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
 .PP
 This document is the reference manpage for the publicly visible API,
 i\&.e\&. the API a user will see, and use\&.

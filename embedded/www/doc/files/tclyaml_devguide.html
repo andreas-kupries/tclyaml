@@ -133,11 +133,11 @@
 </div>
 </div>
 <div id="section1" class="doctools_section"><h2><a name="section1">Description</a></h2>
-<p>Welcome to TclYAML, a binding to the C-based libyaml parser
-library for <a href="http://yaml.org">YAML Ain't Markup Language</a>.</p>
-<p>This document is a guide for developers working on TclYAML,
-i.e. maintainers fixing bugs, extending the package's functionality,
-etc.</p>
+<p>Welcome to TclYAML, a binding to the C-based libyaml
+parser library for <a href="http://yaml.org">YAML Ain't Markup Language</a>.</p>
+<p>This document is a guide for developers working on
+TclYAML, i.e. maintainers fixing bugs, extending the package's
+functionality, etc.</p>
 <p>Please read</p>
 <ol class="doctools_enumerated">
 <li><p><i class="term"><a href="tclyaml_license.html">TclYAML - License</a></i>,</p></li>
@@ -164,12 +164,12 @@ etc.</p>
 in <i class="term">doctools</i> format.</p></dd>
 <dt>&quot;<b class="file">embedded/</b>&quot;</dt>
 <dd><p>This directory contains the documentation converted to regular manpages
-(nroff) and HTML.
+(nroff), Markdown, and HTML.
 It is called embedded because these files, while derived, are part of the
 fossil repository, i.e. embedded into it. This enables fossil to access
 and display these files when serving the repositories' web interface.
 The &quot;Command Reference&quot; link at <a href="https://core.tcl-lang.org/akupries/tclyaml">https://core.tcl-lang.org/akupries/tclyaml</a> is, for example,
-accessing the generated HTML.</p></dd>
+accessing the generated Markdown.</p></dd>
 </dl></dd>
 <dt>Package Code, General structure</dt>
 <dd><dl class="doctools_definitions">
@@ -195,7 +195,7 @@ commands, which instantiate and destroy emitter objects as needed.</p></dd>
 <dd><p>The low-level commands for parsing YAML, returning it in the form
 of various Tcl data structures. Plain commands, not object-based.</p></dd>
 <dt>&quot;<b class="file">libyaml/</b>&quot;</dt>
-<dd><p>A copy of the libyaml 0.4.1 sources.
+<dd><p>A copy of the libyaml 0.2.5 sources.
 Built as part of TclYAML.</p></dd>
 </dl></dd>
 <dt>Package Code, Per Package</dt>

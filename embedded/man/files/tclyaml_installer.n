@@ -282,8 +282,8 @@ package require \fBtclyaml  ?0\&.5?\fR
 .BE
 .SH DESCRIPTION
 .PP
-Welcome to TclYAML, a binding to the C-based libyaml parser
-library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
+Welcome to TclYAML, a binding to the C-based libyaml
+parser library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
 .PP
 The audience of this document is anyone wishing to build the
 packages, for either themselves, or others\&.
@@ -296,12 +296,13 @@ additionally provide
 \fITclYAML - The Developer's Guide\fR\&.
 .PP
 .PP
-Please read \fITclYAML - How To Get The Sources\fR first, if that was
-not done already\&. Here we assume that the sources are already
+Please read \fITclYAML - How To Get The Sources\fR first, if
+that was not done already\&. Here we assume that the sources are already
 available in a directory of your choice\&.
 .PP
 .SH REQUISITES
-Before TclYAML can be build and used a number of requisites must be installed\&. These are:
+Before TclYAML can be build and used a number of requisites
+must be installed\&. These are:
 .IP [1]
 The scripting language Tcl\&.
 For details see \fBTcl\fR\&.
@@ -312,11 +313,12 @@ For details see \fBCriTcl\fR\&.
 The \fBkettle\fR package (build support) for \fBTcl\fR\&.
 For details see \fBKettle\fR\&.
 .PP
-This list assumes that the machine where TclYAML is to be installed is
-essentially clean\&. Of course, if parts of the dependencies listed
-below are already installed the associated steps can be skipped\&. It is
-still recommended to read their sections though, to validate that the
-dependencies they talk about are indeed installed\&.
+This list assumes that the machine where TclYAML is to be
+installed is essentially clean\&.
+Of course, if parts of the dependencies listed below are already
+installed the associated steps can be skipped\&.
+It is still recommended to read their sections though, to validate
+that the dependencies they talk about are indeed installed\&.
 .SS TCL
 As we are building a Tcl package that should be pretty much obvious
 that a working Tcl installation is needed, and I will not belabor the
@@ -347,14 +349,14 @@ Assuming that ActiveTcl got installed I usually run the command
     teacup update
 
 .CE
-to install all packages ActiveState provides, and the kitchensink, as
-the distribution itself usually contains only the most important set
-of packages\&. This ensures that the dependencies for \fBCriTcl\fR,
-and TclYAML are all present, and more\&.
+to install all packages \fIActiveState\fR [https://www\&.activestate\&.com] provides, and the
+kitchensink, as the distribution itself usually contains only the most
+important set of packages\&. This ensures that the dependencies for
+\fBCriTcl\fR, and TclYAML are all present, and more\&.
 .PP
 If that is not to your liking you have to read the sections for
-\fBCriTcl\fR, and TclYAML to determine the exact set of packages
-required, and install only these using
+\fBCriTcl\fR, and TclYAML to determine the exact set of
+packages required, and install only these using
 .CS
 
 
@@ -383,12 +385,12 @@ Tcl
 .SS CRITCL
 To build TclYAML the tool \fBcritcl\fR is required\&.
 .PP
-TclYAML's build systems accepts it either as an application
-found in the PATH, or as a Tcl package available to the \fBtclsh\fR
-used to run their build & installation processes\&.
+TclYAML's build systems accepts it either as an
+application found in the PATH, or as a Tcl package available to the
+\fBtclsh\fR used to run their build & installation processes\&.
 .PP
-TclYAML \fImust\fR have at least version 3\&.1 of critcl itself,
-and at least version 1\&.0\&.3 of \fBcritcl::class\fR\&.
+TclYAML \fImust\fR have at least version 3\&.1 of critcl
+itself, and at least version 1\&.0\&.3 of \fBcritcl::class\fR\&.
 .PP
 The relevant github repository can be found at \fICritcl\fR [https://github\&.com/andreas-kupries/critcl]\&.
 .PP
@@ -414,9 +416,10 @@ The package's fossil repository can be found at
 The relevant repository branch is \fItrunk\fR\&.
 .PP
 Kettle has a build and installation guide much like this one
-for TclYAML, which can be found at the above site and explains how to
-retrieve its sources and build the package, which dependencies are
-required, etc\&. The direct link to this guide is \fIhttps://core\&.tcl-lang\&.org/akupries/kettle/doc/trunk/embedded/md/doc/files/kettle_installer\&.md\fR\&.
+for TclYAML, which can be found at the above site and explains
+how to retrieve its sources and build the package, which dependencies
+are required, etc\&.
+The direct link to this guide is \fIhttps://core\&.tcl-lang\&.org/akupries/kettle/doc/trunk/embedded/md/doc/files/kettle_installer\&.md\fR\&.
 .PP
 Its instructions will not be repeated here\&. If there are
 problems with their directions please file a bug against the Kettle
@@ -426,11 +429,12 @@ To install TclYAML simply run
 .CS
 
 
-    /path/to/tclsh8\&.5 /path/to/tclyaml/build\&.tcl install
+/path/to/tclsh8\&.5 /path/to/tclyaml/build\&.tcl install
 
 .CE
-where "\fI/path/to/tclsh8\&.5\fR" is the tclsh of your Tcl installation, and
-"\fI/path/to/tclyaml\fR" the location of the TclYAML sources on your system\&.
+where "\fI/path/to/tclsh8\&.5\fR" is the tclsh of your Tcl
+installation, and "\fI/path/to/tclyaml\fR" the location of
+the TclYAML sources on your system\&.
 .PP
 This builds all packages and then places them in a directory where the
 \fBtclsh8\&.5\fR will find them\&.
@@ -448,7 +452,7 @@ syntax, invoke  "\fIbuild\&.tcl\fR" with argument \fBhelp\fR, i\&.e\&., like
 .CS
 
 
-    /path/to/tclsh8\&.5 /path/to/tclyaml/build\&.tcl help
+    /path/to/tclsh[vset TCL_version] /path/to/[vset PROJECT_lc]/build\&.tcl help
 
 .CE
 .SH "BUGS, IDEAS, FEEDBACK"

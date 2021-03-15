@@ -1,44 +1,65 @@
 [comment {-*- tcl -*- doctools manpage}]
 [include include/version.inc]
-[manpage_begin tclyaml_sources n [vset VERSION]]
+[manpage_begin [vset PROJECT_lc]_sources n [vset VERSION]]
 [include include/module.inc]
-[titledesc {TclYAML - How To Get The Sources}]
+[titledesc "[vset PROJECT] - How To Get The Sources"]
 [description]
 [include include/welcome.inc]
 
 [para] The audience of this document is anyone wishing to either have
-just a look at TclYAML's source code, or build the packages, or to
-extend and modify them.
+just a look at [vset PROJECT]'s source code, or build the packages, or
+to extend and modify them.
 
 [para] For builders and developers we additionally provide
 
 [list_begin enum]
-[enum] [term {TclYAML - License}].
-[enum] [term {TclYAML - The Installer's Guide}].
-[enum] [term {TclYAML - The Developer's Guide}].
+[enum] [term "[vset PROJECT] - License"].
+[enum] [term "[vset PROJECT] - The Installer's Guide"].
+[enum] [term "[vset PROJECT] - The Developer's Guide"].
 [list_end]
 
 respectively.
 
 [section {Source Location}]
 
-The official repository for TclYAML can be found at
-[vset tclyaml/core], with mirrors at [vset tclyaml/chisel] and
-[vset tclyaml/github], in case of trouble with the main location.
+The official repository for [vset PROJECT] can be found at
+[vset project/core], with mirrors at [vset project/chisel] and
+[vset project/github], in case of trouble with the main location.
 
 [section Retrieval]
 
 Assuming that you simply wish to look at the sources, or build a
-specific revision, the easiest way of retrieving it is to:
+specific revision, the easiest way of retrieving it is to use on of
+the following links:
 
 [list_begin enum]
-[enum] Log into this site, as "anonymous", using the semi-random password in the captcha.
-[enum] Go to the "Timeline".
-[enum] Choose the revision you wish to have and
-[enum] follow its link to its detailed information page.
-[enum] On that page, choose either the "ZIP" or "Tarball" link to get
-a copy of this revision in the format of your choice.
+[enum]	[uri [vset project/core/url  ]/tarball/trunk/[vset PROJECT].tar.gz {Core Tarball}]
+[enum]	[uri [vset project/core/url  ]/zip/trunk/[vset PROJECT].zip {Core Zip Archive}]
+[enum]	[uri [vset project/chisel/url]/tarball/trunk/[vset PROJECT].tar.gz {ChiselApp Tarball}]
+[enum]	[uri [vset project/chisel/url]/zip/trunk/[vset PROJECT].zip {ChiselApp Zip Archive}]
+[enum]	[uri [vset project/github/url]/archive/master.zip {Github Zip Archive}]
 [list_end]
+
+[para] To generalize the above, replace [const trunk] in the links
+above with any commit id, tag or branch name to retrieve an archive
+for that commit, the last commit having the tag, or the last commit on
+the named branch.
+
+[para] As an example, use the links below to retrieve the last commit
+for tag [const v0.5]:
+
+[list_begin enum]
+[enum]	[uri [vset project/core/url  ]/tarball/v0.5/[vset PROJECT].tar.gz {Core v0.5 Tarball}]
+[enum]	[uri [vset project/core/url  ]/zip/v0.5/[vset PROJECT].zip {Core v0.5 Zip Archive}]
+[enum]	[uri [vset project/chisel/url]/tarball/v0.5/[vset PROJECT].tar.gz {ChiselApp v0.5 Tarball}]
+[enum]	[uri [vset project/chisel/url]/zip/v0.5/[vset PROJECT].zip {ChiselApp v0.5 Zip Archive}]
+[enum]	[uri [vset project/github/url]/archive/v0.5.zip {Github v0.5 Zip Archive}]
+[list_end]
+
+[para] [strong {Beware however}] that fossil's [const trunk] branch is
+called [const master] in github, and that github commit ids do not
+match fossil commit ids, at all. Only tags and the other branch names
+match.
 
 [section {Source Code Management}]
 
@@ -50,19 +71,17 @@ its [vset fossil/get].
 
 With that tool available the full history can be retrieved via:
 
-[example {
-    fossil clone \
-	https://core.tcl-lang.org/akupries/tclyaml \
-        tclyaml.fossil
-}]
+[example_begin]
+fossil clone [vset project/core] [vset PROJECT_lc].fossil
+[example_end]
 
 followed by
 
-[example {
-    mkdir tclyaml
-    cd tclyaml
-    fossil open ../tclyaml.fossil
-}]
+[example_begin]
+mkdir [vset PROJECT_lc]
+cd [vset PROJECT_lc]
+fossil open ../[vset PROJECT_lc].fossil
+[example_end]
 
 to get a checkout of the head of the trunk.
 

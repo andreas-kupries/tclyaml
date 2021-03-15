@@ -282,12 +282,12 @@ package require \fBtclyaml  ?0\&.5?\fR
 .BE
 .SH DESCRIPTION
 .PP
-Welcome to TclYAML, a binding to the C-based libyaml parser
-library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
+Welcome to TclYAML, a binding to the C-based libyaml
+parser library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
 .PP
 The audience of this document is anyone wishing to either have
-just a look at TclYAML's source code, or build the packages, or to
-extend and modify them\&.
+just a look at TclYAML's source code, or build the packages, or
+to extend and modify them\&.
 .PP
 For builders and developers we additionally provide
 .IP [1]
@@ -304,19 +304,43 @@ The official repository for TclYAML can be found at
 \fIhttps://github\&.com/andreas-kupries/tclyaml\fR, in case of trouble with the main location\&.
 .SH RETRIEVAL
 Assuming that you simply wish to look at the sources, or build a
-specific revision, the easiest way of retrieving it is to:
+specific revision, the easiest way of retrieving it is to use on of
+the following links:
 .IP [1]
-Log into this site, as "anonymous", using the semi-random password in the captcha\&.
+\fICore Tarball\fR [https://core\&.tcl-lang\&.org/akupries/tclyaml/tarball/trunk/TclYAML\&.tar\&.gz]
 .IP [2]
-Go to the "Timeline"\&.
+\fICore Zip Archive\fR [https://core\&.tcl-lang\&.org/akupries/tclyaml/zip/trunk/TclYAML\&.zip]
 .IP [3]
-Choose the revision you wish to have and
+\fIChiselApp Tarball\fR [https://chiselapp\&.com/user/andreas_kupries/repository/tclyaml/tarball/trunk/TclYAML\&.tar\&.gz]
 .IP [4]
-follow its link to its detailed information page\&.
+\fIChiselApp Zip Archive\fR [https://chiselapp\&.com/user/andreas_kupries/repository/tclyaml/zip/trunk/TclYAML\&.zip]
 .IP [5]
-On that page, choose either the "ZIP" or "Tarball" link to get
-a copy of this revision in the format of your choice\&.
+\fIGithub Zip Archive\fR [https://github\&.com/andreas-kupries/tclyaml/archive/master\&.zip]
 .PP
+.PP
+To generalize the above, replace \fBtrunk\fR in the links
+above with any commit id, tag or branch name to retrieve an archive
+for that commit, the last commit having the tag, or the last commit on
+the named branch\&.
+.PP
+As an example, use the links below to retrieve the last commit
+for tag \fBv0\&.5\fR:
+.IP [1]
+\fICore v0\&.5 Tarball\fR [https://core\&.tcl-lang\&.org/akupries/tclyaml/tarball/v0\&.5/TclYAML\&.tar\&.gz]
+.IP [2]
+\fICore v0\&.5 Zip Archive\fR [https://core\&.tcl-lang\&.org/akupries/tclyaml/zip/v0\&.5/TclYAML\&.zip]
+.IP [3]
+\fIChiselApp v0\&.5 Tarball\fR [https://chiselapp\&.com/user/andreas_kupries/repository/tclyaml/tarball/v0\&.5/TclYAML\&.tar\&.gz]
+.IP [4]
+\fIChiselApp v0\&.5 Zip Archive\fR [https://chiselapp\&.com/user/andreas_kupries/repository/tclyaml/zip/v0\&.5/TclYAML\&.zip]
+.IP [5]
+\fIGithub v0\&.5 Zip Archive\fR [https://github\&.com/andreas-kupries/tclyaml/archive/v0\&.5\&.zip]
+.PP
+.PP
+\fIBeware however\fR that fossil's \fBtrunk\fR branch is
+called \fBmaster\fR in github, and that github commit ids do not
+match fossil commit ids, at all\&. Only tags and the other branch names
+match\&.
 .SH "SOURCE CODE MANAGEMENT"
 For the curious (or a developer-to-be), the sources are managed by the
 \fIFossil SCM\fR [https://www\&.fossil-scm\&.org]\&. Binaries for popular platforms can be found directly at
@@ -326,16 +350,16 @@ With that tool available the full history can be retrieved via:
 .CS
 
 
-    fossil clone  https://core\&.tcl-lang\&.org/akupries/tclyaml  tclyaml\&.fossil
+fossil clone \fIhttps://core\&.tcl-lang\&.org/akupries/tclyaml\fR tclyaml\&.fossil
 
 .CE
 followed by
 .CS
 
 
-    mkdir tclyaml
-    cd tclyaml
-    fossil open \&.\&./tclyaml\&.fossil
+mkdir tclyaml
+cd tclyaml
+fossil open \&.\&./tclyaml\&.fossil
 
 .CE
 to get a checkout of the head of the trunk\&.

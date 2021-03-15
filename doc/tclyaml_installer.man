@@ -1,8 +1,8 @@
 [comment {-*- tcl -*- doctools manpage}]
 [include include/version.inc]
-[manpage_begin tclyaml_install_guide n [vset VERSION]]
+[manpage_begin [vset PROJECT_lc]_install_guide n [vset VERSION]]
 [include include/module.inc]
-[titledesc {TclYAML - The Installer's Guide}]
+[titledesc "[vset PROJECT] - The Installer's Guide"]
 [description]
 [include include/welcome.inc]
 
@@ -13,21 +13,22 @@ packages, for either themselves, or others.
 additionally provide
 
 [list_begin enum]
-[enum] [term {TclYAML - License}].
-[enum] [term {TclYAML - The Developer's Guide}].
+[enum] [term "[vset PROJECT] - License"].
+[enum] [term "[vset PROJECT] - The Developer's Guide"].
 [list_end]
 
 [para]
 
-Please read [term {TclYAML - How To Get The Sources}] first, if that was
-not done already. Here we assume that the sources are already
+Please read [term "[vset PROJECT] - How To Get The Sources"] first, if
+that was not done already. Here we assume that the sources are already
 available in a directory of your choice.
 
 [para]
 
 [section Requisites]
 
-Before TclYAML can be build and used a number of requisites must be installed. These are:
+Before [vset PROJECT] can be build and used a number of requisites
+must be installed. These are:
 
 [list_begin enumerated]
 [enum] The scripting language Tcl.
@@ -38,11 +39,14 @@ Before TclYAML can be build and used a number of requisites must be installed. T
        For details see [sectref Kettle].
 [list_end]
 
-This list assumes that the machine where TclYAML is to be installed is
-essentially clean. Of course, if parts of the dependencies listed
-below are already installed the associated steps can be skipped. It is
-still recommended to read their sections though, to validate that the
-dependencies they talk about are indeed installed.
+This list assumes that the machine where [vset PROJECT] is to be
+installed is essentially clean.
+
+Of course, if parts of the dependencies listed below are already
+installed the associated steps can be skipped.
+
+It is still recommended to read their sections though, to validate
+that the dependencies they talk about are indeed installed.
 
 [include include/rq_tcl.inc]
 [include include/rq_critcl.inc]
@@ -50,19 +54,20 @@ dependencies they talk about are indeed installed.
 
 [section {Build & Installation}]
 
-To install TclYAML simply run
+To install [vset PROJECT] simply run
 
-[example {
-    /path/to/tclsh8.5 /path/to/tclyaml/build.tcl install
-}]
+[example_begin]
+/path/to/tclsh[vset TCL_version] /path/to/[vset PROJECT_lc]/build.tcl install
+[example_end]
 
-where [file /path/to/tclsh8.5] is the tclsh of your Tcl installation, and
-[file /path/to/tclyaml] the location of the TclYAML sources on your system.
+where [file /path/to/tclsh[vset TCL_version]] is the tclsh of your Tcl
+installation, and [file /path/to/[vset PROJECT_lc]] the location of
+the [vset PROJECT] sources on your system.
 
 [para]
 
 This builds all packages and then places them in a directory where the
-[cmd tclsh8.5] will find them.
+[cmd tclsh[vset TCL_version]] will find them.
 
 [para]
 
@@ -82,7 +87,7 @@ To get help about the methods of [file build.tcl], and their complete
 syntax, invoke  [file build.tcl] with argument [method help], i.e., like
 
 [example {
-    /path/to/tclsh8.5 /path/to/tclyaml/build.tcl help
+    /path/to/tclsh[vset TCL_version] /path/to/[vset PROJECT_lc]/build.tcl help
 }]
 
 [include include/feedback.inc]
