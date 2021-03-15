@@ -72,7 +72,7 @@ in case of trouble with the main location\.
 # <a name='section3'></a>Retrieval
 
 Assuming that you simply wish to look at the sources, or build a specific
-revision, the easiest way of retrieving it is to use on of the following links:
+revision, the easiest way of retrieving it is to use one of the following links:
 
   1. [Core
      Tarball](https://core\.tcl\-lang\.org/akupries/tclyaml/tarball/trunk/TclYAML\.tar\.gz)

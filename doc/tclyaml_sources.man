@@ -29,7 +29,7 @@ The official repository for [vset PROJECT] can be found at
 [section Retrieval]
 
 Assuming that you simply wish to look at the sources, or build a
-specific revision, the easiest way of retrieving it is to use on of
+specific revision, the easiest way of retrieving it is to use one of
 the following links:
 
 [list_begin enum]

@@ -304,7 +304,7 @@ The official repository for TclYAML can be found at
 \fIhttps://github\&.com/andreas-kupries/tclyaml\fR, in case of trouble with the main location\&.
 .SH RETRIEVAL
 Assuming that you simply wish to look at the sources, or build a
-specific revision, the easiest way of retrieving it is to use on of
+specific revision, the easiest way of retrieving it is to use one of
 the following links:
 .IP [1]
 \fICore Tarball\fR [https://core\&.tcl-lang\&.org/akupries/tclyaml/tarball/trunk/TclYAML\&.tar\&.gz]
