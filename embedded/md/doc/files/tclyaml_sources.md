@@ -1,9 +1,9 @@
 
 [//000000001]: # (tclyaml\_sources \- TclYAML)
 [//000000002]: # (Generated from file 'tclyaml\_sources\.man' by tcllib/doctools with format 'markdown')
-[//000000003]: # (Copyright &copy; 2012\-2014, 2021 Andreas Kupries)
-[//000000004]: # (Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries)
-[//000000005]: # (tclyaml\_sources\(n\) 0\.5 doc "TclYAML")
+[//000000003]: # (Copyright &copy; 2012\-2014, 2021\-2024 Andreas Kupries)
+[//000000004]: # (Copyright &copy; 2012\-2014, 2021\-2024 Documentation, Andreas Kupries)
+[//000000005]: # (tclyaml\_sources\(n\) 0\.6 doc "TclYAML")
 
 <hr> [ <a href="../../../../../../home">Home</a> &#124; <a
 href="../../toc.md">Main Table Of Contents</a> &#124; <a
@@ -38,8 +38,8 @@ tclyaml\_sources \- TclYAML \- How To Get The Sources
 
 # <a name='synopsis'></a>SYNOPSIS
 
-package require Tcl 8\.5  
-package require tclyaml ?0\.5?  
+package require Tcl 8\.6  
+package require tclyaml ?0\.6?  
 
 # <a name='description'></a>DESCRIPTION
 
@@ -152,5 +152,5 @@ language](\.\./\.\./index\.md\#markup\_language),
 
 # <a name='copyright'></a>COPYRIGHT
 
-Copyright &copy; 2012\-2014, 2021 Andreas Kupries  
-Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries
+Copyright &copy; 2012\-2014, 2021\-2024 Andreas Kupries  
+Copyright &copy; 2012\-2014, 2021\-2024 Documentation, Andreas Kupries

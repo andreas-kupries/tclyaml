@@ -1,9 +1,9 @@
 '\"
 '\" Generated from file 'tclyaml_changes\&.man' by tcllib/doctools with format 'nroff'
-'\" Copyright (c) 2012-2014, 2021 Andreas Kupries
-'\" Copyright (c) 2012-2014, 2021 Documentation, Andreas Kupries
+'\" Copyright (c) 2012-2014, 2021-2024 Andreas Kupries
+'\" Copyright (c) 2012-2014, 2021-2024 Documentation, Andreas Kupries
 '\"
-.TH "tclyaml_changes" n 0\&.5 doc "TclYAML"
+.TH "tclyaml_changes" n 0\&.6 doc "TclYAML"
 .\" The -*- nroff -*- definitions below are for supplemental macros used
 .\" in Tcl/Tk manual entries.
 .\"
@@ -275,9 +275,9 @@ Database Class:	\\fB\\$3\\fR
 .SH NAME
 tclyaml_changes \- TclYAML - Changes
 .SH SYNOPSIS
-package require \fBTcl  8\&.5\fR
+package require \fBTcl 8\&.6\fR
 .sp
-package require \fBtclyaml  ?0\&.5?\fR
+package require \fBtclyaml ?0\&.6?\fR
 .sp
 .BE
 .SH DESCRIPTION
@@ -287,6 +287,18 @@ parser library for \fIYAML Ain't Markup Language\fR [http://yaml\&.org]\&.
 This document provides an overview of the changes \fBTclYAML\fR
 underwent from version to version\&.
 .SH CHANGES
+.SS "CHANGES FOR VERSION 0\&.6"
+.PP
+In detail:
+.IP [1]
+This version of TclYAML requires Tcl 8\&.6 as a minium runtime\&.
+.IP [2]
+In return this version of TclYAML supports Tcl 9\&.
+.IP [3]
+Working with Tcl 8\&.5 is not guaranteed any longer\&.
+.IP [4]
+Keep using TclYAML 0\&.5 when working with Tcl 8\&.5\&.
+.PP
 .SS "CHANGES FOR VERSION 0\&.5"
 .PP
 In detail:
@@ -339,7 +351,7 @@ YAML, markup language, serialization
 3rd party library binding
 .SH COPYRIGHT
 .nf
-Copyright (c) 2012-2014, 2021 Andreas Kupries
-Copyright (c) 2012-2014, 2021 Documentation, Andreas Kupries
+Copyright (c) 2012-2014, 2021-2024 Andreas Kupries
+Copyright (c) 2012-2014, 2021-2024 Documentation, Andreas Kupries
 
 .fi

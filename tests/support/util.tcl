@@ -1,11 +1,10 @@
 # -*- tcl -*-
-## (c) 2021 Andreas Kupries
+## (c) 2021-2024 Andreas Kupries
 # # ## ### ##### ######## ############# #####################
 ## Utility functions for the tests.
 
 proc cat {path} {
-    set c [open $path r]
-    fconfigure $c -encoding binary -translation binary
+    set c [open $path rb]
     set d [read $c]
     close $c
     return $d

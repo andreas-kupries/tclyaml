@@ -1,9 +1,9 @@
 '\"
 '\" Generated from file 'tclyaml\&.man' by tcllib/doctools with format 'nroff'
-'\" Copyright (c) 2012-2014, 2021 Andreas Kupries
-'\" Copyright (c) 2012-2014, 2021 Documentation, Andreas Kupries
+'\" Copyright (c) 2012-2014, 2021-2024 Andreas Kupries
+'\" Copyright (c) 2012-2014, 2021-2024 Documentation, Andreas Kupries
 '\"
-.TH "tclyaml" n 0\&.5 doc "TclYAML"
+.TH "tclyaml" n 0\&.6 doc "TclYAML"
 .\" The -*- nroff -*- definitions below are for supplemental macros used
 .\" in Tcl/Tk manual entries.
 .\"
@@ -275,9 +275,9 @@ Database Class:	\\fB\\$3\\fR
 .SH NAME
 tclyaml \- TclYAML - API
 .SH SYNOPSIS
-package require \fBTcl  8\&.5\fR
+package require \fBTcl 8\&.6\fR
 .sp
-package require \fBtclyaml  ?0\&.5?\fR
+package require \fBtclyaml ?0\&.6?\fR
 .sp
 \fBtclyaml type\fR \fIvalue\fR
 .sp
@@ -937,7 +937,7 @@ YAML, markup language, serialization
 3rd party library binding
 .SH COPYRIGHT
 .nf
-Copyright (c) 2012-2014, 2021 Andreas Kupries
-Copyright (c) 2012-2014, 2021 Documentation, Andreas Kupries
+Copyright (c) 2012-2014, 2021-2024 Andreas Kupries
+Copyright (c) 2012-2014, 2021-2024 Documentation, Andreas Kupries
 
 .fi

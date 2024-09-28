@@ -38,7 +38,7 @@ critcl::ccode {
 	    for (e = YAML_ANY_SCALAR_STYLE;
 		 e <= YAML_FOLDED_SCALAR_STYLE;
 		 e++) {
-	       styleobj [e] = Tcl_NewStringObj (ty_scalar_style_names [e], -1);
+	       styleobj [e] = Tcl_NewStringObj (ty_scalar_style_names [e], TCL_AUTO_LENGTH); /* OK tcl9 */
 	       Tcl_IncrRefCount (styleobj [e]);
 	    }
 	}
@@ -77,7 +77,7 @@ critcl::ccode {
 	    for (e = YAML_ANY_SEQUENCE_STYLE;
 		 e <= YAML_FLOW_SEQUENCE_STYLE;
 		 e++) {
-	       styleobj [e] = Tcl_NewStringObj (ty_block_style_names [e], -1);
+	       styleobj [e] = Tcl_NewStringObj (ty_block_style_names [e], TCL_AUTO_LENGTH); /* OK tcl9 */
 	       Tcl_IncrRefCount (styleobj [e]);
 	    }
 	}
@@ -110,7 +110,7 @@ critcl::ccode {
 	    for (e = YAML_ANY_MAPPING_STYLE;
 		 e <= YAML_FLOW_MAPPING_STYLE;
 		 e++) {
-	       styleobj [e] = Tcl_NewStringObj (ty_block_style_names [e], -1);
+	       styleobj [e] = Tcl_NewStringObj (ty_block_style_names [e], TCL_AUTO_LENGTH); /* OK tcl9 */
 	       Tcl_IncrRefCount (styleobj [e]);
 	    }
 	}

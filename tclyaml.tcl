@@ -4,7 +4,7 @@
 # It directly exposes libyaml functionality to Tcl script.
 #
 # (c) 2012-2014 Andreas Kupries http://wiki.tcl.tk/andreas%20kupries
-# (c) 2021      Andreas Kupries http://wiki.tcl.tk/andreas%20kupries
+# (c) 2021-2024 Andreas Kupries http://wiki.tcl.tk/andreas%20kupries
 #
 
 # # ## ### ##### ######## #############
@@ -44,7 +44,8 @@ critcl::subject {data exchange format} {transfer format}
 # # ## ### ##### ######## #############
 ## Implementation.
 
-critcl::tcl 8.5
+## Implied min tcl 8.6 / 9, as per runtime
+##critcl::tcl 8.5
 
 # # ## ### ##### ######## #############
 ## Access to the libyaml headers and sources
@@ -139,7 +140,7 @@ if {![critcl::load]} {
 
 # # ## ### ##### ######## #############
 
-package provide tclyaml 0.5
+package provide tclyaml 0.6
 #    See also
 #    - doc/include/version.inc
 return

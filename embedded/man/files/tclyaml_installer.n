@@ -1,9 +1,9 @@
 '\"
 '\" Generated from file 'tclyaml_installer\&.man' by tcllib/doctools with format 'nroff'
-'\" Copyright (c) 2012-2014, 2021 Andreas Kupries
-'\" Copyright (c) 2012-2014, 2021 Documentation, Andreas Kupries
+'\" Copyright (c) 2012-2014, 2021-2024 Andreas Kupries
+'\" Copyright (c) 2012-2014, 2021-2024 Documentation, Andreas Kupries
 '\"
-.TH "tclyaml_install_guide" n 0\&.5 doc "TclYAML"
+.TH "tclyaml_install_guide" n 0\&.6 doc "TclYAML"
 .\" The -*- nroff -*- definitions below are for supplemental macros used
 .\" in Tcl/Tk manual entries.
 .\"
@@ -275,9 +275,9 @@ Database Class:	\\fB\\$3\\fR
 .SH NAME
 tclyaml_install_guide \- TclYAML - The Installer's Guide
 .SH SYNOPSIS
-package require \fBTcl  8\&.5\fR
+package require \fBTcl 8\&.6\fR
 .sp
-package require \fBtclyaml  ?0\&.5?\fR
+package require \fBtclyaml ?0\&.6?\fR
 .sp
 .BE
 .SH DESCRIPTION
@@ -429,15 +429,15 @@ To install TclYAML simply run
 .CS
 
 
-/path/to/tclsh8\&.5 /path/to/tclyaml/build\&.tcl install
+/path/to/tclsh8\&.6 /path/to/tclyaml/build\&.tcl install
 
 .CE
-where "\fI/path/to/tclsh8\&.5\fR" is the tclsh of your Tcl
+where "\fI/path/to/tclsh8\&.6\fR" is the tclsh of your Tcl
 installation, and "\fI/path/to/tclyaml\fR" the location of
 the TclYAML sources on your system\&.
 .PP
 This builds all packages and then places them in a directory where the
-\fBtclsh8\&.5\fR will find them\&.
+\fBtclsh8\&.6\fR will find them\&.
 .PP
 On Windows you can invoke the file "\fIbuild\&.tcl\fR" with a
 double-click\&.  This will pop up a small graphical interface for
@@ -467,7 +467,7 @@ YAML, markup language, serialization
 3rd party library binding
 .SH COPYRIGHT
 .nf
-Copyright (c) 2012-2014, 2021 Andreas Kupries
-Copyright (c) 2012-2014, 2021 Documentation, Andreas Kupries
+Copyright (c) 2012-2014, 2021-2024 Andreas Kupries
+Copyright (c) 2012-2014, 2021-2024 Documentation, Andreas Kupries
 
 .fi

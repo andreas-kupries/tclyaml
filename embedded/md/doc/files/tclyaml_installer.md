@@ -1,9 +1,9 @@
 
 [//000000001]: # (tclyaml\_install\_guide \- TclYAML)
 [//000000002]: # (Generated from file 'tclyaml\_installer\.man' by tcllib/doctools with format 'markdown')
-[//000000003]: # (Copyright &copy; 2012\-2014, 2021 Andreas Kupries)
-[//000000004]: # (Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries)
-[//000000005]: # (tclyaml\_install\_guide\(n\) 0\.5 doc "TclYAML")
+[//000000003]: # (Copyright &copy; 2012\-2014, 2021\-2024 Andreas Kupries)
+[//000000004]: # (Copyright &copy; 2012\-2014, 2021\-2024 Documentation, Andreas Kupries)
+[//000000005]: # (tclyaml\_install\_guide\(n\) 0\.6 doc "TclYAML")
 
 <hr> [ <a href="../../../../../../home">Home</a> &#124; <a
 href="../../toc.md">Main Table Of Contents</a> &#124; <a
@@ -42,8 +42,8 @@ tclyaml\_install\_guide \- TclYAML \- The Installer's Guide
 
 # <a name='synopsis'></a>SYNOPSIS
 
-package require Tcl 8\.5  
-package require tclyaml ?0\.5?  
+package require Tcl 8\.6  
+package require tclyaml ?0\.6?  
 
 # <a name='description'></a>DESCRIPTION
 
@@ -187,13 +187,13 @@ directions please file a bug against the Kettle project, and not TclYAML\.
 
 To install TclYAML simply run
 
-    /path/to/tclsh8.5 /path/to/tclyaml/build.tcl install
+    /path/to/tclsh8.6 /path/to/tclyaml/build.tcl install
 
-where "/path/to/tclsh8\.5" is the tclsh of your Tcl installation, and
+where "/path/to/tclsh8\.6" is the tclsh of your Tcl installation, and
 "/path/to/tclyaml" the location of the TclYAML sources on your system\.
 
 This builds all packages and then places them in a directory where the
-__tclsh8\.5__ will find them\.
+__tclsh8\.6__ will find them\.
 
 On Windows you can invoke the file "build\.tcl" with a double\-click\. This will
 pop up a small graphical interface for entering the destination and performing
@@ -226,5 +226,5 @@ language](\.\./\.\./index\.md\#markup\_language),
 
 # <a name='copyright'></a>COPYRIGHT
 
-Copyright &copy; 2012\-2014, 2021 Andreas Kupries  
-Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries
+Copyright &copy; 2012\-2014, 2021\-2024 Andreas Kupries  
+Copyright &copy; 2012\-2014, 2021\-2024 Documentation, Andreas Kupries

@@ -1,8 +1,8 @@
-[vset TCL_version 8.5]
+[vset TCL_version 8.6]
 [vset libyaml_version 0.2.5]
 [vset PROJECT    TclYAML]
 [vset PROJECT_lc tclyaml]
-[vset VERSION 0.5]
+[vset VERSION 0.6]
 [comment {
     See also
     - tclyaml.tcl

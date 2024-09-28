@@ -8,10 +8,10 @@ critcl::ccode {
     static int
     read_handler (void* data, unsigned char* buffer, size_t size, size_t* size_read)
     {
-	int got;
+	Tcl_Size got;
 	Tcl_Channel chan = (Tcl_Channel) data;
 
-	/*fprintf (stderr,"RH rq(%d)\n", size);fflush (stderr);*/
+	/*fprintf (stderr,"RH rq(" TCL_SIZE_FMT ")\n", size);fflush (stderr);*/
 	/*fprintf (stderr,"RH chan = %s\n", Tcl_GetChannelName (chan));fflush (stderr);*/
 
 	if (Tcl_Eof (chan)) {
@@ -23,9 +23,9 @@ critcl::ccode {
 
 	/*fprintf (stderr,"RH read\n");fflush (stderr);*/
 
-	got = Tcl_Read (chan, (char*) buffer, size);
+	got = Tcl_Read (chan, (char*) buffer, size); /* OK tcl9 */
 
-	/*fprintf (stderr,"RH got %d e%d\n\n",got,Tcl_GetErrno());fflush (stderr);*/
+	/*fprintf (stderr,"RH got " TCL_SIZE_FMT " e%d\n\n", got, Tcl_GetErrno());fflush (stderr);*/
 
 	/* XXX check other code reading from channel */
 #if 0
@@ -62,7 +62,7 @@ critcl::ccode {
 	    for (e = YAML_NO_EVENT;
 		 e <= YAML_MAPPING_END_EVENT;
 		 e++) {
-	       events [e] = Tcl_NewStringObj (es [e], -1);
+	       events [e] = Tcl_NewStringObj (es [e], TCL_AUTO_LENGTH); /* OK tcl9 */
 	       Tcl_IncrRefCount (events[e]);
 	    }
 	}
@@ -87,7 +87,7 @@ critcl::ccode {
 	    for (e = YAML_ANY_ENCODING;
 		 e <= YAML_UTF16BE_ENCODING;
 		 e++) {
-	       events [e] = Tcl_NewStringObj (es [e], -1);
+	       events [e] = Tcl_NewStringObj (es [e], TCL_AUTO_LENGTH); /* OK tcl9 */
 	       Tcl_IncrRefCount (events[e]);
 	    }
 	}
@@ -112,8 +112,8 @@ critcl::ccode {
     {
 	/* XXX Should put the totality of dict keys into a setup for Tcl_Obj* sharing as well */
 
-	Tcl_Obj* dict = Tcl_NewListObj (0,0);
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("encoding",-1));
+	Tcl_Obj* dict = Tcl_NewListObj (0,0); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("encoding", TCL_AUTO_LENGTH)); /* OK tcl9 */
 	Tcl_ListObjAppendElement (NULL, dict, decode_encoding_type (ye->data.stream_start.encoding));
 	return dict;
     }
@@ -121,53 +121,53 @@ critcl::ccode {
     static Tcl_Obj*
     decode_event_document_start (yaml_event_t* ye)
     {
-	Tcl_Obj* dict = Tcl_NewListObj (0,0);
+	Tcl_Obj* dict = Tcl_NewListObj (0,0); /* OK tcl9 */
 	if (ye->data.document_start.version_directive) {
-	    Tcl_Obj* v = Tcl_NewListObj (0,0);
-	    Tcl_ListObjAppendElement (NULL, v, Tcl_NewIntObj (ye->data.document_start.version_directive->major));
-	    Tcl_ListObjAppendElement (NULL, v, Tcl_NewIntObj (ye->data.document_start.version_directive->minor));
-	    Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("version",-1));
+	    Tcl_Obj* v = Tcl_NewListObj (0,0); /* OK tcl9 */
+	    Tcl_ListObjAppendElement (NULL, v, Tcl_NewIntObj (ye->data.document_start.version_directive->major)); /* OK tcl9 */
+	    Tcl_ListObjAppendElement (NULL, v, Tcl_NewIntObj (ye->data.document_start.version_directive->minor)); /* OK tcl9 */
+	    Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("version", TCL_AUTO_LENGTH)); /* OK tcl9 */
 	    Tcl_ListObjAppendElement (NULL, dict, v);
 	}
 /* XXX tags... optional */
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("implicit",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewIntObj (ye->data.document_start.implicit));
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("implicit", TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewBooleanObj (ye->data.document_start.implicit));
 	return dict;
     }
 
     static Tcl_Obj*
     decode_event_document_end (yaml_event_t* ye)
     {
-	Tcl_Obj* dict = Tcl_NewListObj (0,0);
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("implicit",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewIntObj (ye->data.document_end.implicit));
+	Tcl_Obj* dict = Tcl_NewListObj (0,0); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("implicit", TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewBooleanObj (ye->data.document_end.implicit));
 	return dict;
     }
 
     static Tcl_Obj*
     decode_event_alias (yaml_event_t* ye)
     {
-	Tcl_Obj* dict = Tcl_NewListObj (0,0);
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("anchor",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.alias.anchor,-1));
+	Tcl_Obj* dict = Tcl_NewListObj (0,0); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("anchor", TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.alias.anchor, TCL_AUTO_LENGTH)); /* OK tcl9 */
 	return dict;
     }
 
     static Tcl_Obj*
     decode_event_scalar (yaml_event_t* ye)
     {
-	Tcl_Obj* dict = Tcl_NewListObj (0,0);
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("anchor",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.scalar.anchor,-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("tag",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.scalar.tag,-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("scalar",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.scalar.value,ye->data.scalar.length));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("plain-implicit",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewIntObj (ye->data.scalar.plain_implicit));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("quoted-implicit",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewIntObj (ye->data.scalar.quoted_implicit));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("style",-1));
+	Tcl_Obj* dict = Tcl_NewListObj (0,0); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("anchor", TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.scalar.anchor, TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("tag", TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.scalar.tag, TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("scalar", TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.scalar.value, ye->data.scalar.length)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("plain-implicit", TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewBooleanObj (ye->data.scalar.plain_implicit));
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("quoted-implicit", TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewBooleanObj (ye->data.scalar.quoted_implicit));
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("style", TCL_AUTO_LENGTH)); /* OK tcl9 */
 	Tcl_ListObjAppendElement (NULL, dict, decode_scalar_style (ye->data.scalar.style));
 	return dict;
     }
@@ -176,14 +176,14 @@ critcl::ccode {
     static Tcl_Obj*
     decode_event_sequence_start (yaml_event_t* ye)
     {
-	Tcl_Obj* dict = Tcl_NewListObj (0,0);
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("anchor",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.sequence_start.anchor,-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("tag",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.sequence_start.tag,-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("implicit",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewIntObj (ye->data.sequence_start.implicit));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("style",-1));
+	Tcl_Obj* dict = Tcl_NewListObj (0,0); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("anchor", TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.sequence_start.anchor, TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("tag", TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.sequence_start.tag, TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("implicit", TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewBooleanObj (ye->data.sequence_start.implicit));
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("style", TCL_AUTO_LENGTH)); /* OK tcl9 */
 	Tcl_ListObjAppendElement (NULL, dict, decode_sequence_style (ye->data.sequence_start.style));
 	return dict;
     }
@@ -191,14 +191,14 @@ critcl::ccode {
     static Tcl_Obj*
     decode_event_mapping_start (yaml_event_t* ye)
     {
-	Tcl_Obj* dict = Tcl_NewListObj (0,0);
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("anchor",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.mapping_start.anchor,-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("tag",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.mapping_start.tag,-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("implicit",-1));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewIntObj (ye->data.mapping_start.implicit));
-	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("style",-1));
+	Tcl_Obj* dict = Tcl_NewListObj (0,0); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("anchor", TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.mapping_start.anchor, TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("tag", TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ((char*) ye->data.mapping_start.tag, TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("implicit", TCL_AUTO_LENGTH)); /* OK tcl9 */
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewBooleanObj (ye->data.mapping_start.implicit));
+	Tcl_ListObjAppendElement (NULL, dict, Tcl_NewStringObj ("style", TCL_AUTO_LENGTH)); /* OK tcl9 */
 	Tcl_ListObjAppendElement (NULL, dict, decode_mapping_style (ye->data.mapping_start.style));
 	return dict;
     }
@@ -264,7 +264,7 @@ critcl::ccommand ::tclyaml::parse::channel {} { /* syntax: <x> <channel> <cmd>..
     Tcl_Obj* cmd;
 
     if (objc < 2) {
-	Tcl_WrongNumArgs (interp, 0, objv, "channel cmd ?arg...?");
+	Tcl_WrongNumArgs (interp, 0, objv, "channel cmd ?arg...?"); /* OK tcl9 */
 	return TCL_ERROR;
     }
 
@@ -288,7 +288,7 @@ critcl::ccommand ::tclyaml::parse::channel {} { /* syntax: <x> <channel> <cmd>..
 
     yaml_parser_set_input    (&yp, read_handler, chan);
 
-    cmdprefix = Tcl_NewListObj (objc - 2, objv + 2);
+    cmdprefix = Tcl_NewListObj (objc - 2, objv + 2); /* OK tcl9 */
     Tcl_IncrRefCount (cmdprefix);
 
     run = 1;

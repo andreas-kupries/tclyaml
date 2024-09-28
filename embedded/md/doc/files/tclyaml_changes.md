@@ -1,9 +1,9 @@
 
 [//000000001]: # (tclyaml\_changes \- TclYAML)
 [//000000002]: # (Generated from file 'tclyaml\_changes\.man' by tcllib/doctools with format 'markdown')
-[//000000003]: # (Copyright &copy; 2012\-2014, 2021 Andreas Kupries)
-[//000000004]: # (Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries)
-[//000000005]: # (tclyaml\_changes\(n\) 0\.5 doc "TclYAML")
+[//000000003]: # (Copyright &copy; 2012\-2014, 2021\-2024 Andreas Kupries)
+[//000000004]: # (Copyright &copy; 2012\-2014, 2021\-2024 Documentation, Andreas Kupries)
+[//000000005]: # (tclyaml\_changes\(n\) 0\.6 doc "TclYAML")
 
 <hr> [ <a href="../../../../../../home">Home</a> &#124; <a
 href="../../toc.md">Main Table Of Contents</a> &#124; <a
@@ -24,7 +24,9 @@ tclyaml\_changes \- TclYAML \- Changes
 
   - [Changes](#section2)
 
-      - [Changes for version 0\.5](#subsection1)
+      - [Changes for version 0\.6](#subsection1)
+
+      - [Changes for version 0\.5](#subsection2)
 
   - [Bugs, Ideas, Feedback](#section3)
 
@@ -36,8 +38,8 @@ tclyaml\_changes \- TclYAML \- Changes
 
 # <a name='synopsis'></a>SYNOPSIS
 
-package require Tcl 8\.5  
-package require tclyaml ?0\.5?  
+package require Tcl 8\.6  
+package require tclyaml ?0\.6?  
 
 # <a name='description'></a>DESCRIPTION
 
@@ -48,7 +50,19 @@ version\.
 
 # <a name='section2'></a>Changes
 
-## <a name='subsection1'></a>Changes for version 0\.5
+## <a name='subsection1'></a>Changes for version 0\.6
+
+In detail:
+
+  1. This version of TclYAML requires Tcl 8\.6 as a minium runtime\.
+
+  1. In return this version of TclYAML supports Tcl 9\.
+
+  1. Working with Tcl 8\.5 is not guaranteed any longer\.
+
+  1. Keep using TclYAML 0\.5 when working with Tcl 8\.5\.
+
+## <a name='subsection2'></a>Changes for version 0\.5
 
 In detail:
 
@@ -105,5 +119,5 @@ language](\.\./\.\./index\.md\#markup\_language),
 
 # <a name='copyright'></a>COPYRIGHT
 
-Copyright &copy; 2012\-2014, 2021 Andreas Kupries  
-Copyright &copy; 2012\-2014, 2021 Documentation, Andreas Kupries
+Copyright &copy; 2012\-2014, 2021\-2024 Andreas Kupries  
+Copyright &copy; 2012\-2014, 2021\-2024 Documentation, Andreas Kupries
